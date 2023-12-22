@@ -1,7 +1,7 @@
 # ESPAÑOL
 # Proyecto de Maridaje de Vinos de la Comunidad Valenciana
 
-Este proyecto es una aplicación para maridaje de vinos la Comunidad Valenciana. Fue creado utilizando Create React App.
+Este proyecto es una aplicación para maridaje de vinos de la Comunidad Valenciana. Fue creado utilizando Create React App.
 
 ## Scripts Disponibles
 
