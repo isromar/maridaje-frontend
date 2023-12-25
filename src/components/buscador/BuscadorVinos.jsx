@@ -10,7 +10,7 @@ const BuscadorVinos = () => {
     };
 
     return (
-        <div className='ComidaSelect'>
+        <div className="buscadorVinos">
             <input type="text" value={busqueda} onChange={handleBusquedaChange} placeholder='Nombre del vino...'/>
             {/* Aquí deberías mostrar la tabla con las opciones coincidentes */}
         </div>
