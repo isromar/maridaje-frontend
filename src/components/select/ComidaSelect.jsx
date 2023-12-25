@@ -26,14 +26,13 @@ const ComidaSelect = () => {
 
   return (
     <>
-    <div>
-      <h1>Maridaje con vinos de la Comunidad Valenciana</h1>
-    </div>
+    <div className='ComidaSelect'>
       <Select
         //options={comidas}
         options={comidas.sort((a, b) => a.label.localeCompare(b.label))}  // Ordena los datos
         placeholder="Selecciona comida..."
       />
+    </div>
     </>
   );
 };
