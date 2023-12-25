@@ -14,7 +14,9 @@
 }
 
 .App-header {
-  background-color: #282c34;
+ /* background-color: #282c34;*/
+  /*background-color: #722f37; /* Color de vino en formato hexadecimal */
+  background-color: #4c1f27; /* Color de vino en formato hexadecimal */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
