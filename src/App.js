@@ -1,8 +1,7 @@
 import logo from './logo.svg';
+import ComidaSelect from './components/select/ComidaSelect'
 
 import './App.css';
-import ComidaSelect from './components/select/ComidaSelect';
-
 function App() {
 
     return (
