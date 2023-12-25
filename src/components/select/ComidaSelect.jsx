@@ -11,8 +11,6 @@ const ComidaSelect = () => {
     const fetchData = async () => {
       try {
         const response = await getData(apiUrl.comidas);
-        console.log("response");
-        console.log(response);
         const data = response["hydra:member"];
         const options = data.map((comida) => ({
           value: comida.id,
