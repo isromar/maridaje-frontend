@@ -6,7 +6,13 @@ import { apiUrl } from "../../data/Url";
 
 const ComidaSelect = () => {
   const [comidas, setComidas] = useState([]); // Inicializa el estado con un array vacío
+  const [selectedOption, setSelectedOption] = useState(null);
 
+  const handleChange = selectedOption => {
+    setSelectedOption(selectedOption);
+    console.log(`Option selected:`, selectedOption);
+  };
+  
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -27,9 +33,12 @@ const ComidaSelect = () => {
 
   return (
     <>
-      <div className="comidaSelect">
+      <div className="select comida-select">
         <Select
           //options={comidas}
+          className="form-group"
+          value={selectedOption}
+          onChange={handleChange}
           options={comidas.sort((a, b) => a.label.localeCompare(b.label))} // Ordena los datos
           placeholder="Selecciona comida..."
         />

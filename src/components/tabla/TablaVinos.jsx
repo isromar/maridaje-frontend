@@ -10,8 +10,8 @@ const TablaVinos = () => {
       try {
         const response = await getData(apiUrl.vinos);
         const data = response["hydra:member"];
-          console.log(data[0])
-          setVinos(data); // Actualiza el estado con los datos obtenidos
+        console.log(data[0]);
+        setVinos(data); // Actualiza el estado con los datos obtenidos
       } catch (error) {
         console.error("Error al obtener los datos:", error);
       }
@@ -34,23 +34,45 @@ const TablaVinos = () => {
               <th>Bodega</th>
               <th>Variedad uva</th>
               <th>Ecológico</th>
+              <th>Maridaje</th>
               <th>Acciones</th>
             </tr>
           </thead>
-            <tbody>
-                {vinos.map((vino) => (
-                <tr key={vino.id}>
-                    <td>{vino.nombre}</td>
-                    <td>{vino.tipo}</td>
-                    <td>{vino.maduracion}</td>
-                    <td>{vino.denominacion_origen}</td>
-                    <td>{vino.bodega}</td>
-                    <td>{vino.variedad_uva}</td>
-                    <td>{vino.ecologico}</td>
-                    <td>Ver,Editar,Borrar</td>
-                </tr>
-                ))}
-            </tbody>
+          <tbody>
+            {vinos.map((vino, index) => (
+              <tr key={vino["@id"]}>
+                <td>{vino.nombre}</td>
+                <td>{vino.tipo}</td>
+                <td>{vino.maduracion}</td>
+                <td>{vino.denominacion_origen}</td>
+                <td>{vino.bodega.nombre}</td>
+                <td>
+                  {vino.variedad_uva
+                    .sort((a, b) => a.nombre.localeCompare(b.nombre)) // Ordenar por el nombre de la variedad de uva
+                    .map((variedad, index) => (
+                      <span key={variedad["@id"]}>
+                        {variedad.nombre}
+                        {index < vino.variedad_uva.length - 1 && ", "}{" "}
+                        {/* Esto es para poner comas entre los valores, menos al último*/}
+                      </span>
+                    ))}
+                </td>
+                <td>{vino.ecologico}</td>
+                <td>
+                  {vino.comida
+                    .sort((a, b) => a.nombre.localeCompare(b.nombre)) // Ordenar por el nombre de la comida
+                    .map((comida, index) => (
+                      <span key={comida["@id"]}>
+                        {comida.nombre}
+                        {index < vino.comida.length - 1 && ", "}{" "}
+                        {/* Esto es para poner comas entre los valores, menos al último*/}
+                      </span>
+                    ))}
+                </td>
+                <td>Ver,Editar,Borrar</td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </div>
     </div>
