@@ -4,11 +4,14 @@ import { apiUrl } from "../../data/Url";
 
 const TablaVinos = () => {
   const [vinos, setVinos] = useState([]); // Inicializa vinos como un array
+  const comidaSeleccionada = JSON.parse(localStorage.getItem('comidaSeleccionada'));
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getData(apiUrl.vinos);
+        const params = { tipo: comidaSeleccionada.label };
+        const response = await getData(apiUrl.vinos, params);
+        //const response = await getData(apiUrl.vinos);
         const data = response["hydra:member"];
         console.log(data[0]);
         setVinos(data); // Actualiza el estado con los datos obtenidos
@@ -18,7 +21,7 @@ const TablaVinos = () => {
     };
 
     fetchData();
-  }, []);
+  }, [comidaSeleccionada]);
 
   return (
     <div>
@@ -53,7 +56,7 @@ const TablaVinos = () => {
                       <span key={variedad["@id"]}>
                         {variedad.nombre}
                         {index < vino.variedad_uva.length - 1 && ", "}{" "}
-                        {/* Esto es para poner comas entre los valores, menos al último*/}
+                        {/*Para poner comas entre los valores, menos al último */}
                       </span>
                     ))}
                 </td>
@@ -65,7 +68,7 @@ const TablaVinos = () => {
                       <span key={comida["@id"]}>
                         {comida.nombre}
                         {index < vino.comida.length - 1 && ", "}{" "}
-                        {/* Esto es para poner comas entre los valores, menos al último*/}
+                        {/* Para poner comas entre los valores, menos al último */}
                       </span>
                     ))}
                 </td>

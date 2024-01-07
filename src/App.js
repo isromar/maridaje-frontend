@@ -13,7 +13,7 @@ function App() {
         <h1>Maridaje con vinos de la Comunidad Valenciana</h1>
       </div>
       <div>
-        <h5>Selecciona una comida o busca un vino, para ver recomendaciones de maridaje</h5>
+        <h5>Para ver recomendaciones de maridaje, selecciona una comida o busca un vino</h5>
       </div>
         <div className='row'>
           <div className="col col-12 col-sm-6">

@@ -6,11 +6,15 @@ import { apiUrl } from "../../data/Url";
 
 const ComidaSelect = () => {
   const [comidas, setComidas] = useState([]); // Inicializa el estado con un array vacío
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [comidaSeleccionada, setComidaSeleccionada] = useState('');
+  localStorage.setItem('comidaSeleccionada', JSON.stringify(comidaSeleccionada));
 
-  const handleChange = selectedOption => {
-    setSelectedOption(selectedOption);
-    console.log(`Option selected:`, selectedOption);
+
+  const handleChange = comidaSeleccionada => {
+    setComidaSeleccionada(comidaSeleccionada);
+    localStorage.setItem('comidaSeleccionada', JSON.stringify(comidaSeleccionada));
+    console.log(`Option selected:`, comidaSeleccionada);
+
   };
   
   useEffect(() => {
@@ -18,10 +22,16 @@ const ComidaSelect = () => {
       try {
         const response = await getData(apiUrl.comidas);
         const data = response["hydra:member"];
-        const options = data.map((comida) => ({
+        const options = [
+          { value: 1, label: "tinto" },
+          { value: 2, label: "blanco" }
+        ];
+        /*
+                const options = data.map((comida) => ({
           value: comida.id,
           label: comida.nombre,
         }));
+        */
         setComidas(options);
       } catch (error) {
         console.error("Error al obtener los datos:", error);
@@ -37,7 +47,7 @@ const ComidaSelect = () => {
         <Select
           //options={comidas}
           className="form-group"
-          value={selectedOption}
+          value={comidaSeleccionada}
           onChange={handleChange}
           options={comidas.sort((a, b) => a.label.localeCompare(b.label))} // Ordena los datos
           placeholder="Selecciona comida..."
