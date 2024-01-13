@@ -9,11 +9,7 @@ const TablaVinos = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const params = { 
-          tipo: comidaSeleccionada.label,
-          nombre: 'll' };
-        const response = await getData(apiUrl.vinos, params);
-        //const response = await getData(apiUrl.vinos);
+        const response = await getData(apiUrl.vinos);
         const data = response["hydra:member"];
         console.log(data[0]);
         setVinos(data); // Actualiza el estado con los datos obtenidos
