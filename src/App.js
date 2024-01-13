@@ -3,26 +3,33 @@ import ComidaSelect from './components/select/ComidaSelect'
 import BuscadorVinos from './components/buscador/BuscadorVinos';
 import './App.css';
 import TablaVinos from './components/tabla/TablaVinos';
+import TablaCheck  from './components/tabla/TablaCheck';
 
 function App() {
 
     return (
     <div className="App">
       <header className="App-header">
-      <div>
-        <h1>Maridaje con vinos de la Comunidad Valenciana</h1>
-      </div>
-      <div>
-        <h5>Selecciona una comida o busca un vino, para ver recomendaciones de maridaje</h5>
-      </div>
+        <div>
+          <h1>Maridaje con vinos de la Comunidad Valenciana</h1>
+        </div>
+        <div>
+          <h5>Para ver recomendaciones de maridaje, selecciona una comida o busca un vino</h5>
+        </div>
         <div className='row'>
-          <div className="col col-12 col-sm-6">
+          <div className="col col-3 col-sm-3">
             <ComidaSelect/>
           </div>
-          <div className="col col-12 col-sm-6">
+
+          <div className="col col-3 col-sm-3">
             <BuscadorVinos/>
           </div>
+
+          <div className="col col-6 col-sm-6">
+            <TablaCheck/>
+          </div>
         </div>
+
         <div className='row'>
           <TablaVinos/>
         </div>

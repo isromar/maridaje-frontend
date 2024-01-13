@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { getData } from "../../utility/getData";
 import { apiUrl } from "../../data/Url";
+import Checkbox from "../check/Checkbox";
 
 const TablaVinos = () => {
   const [vinos, setVinos] = useState([]); // Inicializa vinos como un array
@@ -8,7 +9,11 @@ const TablaVinos = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getData(apiUrl.vinos);
+        const params = { 
+          tipo: comidaSeleccionada.label,
+          nombre: 'll' };
+        const response = await getData(apiUrl.vinos, params);
+        //const response = await getData(apiUrl.vinos);
         const data = response["hydra:member"];
         console.log(data[0]);
         setVinos(data); // Actualiza el estado con los datos obtenidos
@@ -24,7 +29,7 @@ const TablaVinos = () => {
     <div>
       <h1>Resultado de la búsqueda</h1>
       <div className="table-responsive">
-        <table className="table table-striped">
+        <table className="table table-striped tabla-vinos">
           <thead>
             <tr>
               <th>Nombre</th>
@@ -42,9 +47,9 @@ const TablaVinos = () => {
             {vinos.map((vino, index) => (
               <tr key={vino["@id"]}>
                 <td>{vino.nombre}</td>
-                <td>{vino.tipo}</td>
+                <td>{vino.tipoVino.nombre}</td>
                 <td>{vino.maduracion}</td>
-                <td>{vino.denominacion_origen}</td>
+                <td>{vino.denominacionOrigen.nombre}</td>
                 <td>{vino.bodega.nombre}</td>
                 <td>
                   {vino.variedad_uva

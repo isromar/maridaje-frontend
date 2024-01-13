@@ -1,3 +1,9 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,7 +11,6 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 5px;
 }
 
 code {
@@ -16,3 +21,20 @@ code {
 .select {
    color:black;
   }
+
+.tabla-check {
+  border-spacing: 50px; /* Espaciado entre columnas */
+}
+
+/* Aplica un margen a la derecha del cuadro de verificación */
+input[type="checkbox"] {
+  margin-right: 10px; /* Ajusta el valor según sea necesario */
+}
+
+table {
+  border-collapse: collapse; /* Elimina el espaciado entre las celdas */
+}
+
+td {
+  padding: 5px; /* Reduce el relleno de las celdas, ajusta el valor según sea necesario */
+}
