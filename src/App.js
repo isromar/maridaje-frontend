@@ -4,6 +4,7 @@ import BuscadorVinos from './components/buscador/BuscadorVinos';
 import './App.css';
 import TablaVinos from './components/tabla/TablaVinos';
 import TablaCheck from './components/tabla/TablaCheck';
+import ComponenteSuperior from './components/filtros';
 
 function App() {
 
@@ -18,13 +19,7 @@ function App() {
           <h5>Para ver recomendaciones de maridaje, selecciona una comida o busca un vino</h5>
         </div>
         <div className='row'>
-          <div className="col col-6 col-sm-6">
-            <ComidaSelect />
-          </div>
-
-          <div className="col col-6 col-sm-6">
-            <BuscadorVinos />
-          </div>
+        <ComponenteSuperior/>
           {/*}
           <div className="col col-6 col-sm-6">
             <TablaCheck/>

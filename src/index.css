@@ -49,6 +49,8 @@ td {
 
 .buscador-vinos {
   height: 38px;
+  border-radius: 4px;
+  border: 1px gray solid;
 }
 
 .centrar{

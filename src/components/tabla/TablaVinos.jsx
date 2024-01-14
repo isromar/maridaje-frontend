@@ -21,6 +21,7 @@ const TablaVinos = () => {
 
     fetchData();
   }, []);
+  
 
   // Función para manejar el clic en el encabezado "Tipo"
   const handleSort = () => {
