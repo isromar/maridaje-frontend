@@ -33,10 +33,10 @@ const ComidaSelect = () => {
 
   return (
     <>
-      <div className="select comida-select">
+      <div className="select">
         <Select
           //options={comidas}
-          className="form-group"
+          className="form-group comida-select"
           value={selectedOption}
           onChange={handleChange}
           options={comidas.sort((a, b) => a.label.localeCompare(b.label))} // Ordena los datos

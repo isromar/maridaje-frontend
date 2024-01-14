@@ -10,9 +10,10 @@ const BuscadorVinos = () => {
   };
 
   return (
-    <div className="input buscador-vinos input-group">
+    <div className="input input-group">
       <input
         type="text"
+        className="buscador-vinos centrar"
         value={busqueda}
         onChange={handleBusquedaChange}
         placeholder="Nombre del vino..."

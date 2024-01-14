@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { getData } from "../../utility/getData";
 import { apiUrl } from "../../data/Url";
-import Checkbox from "../check/Checkbox";
+import { Eye, Trash2, Edit } from "react-feather";
 
 const TablaVinos = () => {
   const [vinos, setVinos] = useState([]); // Inicializa vinos como un array
+  const [orden, setOrden] = useState('asc'); // Estado para controlar el orden
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,20 +22,32 @@ const TablaVinos = () => {
     fetchData();
   }, []);
 
+  // Función para manejar el clic en el encabezado "Tipo"
+  const handleSort = () => {
+    const nextOrder = orden === 'asc' ? 'desc' : 'asc';
+    setOrden(nextOrder);
+    const sortedVinos = [...vinos].sort((a, b) => {
+      if (nextOrder === 'asc') {
+        return a.tipoVino.nombre.localeCompare(b.tipoVino.nombre);
+      } else {
+        return b.tipoVino.nombre.localeCompare(a.tipoVino.nombre);
+      }
+    });
+    setVinos(sortedVinos);
+  };
+
+
   return (
     <div>
-      <h1>Resultado de la búsqueda</h1>
+      <br/>
       <div className="table-responsive">
         <table className="table table-striped tabla-vinos">
           <thead>
             <tr>
               <th>Nombre</th>
-              <th>Tipo</th>
-              <th>Maduración</th>
-              <th>DO</th>
-              <th>Bodega</th>
-              <th>Variedad uva</th>
-              <th>Ecológico</th>
+              <th onClick={handleSort} className="cursor-pointer">Tipo{orden === 'asc' ? '⇅' : '⇅'} {/* Agrega el símbolo de las flechas */}</th> {/* Agrega el manejador de clic para ordenar */}
+              <th onClick={handleSort} className="cursor-pointer">DO{orden === 'asc' ? '⇅' : '⇅'}</th>
+              <th>Variedad de uva</th>
               <th>Maridaje</th>
               <th>Acciones</th>
             </tr>
@@ -44,9 +57,7 @@ const TablaVinos = () => {
               <tr key={vino["@id"]}>
                 <td>{vino.nombre}</td>
                 <td>{vino.tipoVino.nombre}</td>
-                <td>{vino.maduracion}</td>
                 <td>{vino.denominacionOrigen.nombre}</td>
-                <td>{vino.bodega.nombre}</td>
                 <td>
                   {vino.variedad_uva
                     .sort((a, b) => a.nombre.localeCompare(b.nombre)) // Ordenar por el nombre de la variedad de uva
@@ -58,7 +69,6 @@ const TablaVinos = () => {
                       </span>
                     ))}
                 </td>
-                <td>{vino.ecologico}</td>
                 <td>
                   {vino.comida
                     .sort((a, b) => a.nombre.localeCompare(b.nombre)) // Ordenar por el nombre de la comida
@@ -70,7 +80,11 @@ const TablaVinos = () => {
                       </span>
                     ))}
                 </td>
-                <td>Ver,Editar,Borrar</td>
+                <td>
+                  <Eye size={20} className="cursor-pointer" />
+                  <Edit size={20} className="cursor-pointer" />
+                  <Trash2 size={20} className="cursor-pointer" />
+                </td>
               </tr>
             ))}
           </tbody>

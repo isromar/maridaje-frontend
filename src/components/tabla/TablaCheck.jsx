@@ -41,6 +41,7 @@ const TablaCheck = () => {
       <div className="table-responsive">
         <table className="tabla-check">
           <tbody>
+            
             <tr>
               <th>Tipo</th>
               <td>

@@ -38,3 +38,19 @@ table {
 td {
   padding: 5px; /* Reduce el relleno de las celdas, ajusta el valor según sea necesario */
 }
+
+.cursor-pointer {
+  cursor: pointer; /* Cambia el cursor a una mano al pasar el mouse sobre el elemento */
+}
+
+.comida-select, .buscador-vinos {
+ min-width: 300px;
+}
+
+.buscador-vinos {
+  height: 38px;
+}
+
+.centrar{
+  text-align: center;
+}
