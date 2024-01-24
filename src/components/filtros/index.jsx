@@ -2,30 +2,38 @@
 import React, { useState } from "react";
 import ComidaSelect from "../select/ComidaSelect";
 import BuscadorVinos from "../buscador/BuscadorVinos";
+import TablaVinos from "../tabla";
 
 const ComponenteSuperior = () => {
-  const [selectedOption, setSelectedOption] = useState(null);
-  const [busqueda, setBusqueda] = useState(null);
+  const [selectedOption, setSelectedOption] = useState('');
+  const [busquedaNombreVino, setBusquedaNombreVino] = useState('');
   const [placeholder, setPlaceholder] = useState("Nombre del vino...");
 
   return (
     <>
-      <div className="col col-6 col-sm-6">
-        <ComidaSelect
-          selectedOption={selectedOption}
-          setSelectedOption={setSelectedOption}
-          setBusqueda={setBusqueda}
-          setPlaceholder={setPlaceholder}
-        />
+      <div className='row'>
+        <div className="col col-6 col-sm-6">
+          <ComidaSelect
+            selectedOption={selectedOption}
+            setSelectedOption={setSelectedOption}
+            setBusquedaNombreVino={setBusquedaNombreVino}
+            setPlaceholder={setPlaceholder}
+          />
+        </div>
+        <div className="col col-6 col-sm-6">
+          <BuscadorVinos
+            setSelectedOption={setSelectedOption}
+            setBusquedaNombreVino={setBusquedaNombreVino}
+            busquedaNombreVino={busquedaNombreVino}
+            setPlaceholder={setPlaceholder}
+            placeholder={placeholder}
+          />
+        </div>
       </div>
-      <div className="col col-6 col-sm-6">
-        <BuscadorVinos
-          setSelectedOption={setSelectedOption}
-          setBusqueda={setBusqueda}
-          busqueda={busqueda}
-          setPlaceholder={setPlaceholder}
-          placeholder={placeholder}
-        />
+      <div className='row'>
+        <div className="col col-12 col-sm-12">
+          <TablaVinos busquedaNombreVino={busquedaNombreVino} selectedOption={selectedOption}/>
+        </div>
       </div>
     </>
   );

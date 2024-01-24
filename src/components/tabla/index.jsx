@@ -2,26 +2,28 @@ import React, { useState, useEffect } from "react";
 import { getData } from "../../utility/getData";
 import { apiUrl } from "../../data/Url";
 import { Eye, Trash2, Edit } from "react-feather";
+import BuscadorVinos from "../buscador/BuscadorVinos";
 
-const TablaVinos = () => {
+const TablaVinos = ({busquedaNombreVino, selectedOption}) => {
+  console.log(busquedaNombreVino)
   const [vinos, setVinos] = useState([]); // Inicializa vinos como un array
   const [orden, setOrden] = useState('asc'); // Estado para controlar el orden
+  const [vinosFiltrados, setVinosFiltrados] = useState([]); // Estado para almacenar los vinos filtrados
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getData(apiUrl.vinos);
+        const response = await getData(apiUrl.vinos, busquedaNombreVino, selectedOption);
         const data = response["hydra:member"];
-        console.log(data[0]);
         setVinos(data); // Actualiza el estado con los datos obtenidos
+        setVinosFiltrados(data); // Inicializa los vinos filtrados con todos los vinos
       } catch (error) {
         console.error("Error al obtener los datos:", error);
       }
     };
 
     fetchData();
-  }, []);
-  
+  }, [busquedaNombreVino, selectedOption]);
 
   // Función para manejar el clic en el encabezado "Tipo"
   const handleSort = () => {
@@ -40,36 +42,21 @@ const TablaVinos = () => {
 
   return (
     <div>
-      <br/>
       <div className="table-responsive">
         <table className="table table-striped tabla-vinos">
           <thead>
             <tr>
-              <th>Nombre</th>
+            <th onClick={handleSort} className="cursor-pointer">Nombre{orden === 'asc' ? '⇅' : '⇅'} {/* Agrega el símbolo de las flechas */}</th> {/* Agrega el manejador de clic para ordenar */}
               <th onClick={handleSort} className="cursor-pointer">Tipo{orden === 'asc' ? '⇅' : '⇅'} {/* Agrega el símbolo de las flechas */}</th> {/* Agrega el manejador de clic para ordenar */}
-              <th onClick={handleSort} className="cursor-pointer">DO{orden === 'asc' ? '⇅' : '⇅'}</th>
-              <th>Variedad de uva</th>
               <th>Maridaje</th>
               <th>Acciones</th>
             </tr>
           </thead>
           <tbody>
-            {vinos.map((vino, index) => (
+            {vinosFiltrados.map((vino, index) => (
               <tr key={vino["@id"]}>
                 <td>{vino.nombre}</td>
                 <td>{vino.tipoVino.nombre}</td>
-                <td>{vino.denominacionOrigen.nombre}</td>
-                <td>
-                  {vino.variedad_uva
-                    .sort((a, b) => a.nombre.localeCompare(b.nombre)) // Ordenar por el nombre de la variedad de uva
-                    .map((variedad, index) => (
-                      <span key={variedad["@id"]}>
-                        {variedad.nombre}
-                        {index < vino.variedad_uva.length - 1 && ", "}{" "}
-                        {/* Esto es para poner comas entre los valores, menos al último*/}
-                      </span>
-                    ))}
-                </td>
                 <td>
                   {vino.comida
                     .sort((a, b) => a.nombre.localeCompare(b.nombre)) // Ordenar por el nombre de la comida

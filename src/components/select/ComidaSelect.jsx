@@ -4,15 +4,14 @@ import Select from "react-select";
 import { getData } from "../../utility/getData";
 import { apiUrl } from "../../data/Url";
 
-const ComidaSelect = ({ selectedOption, setSelectedOption, setBusqueda, setPlaceholder }) => {
+const ComidaSelect = ({ selectedOption, setSelectedOption, setBusquedaNombreVino, setPlaceholder }) => {
   const [comidas, setComidas] = useState([]); // Inicializa el estado con un array vacío
   //const [selectedOption, setSelectedOption] = useState(null);
 
   const handleChange = selectedOption => {
     setSelectedOption(selectedOption);
-    setBusqueda("");
+    setBusquedaNombreVino("");
     setPlaceholder("Nombre del vino...");
-    console.log(`Option selected:`, selectedOption);
   };
   
   // Carga los valores de las comidas en el Select

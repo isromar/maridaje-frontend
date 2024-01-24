@@ -2,7 +2,7 @@ import logo from './logo.svg';
 import ComidaSelect from './components/select/ComidaSelect'
 import BuscadorVinos from './components/buscador/BuscadorVinos';
 import './App.css';
-import TablaVinos from './components/tabla/TablaVinos';
+import TablaVinos from './components/tabla';
 import TablaCheck from './components/tabla/TablaCheck';
 import ComponenteSuperior from './components/filtros';
 
@@ -29,9 +29,7 @@ function App() {
 
         </div>
         <br/>
-        <div className='row'>
-          <TablaVinos />
-        </div>
+
         <img src={logo} className="App-logo" alt="logo" />
       </header>
     </div>
