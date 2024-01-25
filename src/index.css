@@ -5,7 +5,6 @@
 }
 
 body {
-  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -22,15 +21,6 @@ code {
    color:black;
   }
 
-.tabla-check {
-  border-spacing: 50px; /* Espaciado entre columnas */
-}
-
-/* Aplica un margen a la derecha del cuadro de verificación */
-input[type="checkbox"] {
-  margin-right: 10px; /* Ajusta el valor según sea necesario */
-}
-
 table {
   border-collapse: collapse; /* Elimina el espaciado entre las celdas */
 }
@@ -43,11 +33,12 @@ td {
   cursor: pointer; /* Cambia el cursor a una mano al pasar el mouse sobre el elemento */
 }
 
-.comida-select, .buscador-vinos {
- min-width: 300px;
+.comida-select{
+  min-width: 300px;
 }
 
 .buscador-vinos {
+  min-width: 300px;
   height: 38px;
   border-radius: 4px;
   border: 1px gray solid;
@@ -55,4 +46,9 @@ td {
 
 .centrar{
   text-align: center;
+}
+
+thead, th {
+  position: sticky;
+  top: 0;
 }

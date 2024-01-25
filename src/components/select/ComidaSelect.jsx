@@ -1,7 +1,6 @@
 // ComidaSelect.js
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
-import { getData } from "../../utility/getData";
 import { apiUrl } from "../../data/Url";
 
 const ComidaSelect = ({ selectedOption, setSelectedOption, setBusquedaNombreVino, setPlaceholder }) => {
@@ -18,13 +17,15 @@ const ComidaSelect = ({ selectedOption, setSelectedOption, setBusquedaNombreVino
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await getData(apiUrl.comidas);
-        const data = response["hydra:member"];
-        const options = data.map((comida) => ({
-          value: comida.id,
-          label: comida.nombre,
-        }));
-        setComidas(options);
+        const response = await fetch(apiUrl.comidas);
+        const data = await response.json();
+        if (data && data["hydra:member"]) {
+          const options = data["hydra:member"].map((comida) => ({
+            value: comida.id,
+            label: comida.nombre,
+          }));
+          setComidas(options);
+        }
       } catch (error) {
         console.error("Error al obtener los datos:", error);
       }

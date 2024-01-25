@@ -1,10 +1,13 @@
-export const getData = async (url, busquedaNombreVino = '', selectedOption = '') => {
-  const params = new URLSearchParams();
+export const getData = async (url, busquedaNombreVino = '', selectedOption = null) => {
+  if (busquedaNombreVino === '' && selectedOption === '') {
+    return;
+  }
+  let params = new URLSearchParams();
 
   if (busquedaNombreVino !== '') {
     params.append('nombre', busquedaNombreVino);
-  } else {
-    params.append('comida', selectedOption.label);
+  } else if (selectedOption !== null) {
+    params.append('comida.nombre', selectedOption.label);
   }
 
   const urlConParametros = `${url}?${params.toString()}`;
@@ -14,3 +17,4 @@ export const getData = async (url, busquedaNombreVino = '', selectedOption = '')
   const data = await response.json();
   return data;
 }
+

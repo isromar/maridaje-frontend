@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { apiUrl } from "../../data/Url";
-import { getData } from "../../utility/getData";
 
 const BuscadorVinos = ({ setSelectedOption, setBusquedaNombreVino, busquedaNombreVino, setPlaceholder, placeholder }) => {
   //const [busqueda, setBusqueda] = useState("");
@@ -10,6 +8,7 @@ const BuscadorVinos = ({ setSelectedOption, setBusquedaNombreVino, busquedaNombr
     const nuevaBusqueda = event.target.value;
     // Realizar aquí la lógica para obtener las opciones coincidentes
     setBusquedaNombreVino(nuevaBusqueda);
+    console.log(nuevaBusqueda)
     setSelectedOption(null); // Restablecer el valor del Select
   };
 
@@ -35,7 +34,6 @@ const BuscadorVinos = ({ setSelectedOption, setBusquedaNombreVino, busquedaNombr
         onFocus={handleFocus}
         onBlur={handleBlur}
       />
-      {/* Aquí deberías mostrar la tabla con las opciones coincidentes */}
     </div>
   );
 };
