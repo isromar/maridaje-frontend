@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { getData } from "../../utility/getData";
-import { apiUrl } from "../../data/Url";
+import { getData } from "../../../../utility/getData";
+import { apiUrl } from "../../../../data/Url";
 import { Eye, Trash2, Edit } from "react-feather";
-import { mostrarMensajeConfirmacion, mostrarMensaje } from "../../utility/utils";
+import { mostrarMensajeConfirmacion, mostrarMensaje } from "../../../../utility/utils";
+import { Link } from 'react-router-dom';
 
 /* Este componente muestra una tabla de vinos y permite ordenar los vinos por nombre y tipo. */
 const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
@@ -64,10 +65,10 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
           .then(response => {
             if (response.ok) {
               // Lógica para manejar la eliminación exitosa
-              mostrarMensaje('¡Borrado!', 'El registro ha sido eliminado.', 'success');
+              mostrarMensaje('¡Borrado!', 'El registro ha sido eliminado', 'success');
               fetchData(); // Llama a fetchData para actualizar la lista de vinos
             } else {
-              mostrarMensaje('¡Error!', 'El registro no se ha podido eliminar', 'warning');
+              mostrarMensaje('¡Error!', 'El registro no se ha podido eliminar', 'error');
             }
           })
           .catch(error => {
@@ -102,16 +103,18 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
                 <td>
                   {vino.comida
                     .sort((a, b) => a.nombre.localeCompare(b.nombre)) // Ordenar por el nombre de la comida
-                    .map((comida, index) => (
-                      <span key={comida["@id"]}>
-                        {comida.nombre}
+                    .map((itemComida, index) => (
+                      <span key={itemComida["@id"]}>
+                        {itemComida.nombre}
                         {index < vino.comida.length - 1 && ", "}{" "}
                         {/* Esto es para poner comas entre los valores, menos al último*/}
                       </span>
                     ))}
                 </td>
                 <td>
-                  <Eye size={20} className="cursor-pointer" />
+                  <Link to={`/details/${vino["@id"].split("/").pop()}`} id={`detalles-ver-${vino["@id"]}`}>
+                    <Eye size={20} className="cursor-pointer" />
+                  </Link>
                   <Edit size={20} className="cursor-pointer" />
                   <Trash2 size={20} className="cursor-pointer" onClick={() => handleDelete(vino["@id"])} />
                 </td>

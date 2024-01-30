@@ -52,3 +52,31 @@ thead, th {
   position: sticky;
   top: 0;
 }
+
+input.disabled, .form-control.disabled {
+  background-color: #ccc; /* Cambia el color de fondo del input deshabilitado */
+  border: 1px solid #ccc; /* Cambia el borde del input deshabilitado */
+  /* Agrega cualquier otro estilo que desees */
+}
+
+.form-group.details  {
+  display: inline-flex;
+  align-items: center;
+  line-height: 3em;
+}
+
+.form-group label {
+  margin-right: 10px; /* Ajusta el margen entre la etiqueta y el input según sea necesario */
+  width: 400px; /* Establece el ancho deseado para la etiqueta */
+  display: inline-block;
+  text-align: right; /* Alinea el texto a la derecha dentro de la etiqueta */
+}
+
+.form-group input {
+  display: inline-block;
+}
+
+span.form-control {
+  min-width: 80px;
+  min-height: 40px;
+}

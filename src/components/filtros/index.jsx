@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import ComidaSelect from "../select/ComidaSelect";
 import BuscadorVinos from "../buscador/BuscadorVinos";
-import TablaVinos from "../tabla";
+import TablaVinos from "../views/vino/list";
 
 const ComponenteSuperior = () => {
   const [selectedOption, setSelectedOption] = useState("");
