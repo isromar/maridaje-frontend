@@ -54,9 +54,6 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
 
   const handleDelete = (urlVinoId) => {
     const vinoId = urlVinoId.split("/").pop();  // Obtiene la id del vino, ya que llega en urlVinoId como api/vinos/vinoId
-    console.log('vinoId')
-    console.log(apiUrl.vinos)
-    console.log(vinoId)
     mostrarMensajeConfirmacion('¿Quieres borrar este vino?', 'Esta acción no se puede deshacer', 'warning')
       .then((result) => {
         if (result.isConfirmed) {
