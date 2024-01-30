@@ -2,27 +2,28 @@ import React, { useState, useEffect } from "react";
 import { getData } from "../../utility/getData";
 import { apiUrl } from "../../data/Url";
 import { Eye, Trash2, Edit } from "react-feather";
+import { mostrarMensajeConfirmacion, mostrarMensaje } from "../../utility/utils";
 
 /* Este componente muestra una tabla de vinos y permite ordenar los vinos por nombre y tipo. */
 const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
   const [orden, setOrden] = useState("asc"); // Estado para controlar el orden
   const [vinosFiltrados, setVinosFiltrados] = useState([]); // Estado para almacenar los vinos filtrados
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await getData(
-          apiUrl.vinos,
-          busquedaNombreVino,
-          selectedOption
-        );
-        const data = response["hydra:member"];
-        setVinosFiltrados(data); // Inicializa los vinos filtrados con todos los vinos
-      } catch (error) {
-        console.error("Error al obtener los datos:", error);
-      }
-    };
+  const fetchData = async () => {
+    try {
+      const response = await getData(
+        apiUrl.vinos,
+        busquedaNombreVino,
+        selectedOption
+      );
+      const data = response["hydra:member"];
+      setVinosFiltrados(data); // Inicializa los vinos filtrados con todos los vinos
+    } catch (error) {
+      console.error("Error al obtener los datos:", error);
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, [busquedaNombreVino, selectedOption]);
 
@@ -49,6 +50,34 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
       });
     }
   setVinosFiltrados(sortedVinos); // Actualiza el estado con los vinos ordenados
+  };
+
+  const handleDelete = (urlVinoId) => {
+    const vinoId = urlVinoId.split("/").pop();  // Obtiene la id del vino, ya que llega en urlVinoId como api/vinos/vinoId
+    console.log('vinoId')
+    console.log(apiUrl.vinos)
+    console.log(vinoId)
+    mostrarMensajeConfirmacion('¿Quieres borrar este vino?', 'Esta acción no se puede deshacer', 'warning')
+      .then((result) => {
+        if (result.isConfirmed) {
+          // Lógica para eliminar el registro de la base de datos
+          fetch(`${apiUrl.vinos}/${vinoId}`, {
+            method: 'DELETE',
+          })
+          .then(response => {
+            if (response.ok) {
+              // Lógica para manejar la eliminación exitosa
+              mostrarMensaje('¡Borrado!', 'El registro ha sido eliminado.', 'success');
+              fetchData(); // Llama a fetchData para actualizar la lista de vinos
+            } else {
+              mostrarMensaje('¡Error!', 'El registro no se ha podido eliminar', 'warning');
+            }
+          })
+          .catch(error => {
+            // Lógica para manejar errores de red u otros errores
+          });
+        }
+      });
   };
 
   return (
@@ -87,7 +116,7 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
                 <td>
                   <Eye size={20} className="cursor-pointer" />
                   <Edit size={20} className="cursor-pointer" />
-                  <Trash2 size={20} className="cursor-pointer" />
+                  <Trash2 size={20} className="cursor-pointer" onClick={() => handleDelete(vino["@id"])} />
                 </td>
               </tr>
             ))}
