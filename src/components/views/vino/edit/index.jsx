@@ -29,12 +29,12 @@ function EditarVino() {
   };
 
   return (
-    <form className="details">
-      <section className="vino-details">
+    <form className="view">
+      <section className="vino-view">
         <h2 className="centrar">
           <span>Vino - {vino.nombre} </span>
         </h2>
-        <table className="tabla-details">
+        <table className="tabla-view">
           <tr>
             <td>Tipo de Vino:</td>
             <td>
@@ -87,7 +87,9 @@ function EditarVino() {
             <td>Marida con:</td>
             <td className>
               <span className>
-                {vino.comida.map((itemComida, index) => {
+                {vino.comida
+                .sort((a, b) => a.nombre.localeCompare(b.nombre)) // Ordenar alfabéticamente
+                .map((itemComida, index) => {
                   return (
                     <span key={itemComida["@id"]}>
                       {itemComida.nombre}
@@ -98,14 +100,33 @@ function EditarVino() {
               </span>
             </td>
           </tr>
+
+          <tr>
+            <td>Variedad de uva:</td>
+            <td className="disabled">
+              <span className="disabled">
+                {vino.variedad_uva
+                .sort((a, b) => a.nombre.localeCompare(b.nombre)) // Ordenar alfabéticamente
+                .map((itemVariedadUva, index) => {
+                  return (
+                    <span key={itemVariedadUva["@id"]}>
+                      {itemVariedadUva.nombre}
+                      {index < vino.variedad_uva.length - 1 && ", "}
+                    </span>
+                  );
+                })}
+              </span>
+            </td>
+          </tr>
+
         </table>
       </section>
 
-      <section className="bodega-details">
+      <section className="bodega-view">
         <h4 className="centrar">
           <span>Bodega - {vino.bodega.nombre} </span>
         </h4>
-        <table className="tabla-details">
+        <table className="tabla-view">
           <tr>
             <td>Dirección:</td>
             <td>

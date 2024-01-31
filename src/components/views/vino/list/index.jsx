@@ -112,7 +112,7 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
                     ))}
                 </td>
                 <td>
-                  <Link to={`/details/${vino["@id"].split("/").pop()}`}>
+                  <Link to={`/view/${vino["@id"].split("/").pop()}`}>
                     <Eye size={20} className="cursor-pointer" />
                   </Link>
                   <Link to={`/edit/${vino["@id"].split("/").pop()}`}>

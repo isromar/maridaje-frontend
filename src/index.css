@@ -53,43 +53,43 @@ table {
   top: 0;
 }
 
-.tabla-details {
+.tabla-view {
   margin: 0 auto; /* Esto centra horizontalmente la tabla */
 }
 
-.tabla-details td.disabled {
+.tabla-view td.disabled {
   background-color: #e9ecef; /* Cambia el color de fondo del input deshabilitado */
   border-radius: 5px;
 }
 
-.tabla-details tr>td:first-child {
+.tabla-view tr>td:first-child {
   text-align: right;
   padding-right: 10px;
 }
 
-.tabla-details span.disabled{
+.tabla-view span.disabled{
   margin-left: 0.8em;
 }
 
-.tabla-details td {
+.tabla-view td {
   padding: 10px 0;
 }
 
-.tabla-details input {
+.tabla-view input {
   min-width: 500px;
 }
 
-.details h2  {
+.view h2  {
   background-color: #4c1f27;
   color: white;
 }
 
-.details h4  {
+.view h4  {
   margin-top: 2%;
   background-color: #4c1f27;
   color: white;
 }
 
-.details {
+.view {
   background-color: antiquewhite;
 }
