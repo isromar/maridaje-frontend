@@ -24,7 +24,7 @@ const TablaCheck = () => {
     const fetchData = async () => {
       try {
         // Realiza la consulta a la base de datos para obtener los tipos de vino
-        const response = await getData(apiUrl.variedadUvas);
+        const response = await getData(apiUrl.variedadesUva);
         const data = response["hydra:member"];
         // Establece el estado con el array creado
         setVariedadesUva(opciones);

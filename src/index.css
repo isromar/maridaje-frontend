@@ -73,6 +73,8 @@ table {
 
 .tabla-view td {
   padding: 10px 0;
+  font-weight: 500;
+  font-size: large;
 }
 
 .tabla-view input {

@@ -16,6 +16,9 @@ function EditarVino() {
     { value: "si", label: "sí" },
     { value: "no", label: "no" },
   ];
+  const [variedadesUva, setVariedadesUva] = useState([]);
+  const [variedadUvaSelected, setVariedadUvaSelected] =
+    useState([]);
 
   const fetchTiposDeVino = async () => {
     try {
@@ -53,6 +56,24 @@ function EditarVino() {
     }
   };
 
+  const fetchVariedadesUva = async () => {
+    try {
+      const response = await fetch(apiUrl.variedadesUva);
+      const data = await response.json();
+      if (data && data["hydra:member"]) {
+        const options = data["hydra:member"]
+          .map((variedad) => ({
+            value: variedad.id,
+            label: variedad.nombre,
+          }))
+          .sort((a, b) => a.label.localeCompare(b.label));
+        setVariedadesUva(options);
+      }
+    } catch (error) {
+      console.error("Error al obtener los datos:", error);
+    }
+  };
+
   useEffect(() => {
     // Aquí deberías hacer una solicitud a tu API o base de datos para obtener los datos del vino por su ID
     // Por ejemplo, con fetch o axios
@@ -66,6 +87,7 @@ function EditarVino() {
   useEffect(() => {
     fetchTiposDeVino();
     fetchDenominacionOrigen();
+    fetchVariedadesUva();
   }, []);
 
   if (!vino) {
@@ -173,19 +195,22 @@ function EditarVino() {
 
           <tr>
             <td>Variedad de uva:</td>
-            <td className="disabled">
-              <span className="disabled">
-                {vino.variedad_uva
-                  .sort((a, b) => a.nombre.localeCompare(b.nombre)) // Ordenar alfabéticamente
-                  .map((itemVariedadUva, index) => {
-                    return (
-                      <span key={itemVariedadUva["@id"]}>
-                        {itemVariedadUva.nombre}
-                        {index < vino.variedad_uva.length - 1 && ", "}
-                      </span>
-                    );
-                  })}
-              </span>
+            <td>
+            <Select
+                isMulti
+                value={vino.variedad_uva.map(uva => ({ value: uva.id, label: uva.nombre }))}
+                onChange={(selectedOptions) =>
+                  setVariedadUvaSelected(selectedOptions)
+                }
+                options={variedadesUva}
+                placeholder={[
+                  {
+                    value: vino.variedad_uva[0]["@id"].split("/").pop(),
+                    label: vino.variedad_uva[0].nombre
+                  }
+                ]}
+
+              />
             </td>
           </tr>
         </table>
