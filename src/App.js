@@ -1,8 +1,9 @@
 import logo from './logo.svg';
 import './App.css';
 import ComponenteSuperior from './components/filtros';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import DetallesVino from './components/views/vino/details';
+import EditarVino from './components/views/vino/edit';
 
 function App() {
   return (
@@ -27,7 +28,8 @@ function App() {
             </header>
           </div>
         } />
-        <Route path="/details/:id" element={<DetallesVino />} />
+        <Route path="/details/:vinoId" element={<DetallesVino />} />
+        <Route path="/edit/:vinoId" element={<EditarVino />} />
       </Routes>
     </Router>
   );

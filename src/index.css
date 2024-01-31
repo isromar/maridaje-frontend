@@ -21,14 +21,6 @@ code {
    color:black;
   }
 
-table {
-  border-collapse: collapse; /* Elimina el espaciado entre las celdas */
-}
-
-td {
-  padding: 5px; /* Reduce el relleno de las celdas, ajusta el valor según sea necesario */
-}
-
 .cursor-pointer {
   cursor: pointer; /* Cambia el cursor a una mano al pasar el mouse sobre el elemento */
 }
@@ -48,35 +40,56 @@ td {
   text-align: center;
 }
 
-thead, th {
+table {
+  border-collapse: collapse; /* Elimina el espaciado entre las celdas */
+}
+
+.tabla-vinos td {
+  padding: 5px; /* Reduce el relleno de las celdas, ajusta el valor según sea necesario */
+}
+
+.tabla-vinos thead, th {
   position: sticky;
   top: 0;
 }
 
-input.disabled, .form-control.disabled {
-  background-color: #ccc; /* Cambia el color de fondo del input deshabilitado */
-  border: 1px solid #ccc; /* Cambia el borde del input deshabilitado */
-  /* Agrega cualquier otro estilo que desees */
+.tabla-details {
+  margin: 0 auto; /* Esto centra horizontalmente la tabla */
 }
 
-.form-group.details  {
-  display: inline-flex;
-  align-items: center;
-  line-height: 3em;
+.tabla-details td.disabled {
+  background-color: #e9ecef; /* Cambia el color de fondo del input deshabilitado */
+  border-radius: 5px;
 }
 
-.form-group label {
-  margin-right: 10px; /* Ajusta el margen entre la etiqueta y el input según sea necesario */
-  width: 400px; /* Establece el ancho deseado para la etiqueta */
-  display: inline-block;
-  text-align: right; /* Alinea el texto a la derecha dentro de la etiqueta */
+.tabla-details tr>td:first-child {
+  text-align: right;
+  padding-right: 10px;
 }
 
-.form-group input {
-  display: inline-block;
+.tabla-details span.disabled{
+  margin-left: 0.8em;
 }
 
-span.form-control {
-  min-width: 80px;
-  min-height: 40px;
+.tabla-details td {
+  padding: 10px 0;
+}
+
+.tabla-details input {
+  min-width: 500px;
+}
+
+.details h2  {
+  background-color: #4c1f27;
+  color: white;
+}
+
+.details h4  {
+  margin-top: 2%;
+  background-color: #4c1f27;
+  color: white;
+}
+
+.details {
+  background-color: antiquewhite;
 }

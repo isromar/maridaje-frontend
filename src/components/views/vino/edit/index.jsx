@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"; // Importa useState y useEff
 import { apiUrl } from "../../../../data/Url";
 import { useParams } from 'react-router-dom';
 
-function DetallesVino() {
+function EditarVino() {
   let { vinoId } = useParams();
   const [vino, setVino] = useState(null);
 
@@ -20,8 +20,16 @@ function DetallesVino() {
     return <div>Cargando...</div>;
   }
 
+  const handleInputChange = (event, key) => {
+    const value = event.target.value;
+    setVino((prevVino) => ({
+      ...prevVino,
+      [key]: value,
+    }));
+  };
+
   return (
-    <div className="details">
+    <form className="details">
       <section className="vino-details">
         <h2 className="centrar">
           <span>Vino - {vino.nombre} </span>
@@ -32,9 +40,9 @@ function DetallesVino() {
             <td>
               <input
                 type="text"
-                className="form-control disabled"
+                className="form-control "
                 value={vino.tipoVino.nombre}
-                disabled="disabled"
+                onChange={(event) => handleInputChange(event, 'tipoVino')}
               />
             </td>
           </tr>
@@ -44,9 +52,9 @@ function DetallesVino() {
             <td>
               <input
                 type="text"
-                className="form-control disabled"
+                className="form-control "
                 value={vino.maduracion}
-                disabled="disabled"
+                
               />
             </td>
           </tr>
@@ -56,9 +64,9 @@ function DetallesVino() {
             <td>
               <input
                 type="text"
-                className="form-control disabled"
+                className="form-control "
                 value={vino.denominacionOrigen.nombre}
-                disabled="disabled"
+                
               />
             </td>
           </tr>
@@ -68,17 +76,17 @@ function DetallesVino() {
             <td>
               <input
                 type="text"
-                className="form-control disabled"
+                className="form-control "
                 value={vino.ecologico ? "Sí" : "No"}
-                disabled="disabled"
+                
               />
             </td>
           </tr>
 
           <tr>
             <td>Marida con:</td>
-            <td className="disabled">
-              <span className="disabled">
+            <td className>
+              <span className>
                 {vino.comida.map((itemComida, index) => {
                   return (
                     <span key={itemComida["@id"]}>
@@ -103,9 +111,9 @@ function DetallesVino() {
             <td>
               <input
                 type="text"
-                className="form-control disabled"
+                className="form-control "
                 value={vino.bodega.direccion}
-                disabled="disabled"
+                
               />
             </td>
           </tr>
@@ -115,9 +123,9 @@ function DetallesVino() {
             <td>
               <input
                 type="text"
-                className="form-control disabled"
+                className="form-control "
                 value={vino.bodega.telefono}
-                disabled="disabled"
+                
               />
             </td>
           </tr>
@@ -127,9 +135,9 @@ function DetallesVino() {
             <td>
               <input
                 type="text"
-                className="form-control disabled"
+                className="form-control "
                 value={vino.bodega.cif}
-                disabled="disabled"
+                
               />
             </td>
           </tr>
@@ -139,16 +147,16 @@ function DetallesVino() {
             <td>
               <input
                 type="text"
-                className="form-control disabled"
+                className="form-control "
                 value={vino.bodega.cif}
-                disabled="disabled"
+                
               />
             </td>
           </tr>
         </table>
       </section>
-    </div>
+    </form>
   );
 };
 
-export default DetallesVino;
+export default EditarVino;
