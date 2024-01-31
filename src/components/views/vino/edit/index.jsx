@@ -1,10 +1,57 @@
 import React, { useState, useEffect } from "react"; // Importa useState y useEffect
 import { apiUrl } from "../../../../data/Url";
-import { useParams } from 'react-router-dom';
+import { useParams } from "react-router-dom";
+import Select from "react-select";
 
 function EditarVino() {
   let { vinoId } = useParams();
   const [vino, setVino] = useState(null);
+  const [tiposDeVino, setTiposDeVino] = useState([]);
+  const [tipoVinoSelected, setTipoVinoSelected] = useState("");
+  const [denominacionOrigen, setDenominacionOrigen] = useState([]);
+  const [denominacionOrigenSelected, setDenominacionOrigenSelected] =
+    useState("");
+  const [vinoEcologicoSelected, setVinoEcologicoSelected] = useState("");
+  const opcionesVinoEcologico = [
+    { value: "si", label: "sí" },
+    { value: "no", label: "no" },
+  ];
+
+  const fetchTiposDeVino = async () => {
+    try {
+      const response = await fetch(apiUrl.tiposDeVino);
+      const data = await response.json();
+      if (data && data["hydra:member"]) {
+        const options = data["hydra:member"]
+          .map((tipo) => ({
+            value: tipo.id,
+            label: tipo.nombre,
+          }))
+          .sort((a, b) => a.label.localeCompare(b.label));
+        setTiposDeVino(options);
+      }
+    } catch (error) {
+      console.error("Error al obtener los datos:", error);
+    }
+  };
+
+  const fetchDenominacionOrigen = async () => {
+    try {
+      const response = await fetch(apiUrl.denominacionDeOrigen);
+      const data = await response.json();
+      if (data && data["hydra:member"]) {
+        const options = data["hydra:member"]
+          .map((denominacion) => ({
+            value: denominacion.id,
+            label: denominacion.nombre,
+          }))
+          .sort((a, b) => a.label.localeCompare(b.label));
+        setDenominacionOrigen(options);
+      }
+    } catch (error) {
+      console.error("Error al obtener los datos:", error);
+    }
+  };
 
   useEffect(() => {
     // Aquí deberías hacer una solicitud a tu API o base de datos para obtener los datos del vino por su ID
@@ -16,9 +63,24 @@ function EditarVino() {
     }
   }, []);
 
+  useEffect(() => {
+    fetchTiposDeVino();
+    fetchDenominacionOrigen();
+  }, []);
+
   if (!vino) {
     return <div>Cargando...</div>;
   }
+
+  const handleChange = (selectedOption, stateName) => {
+    if (stateName === "tipoVinoSelected") {
+      setTipoVinoSelected(selectedOption);
+    } else if (stateName === "denominacionOrigenSelected") {
+      setDenominacionOrigenSelected(selectedOption);
+    } else if (stateName === "vinoEcologicoSelected") {
+      setVinoEcologicoSelected(selectedOption);
+    }
+  };
 
   const handleInputChange = (event, key) => {
     const value = event.target.value;
@@ -38,11 +100,13 @@ function EditarVino() {
           <tr>
             <td>Tipo de Vino:</td>
             <td>
-              <input
-                type="text"
-                className="form-control "
-                value={vino.tipoVino.nombre}
-                onChange={(event) => handleInputChange(event, 'tipoVino')}
+              <Select
+                value={tipoVinoSelected}
+                onChange={(tipoVinoSelected) =>
+                  handleChange(tipoVinoSelected, "tipoVinoSelected")
+                }
+                options={tiposDeVino}
+                placeholder={vino.tipoVino.nombre}
               />
             </td>
           </tr>
@@ -54,7 +118,6 @@ function EditarVino() {
                 type="text"
                 className="form-control "
                 value={vino.maduracion}
-                
               />
             </td>
           </tr>
@@ -62,11 +125,16 @@ function EditarVino() {
           <tr>
             <td>Denominación de origen:</td>
             <td>
-              <input
-                type="text"
-                className="form-control "
-                value={vino.denominacionOrigen.nombre}
-                
+              <Select
+                value={denominacionOrigenSelected}
+                onChange={(denominacionOrigenSelected) =>
+                  handleChange(
+                    denominacionOrigenSelected,
+                    "denominacionOrigenSelected"
+                  )
+                }
+                options={denominacionOrigen}
+                placeholder={vino.denominacionOrigen.nombre}
               />
             </td>
           </tr>
@@ -74,11 +142,13 @@ function EditarVino() {
           <tr>
             <td>Ecológico:</td>
             <td>
-              <input
-                type="text"
-                className="form-control "
-                value={vino.ecologico ? "Sí" : "No"}
-                
+              <Select
+                value={vinoEcologicoSelected}
+                onChange={(vinoEcologicoSelected) =>
+                  handleChange(vinoEcologicoSelected, "vinoEcologicoSelected")
+                }
+                options={opcionesVinoEcologico}
+                placeholder={vino.ecologico}
               />
             </td>
           </tr>
@@ -88,15 +158,15 @@ function EditarVino() {
             <td className>
               <span className>
                 {vino.comida
-                .sort((a, b) => a.nombre.localeCompare(b.nombre)) // Ordenar alfabéticamente
-                .map((itemComida, index) => {
-                  return (
-                    <span key={itemComida["@id"]}>
-                      {itemComida.nombre}
-                      {index < vino.comida.length - 1 && ", "}
-                    </span>
-                  );
-                })}
+                  .sort((a, b) => a.nombre.localeCompare(b.nombre)) // Ordenar alfabéticamente
+                  .map((itemComida, index) => {
+                    return (
+                      <span key={itemComida["@id"]}>
+                        {itemComida.nombre}
+                        {index < vino.comida.length - 1 && ", "}
+                      </span>
+                    );
+                  })}
               </span>
             </td>
           </tr>
@@ -106,19 +176,18 @@ function EditarVino() {
             <td className="disabled">
               <span className="disabled">
                 {vino.variedad_uva
-                .sort((a, b) => a.nombre.localeCompare(b.nombre)) // Ordenar alfabéticamente
-                .map((itemVariedadUva, index) => {
-                  return (
-                    <span key={itemVariedadUva["@id"]}>
-                      {itemVariedadUva.nombre}
-                      {index < vino.variedad_uva.length - 1 && ", "}
-                    </span>
-                  );
-                })}
+                  .sort((a, b) => a.nombre.localeCompare(b.nombre)) // Ordenar alfabéticamente
+                  .map((itemVariedadUva, index) => {
+                    return (
+                      <span key={itemVariedadUva["@id"]}>
+                        {itemVariedadUva.nombre}
+                        {index < vino.variedad_uva.length - 1 && ", "}
+                      </span>
+                    );
+                  })}
               </span>
             </td>
           </tr>
-
         </table>
       </section>
 
@@ -134,7 +203,6 @@ function EditarVino() {
                 type="text"
                 className="form-control "
                 value={vino.bodega.direccion}
-                
               />
             </td>
           </tr>
@@ -146,7 +214,6 @@ function EditarVino() {
                 type="text"
                 className="form-control "
                 value={vino.bodega.telefono}
-                
               />
             </td>
           </tr>
@@ -158,7 +225,6 @@ function EditarVino() {
                 type="text"
                 className="form-control "
                 value={vino.bodega.cif}
-                
               />
             </td>
           </tr>
@@ -170,7 +236,6 @@ function EditarVino() {
                 type="text"
                 className="form-control "
                 value={vino.bodega.cif}
-                
               />
             </td>
           </tr>
@@ -178,6 +243,6 @@ function EditarVino() {
       </section>
     </form>
   );
-};
+}
 
 export default EditarVino;
