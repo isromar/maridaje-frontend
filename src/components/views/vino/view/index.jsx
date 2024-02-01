@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react"; // Importa useState y useEffect
 import { apiUrl } from "../../../../data/Url";
 import { useParams } from 'react-router-dom';
+import { mostrarMensaje } from "../../../../utility/utils";
+import Swal from "sweetalert2";
 
 function DetallesVino() {
   let { vinoId } = useParams();
   const [vino, setVino] = useState(null);
 
   useEffect(() => {
+    mostrarMensaje('Cargando datos...', 'Espere mientras se cargan los datos', 'info');
     // Aquí deberías hacer una solicitud a tu API o base de datos para obtener los datos del vino por su ID
     // Por ejemplo, con fetch o axios
     if (vinoId) {
@@ -14,7 +17,10 @@ function DetallesVino() {
         .then((response) => response.json())
         .then((data) => setVino(data));
     }
-  }, []);
+    setTimeout(() => {
+      Swal.close(); // Cierra el mensaje después de un segundo
+    }, 1000);
+  }, [vinoId]);
 
   if (!vino) {
     return <div>Cargando...</div>;

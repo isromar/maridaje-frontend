@@ -59,8 +59,8 @@ function EditarVino() {
   };
 
   const fetchVariedadesUva = async () => {
-    mostrarMensaje('Cargando datos...', 'Espere mientras se cargan los datos', 'info');
     try {
+      mostrarMensaje('Cargando datos...', 'Espere mientras se cargan los datos', 'info');
       const response = await fetch(apiUrl.variedadesUva);
       const data = await response.json();
       if (data && data["hydra:member"]) {
@@ -71,11 +71,11 @@ function EditarVino() {
           }))
           .sort((a, b) => a.label.localeCompare(b.label));
         setVariedadesUva(options);
+        Swal.close(); // Cierra el mensaje una vez que se han cargado los datos
       }
     } catch (error) {
       console.error("Error al obtener los datos:", error);
     }
-    Swal.close(); // Cierra el mensaje una vez que se han cargado los datos
   };
 
   useEffect(() => {
