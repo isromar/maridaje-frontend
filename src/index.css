@@ -81,12 +81,18 @@ table {
 .view h2  {
   background-color: #4c1f27;
   color: white;
+  padding-top: 10px;
 }
 
 .view h4  {
   background-color: #4c1f27;
   color: white;
-  height: 40px;
+  height: 60px;
+  padding-top: 20px;
+}
+
+section h2, section h4 {
+  margin-bottom: 50px;
 }
 
 .vino-view {
