@@ -177,8 +177,8 @@ function EditarVino() {
 
           <tr>
             <td>Marida con:</td>
-            <td className>
-              <span className>
+            <td>
+              <span>
                 {vino.comida
                   .sort((a, b) => a.nombre.localeCompare(b.nombre)) // Ordenar alfabéticamente
                   .map((itemComida, index) => {

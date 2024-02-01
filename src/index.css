@@ -57,9 +57,10 @@ table {
   margin: 0 auto; /* Esto centra horizontalmente la tabla */
 }
 
-.tabla-view td.disabled {
+.tabla-view span.disabled {
   background-color: #e9ecef; /* Cambia el color de fondo del input deshabilitado */
   border-radius: 5px;
+  margin: 10;
 }
 
 .tabla-view tr>td:first-child {
@@ -67,14 +68,14 @@ table {
   padding-right: 10px;
 }
 
-.tabla-view span.disabled{
-  margin-left: 0.8em;
-}
-
 .tabla-view td {
   padding: 10px 0;
   font-weight: 500;
   font-size: large;
+}
+
+.tabla-view td.disabled {
+  margin-top: 500px;
 }
 
 .tabla-view input {
@@ -87,11 +88,12 @@ table {
 }
 
 .view h4  {
-  margin-top: 2%;
   background-color: #4c1f27;
   color: white;
+  height: 40px;
 }
 
-.view {
-  background-color: antiquewhite;
+.vino-view {
+  width: 50%;
+  float: left; /* Para alinear las tablas una al lado de la otra */
 }

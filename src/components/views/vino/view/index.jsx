@@ -77,8 +77,8 @@ function DetallesVino() {
 
           <tr>
             <td>Marida con:</td>
-            <td className="disabled">
-              <span className="disabled">
+            <td>
+              <span className="form-control disabled">
                 {vino.comida
                 .sort((a, b) => a.nombre.localeCompare(b.nombre)) // Ordenar alfabéticamente
                 .map((itemComida, index) => {
@@ -95,8 +95,8 @@ function DetallesVino() {
 
           <tr>
             <td>Variedad de uva:</td>
-            <td className="disabled">
-              <span className="disabled">
+            <td>
+              <span className="form-control disabled">
                 {vino.variedad_uva
                 .sort((a, b) => a.nombre.localeCompare(b.nombre)) // Ordenar alfabéticamente
                 .map((itemVariedadUva, index) => {
