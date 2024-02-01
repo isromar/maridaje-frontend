@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+import logo from './icono_vino_byn.png';
 import './App.css';
 import ComponenteSuperior from './components/filtros';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';

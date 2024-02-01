@@ -28,7 +28,7 @@ function DetallesVino() {
         </h2>
         <table className="tabla-view">
           <tr>
-            <td>Tipo de Vino:</td>
+            <td>Tipo de vino:</td>
             <td>
               <input
                 type="text"
