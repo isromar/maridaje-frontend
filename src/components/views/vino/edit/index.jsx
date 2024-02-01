@@ -2,13 +2,15 @@ import React, { useState, useEffect } from "react"; // Importa useState y useEff
 import { apiUrl } from "../../../../data/Url";
 import { useParams } from "react-router-dom";
 import Select from "react-select";
+import { mostrarMensaje } from "../../../../utility/utils";
+import Swal from "sweetalert2";
 
 function EditarVino() {
   let { vinoId } = useParams();
   const [vino, setVino] = useState(null);
   const [tiposDeVino, setTiposDeVino] = useState([]);
   const [tipoVinoSelected, setTipoVinoSelected] = useState("");
-  const [denominacionOrigen, setDenominacionOrigen] = useState([]);
+  const [denominacionOrigenOptions, setDenominacionOrigenOptions] = useState([]);
   const [denominacionOrigenSelected, setDenominacionOrigenSelected] =
     useState("");
   const [vinoEcologicoSelected, setVinoEcologicoSelected] = useState("");
@@ -49,7 +51,7 @@ function EditarVino() {
             label: denominacion.nombre,
           }))
           .sort((a, b) => a.label.localeCompare(b.label));
-        setDenominacionOrigen(options);
+          setDenominacionOrigenOptions(options);
       }
     } catch (error) {
       console.error("Error al obtener los datos:", error);
@@ -57,6 +59,7 @@ function EditarVino() {
   };
 
   const fetchVariedadesUva = async () => {
+    mostrarMensaje('Cargando datos...', 'Espere mientras se cargan los datos', 'info');
     try {
       const response = await fetch(apiUrl.variedadesUva);
       const data = await response.json();
@@ -72,6 +75,7 @@ function EditarVino() {
     } catch (error) {
       console.error("Error al obtener los datos:", error);
     }
+    Swal.close(); // Cierra el mensaje una vez que se han cargado los datos
   };
 
   useEffect(() => {
@@ -85,9 +89,13 @@ function EditarVino() {
   }, []);
 
   useEffect(() => {
+
+
     fetchTiposDeVino();
     fetchDenominacionOrigen();
     fetchVariedadesUva();
+
+
   }, []);
 
   if (!vino) {
@@ -148,15 +156,15 @@ function EditarVino() {
             <td>Denominación de origen:</td>
             <td>
               <Select
-                value={denominacionOrigenSelected}
+                value={denominacionOrigenSelected || ""}
                 onChange={(denominacionOrigenSelected) =>
                   handleChange(
                     denominacionOrigenSelected,
                     "denominacionOrigenSelected"
                   )
                 }
-                options={denominacionOrigen}
-                placeholder={vino.denominacionOrigen.nombre}
+                options={denominacionOrigenOptions}
+                placeholder={vino.denominacionOrigen.nombre || ""}
               />
             </td>
           </tr>
@@ -203,13 +211,15 @@ function EditarVino() {
                   setVariedadUvaSelected(selectedOptions)
                 }
                 options={variedadesUva}
-                placeholder={[
-                  {
-                    value: vino.variedad_uva[0]["@id"].split("/").pop(),
-                    label: vino.variedad_uva[0].nombre
-                  }
-                ]}
-
+                placeholder={vino.variedad_uva && vino.variedad_uva.length > 0
+                  ? [
+                      {
+                        value: vino.variedad_uva[0].id,
+                        label: vino.variedad_uva[0].nombre
+                      }
+                    ]
+                  : ""
+              }
               />
             </td>
           </tr>

@@ -78,6 +78,9 @@ table {
   min-width: 500px;
 }
 
+header h1{
+  margin-top: 20px;
+}
 .view h2  {
   background-color: #4c1f27;
   color: white;
