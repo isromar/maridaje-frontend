@@ -33,5 +33,5 @@ The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
 ## Image preview
-![Preview de la Web App](https://raw.githubusercontent.com/isromar/maridaje-frontend/main/preview.JPG)
+![Preview de la Web App](https://raw.githubusercontent.com/isromar/maridaje-frontend/c9fda2ff2d7337f210f8669b2f1c4b496ff63dd1/preview.JPG)
 
