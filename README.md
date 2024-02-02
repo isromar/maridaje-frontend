@@ -11,6 +11,7 @@ En el directorio del proyecto, puedes ejecutar:
 
 Ejecuta la aplicación en modo de desarrollo.
 Abre [http://localhost:3000](http://localhost:3000) para verla en tu navegador.
+
 La página se recargará automáticamente al realizar cambios.
 También verás cualquier error de sintaxis en la consola.
 
@@ -18,10 +19,6 @@ También verás cualquier error de sintaxis en la consola.
 ## Valencian Community Wine Pairing Project
 
 This project is an application for pairing wines from the Valencian Community. It was created using Create React App.
-
-### Getting Started with Create React App
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ### Available Scripts
 
