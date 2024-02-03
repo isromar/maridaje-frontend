@@ -117,5 +117,6 @@ section h2, section h4 {
 }
 
 .barra-navegacion form button {
-  padding: 0 5px 0 5px; /* Espacio entre los inputs */
+  padding: 0 10px 0 10px; /* Espacio entre los inputs */
+  margin-right: 5px;
 }
