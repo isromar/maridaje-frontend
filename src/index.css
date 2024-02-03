@@ -102,3 +102,20 @@ section h2, section h4 {
   width: 50%;
   float: left; /* Para alinear las tablas una al lado de la otra */
 }
+
+/* Estilos para la barra de navegación */
+.barra-navegacion {
+  display: flex;
+  justify-content: flex-end; /* Alinea los elementos a la derecha */
+  background-color: #4c1f27;
+  height: 60px;
+  padding-top: 10px;
+}
+
+.barra-navegacion form input {
+  margin: 5px; /* Espacio entre los inputs */
+}
+
+.barra-navegacion form button {
+  padding: 0 5px 0 5px; /* Espacio entre los inputs */
+}

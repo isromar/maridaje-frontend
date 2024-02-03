@@ -4,6 +4,7 @@ import ComponenteSuperior from './components/filtros';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import DetallesVino from './components/views/vino/view';
 import EditarVino from './components/views/vino/edit';
+import BarraNavegacion from './components/barra-navegacion';
 
 function App() {
   return (
@@ -13,7 +14,10 @@ function App() {
           <div className="App">
             <header className="App-header">
               <div>
-                <h1>Maridaje con vinos de la Comunidad Valenciana</h1>
+                <BarraNavegacion />
+              </div>
+              <div>
+                <h1>Maridaje con vinos de la Comunidad Valenciana </h1>
               </div>
               <br />
               <div>
