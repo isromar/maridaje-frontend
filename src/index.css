@@ -87,7 +87,15 @@ header h1{
   padding-top: 10px;
 }
 
-.view h4  {
+.perfil-bodega {
+  background-color: #4c1f27;
+  color: white;
+  height: 60px;
+  padding-top: 10px;
+  margin-bottom: 30px;
+}
+
+.view h4 {
   background-color: #4c1f27;
   color: white;
   height: 60px;
@@ -119,4 +127,17 @@ section h2, section h4 {
 .barra-navegacion form button {
   padding: 0 10px 0 10px; /* Espacio entre los inputs */
   margin-right: 5px;
+}
+
+/* Estilos para el enlace "Perfil bodega" */
+.barra-navegacion a {
+  color:white; /* Color del texto */
+  text-decoration: none; /* Quitar subrayado del enlace */
+  padding: 8 5px 0 5px; /* Añadir espaciado interno */
+  padding-top: 10px;
+}
+
+/* Estilos para el enlace "Perfil bodega" al pasar el ratón por encima */
+.barra-navegacion a:hover {
+  background-color:#ccc; /* Cambiar color de fondo al pasar el ratón por encima */
 }
