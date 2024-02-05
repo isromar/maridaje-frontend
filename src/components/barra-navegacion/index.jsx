@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { comprobarLogin } from "../../utility/getData";
 import { mostrarMensaje } from "../../utility/utils";
 import Swal from "sweetalert2";
@@ -6,7 +6,15 @@ import Swal from "sweetalert2";
 const BarraNavegacion = () => {
   const [usuario, setUsuario] = useState("");
   const [contrasena, setContrasena] = useState("");
+  const [acceso, setAcceso] = useState(false);
 
+  useEffect(() => {
+    const accesoLocalStorage = localStorage.getItem("acceso");
+    if (accesoLocalStorage) {
+      setAcceso(accesoLocalStorage === "true");
+    }
+  }, [acceso]);
+  
   const handleUsuarioChange = (event) => {
       setUsuario(event.target.value);
   };
@@ -26,6 +34,8 @@ const BarraNavegacion = () => {
             if (options[0].label === usuario) {
             mostrarMensaje("Acceso correcto", `Te damos la bienvenida ${options[0].name}`, "success");
             localStorage.setItem("usuario", usuario);
+            setAcceso(true)
+            localStorage.setItem("acceso", true);
             setTimeout(() => {
                 // Cerrar el mensaje después de 3 segundos
                 Swal.close();
@@ -37,6 +47,7 @@ const BarraNavegacion = () => {
             "La bodega no está registrada",
             "error"
             );
+            setAcceso(false)
             setTimeout(() => {
             // Cerrar el mensaje después de 3 segundos
             Swal.close();
@@ -47,6 +58,7 @@ const BarraNavegacion = () => {
 
   return (
     <div className="barra-navegacion">
+        {acceso && <a href="#">Perfil bodega</a>}
       <form onSubmit={handleFormSubmit}>
         <input
           type="text"
