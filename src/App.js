@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import DetallesVino from './components/views/vino/view';
 import EditarVino from './components/views/vino/edit';
 import BarraNavegacion from './components/barra-navegacion';
-import PerfilBodega from './components/views/bodega/list';
+import PerfilBodega from './components/views/bodega/view';
 
 function App() {
   return (

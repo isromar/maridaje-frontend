@@ -115,10 +115,6 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
                   <Link to={`/view/${vino["@id"].split("/").pop()}`}>
                     <Eye size={20} className="cursor-pointer" />
                   </Link>
-                  <Link to={`/edit/${vino["@id"].split("/").pop()}`}>
-                    <Edit size={20} className="cursor-pointer" />
-                  </Link>
-                  <Trash2 size={20} className="cursor-pointer" onClick={() => handleDelete(vino["@id"])} />
                 </td>
               </tr>
             ))}

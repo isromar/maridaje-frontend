@@ -1,7 +1,7 @@
 import { apiUrl } from "../data/Url";
 
 /* Obtiene los datos según la url que se pasa por parámetro e incluye las opciones en la búsqueda en la bbdd si las hay */
-export const getData = async (url, busquedaNombreVino = '', selectedOption = null) => {
+export const getData = async (url, busquedaNombreVino = '', selectedOption = null, bodegaId = null) => {
   if (busquedaNombreVino === '' && selectedOption === '') {
     return;
   }
@@ -13,7 +13,29 @@ export const getData = async (url, busquedaNombreVino = '', selectedOption = nul
     params.append('comida.nombre', selectedOption.label);
   }
 
+  if (bodegaId !== null) {
+    params.append('bodega.id', bodegaId);
+  }
+
   const urlConParametros = `${url}?${params.toString()}`;
+  const response = await fetch(urlConParametros); // Envía el parámetro con la url
+  const data = await response.json();
+  return data;
+}
+
+/* Obtiene los datos según la url que se pasa por parámetro e incluye las opciones en la búsqueda en la bbdd si las hay */
+export const getDataPerfilBodega = async (url, bodegaId = null) => {
+  let params = new URLSearchParams();
+
+  bodegaId = localStorage.getItem("bodegaId");
+  if (bodegaId !== null) {
+    params.append('bodega.id', bodegaId);
+  }
+
+  //F2345678E probar como CIF
+
+  const urlConParametros = `${url}?${params.toString()}`;
+  console.log(urlConParametros)
   const response = await fetch(urlConParametros); // Envía el parámetro con la url
   const data = await response.json();
   return data;
