@@ -14,6 +14,7 @@ const PerfilBodega = ({ nombre }) => {
             <span>Bodega - {nombre} </span>
           </h2>
         </section>
+        <button className="btn-nuevo-vino btn btn-light">Añadir nuevo vino</button>
         <TablaVinosBodega />
       </div>
     </div>

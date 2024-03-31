@@ -4,6 +4,7 @@ import { mostrarMensaje } from "../../utility/utils";
 import Swal from "sweetalert2";
 import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
+import BarraNavegacion from "../barra-navegacion";
 //import { useHistory } from "react-router-dom";
 
 const TopMenu = () => {

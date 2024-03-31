@@ -60,3 +60,8 @@
   border-color: #4c1f27; 
   background-color: #4c1f27;
 }
+
+.btn-nuevo-vino, .btn-editar-vino {
+  margin-bottom: 3%;
+  margin-left: 20%;
+}

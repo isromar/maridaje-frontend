@@ -54,3 +54,4 @@ export const comprobarLogin = async (usuario) => {
   const data = await response.json();
   return data;
 }
+
