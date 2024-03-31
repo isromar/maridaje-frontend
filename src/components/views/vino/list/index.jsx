@@ -4,6 +4,7 @@ import { apiUrl } from "../../../../data/Url";
 import { Eye, Trash2, Edit } from "react-feather";
 import { mostrarMensajeConfirmacion, mostrarMensaje } from "../../../../utility/utils";
 import { Link } from 'react-router-dom';
+import TopMenu from "../../../menu";
 
 /* Este componente muestra una tabla de vinos y permite ordenar los vinos por nombre y tipo. */
 const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
@@ -80,6 +81,9 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
 
   return (
     <div>
+      <div>
+        <TopMenu/>
+      </div>
       <div className="table-responsive">
         <table className="table table-striped tabla-vinos">
           <thead>

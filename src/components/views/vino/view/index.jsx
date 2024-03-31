@@ -3,6 +3,7 @@ import { apiUrl } from "../../../../data/Url";
 import { useParams } from 'react-router-dom';
 import { mostrarMensaje } from "../../../../utility/utils";
 import Swal from "sweetalert2";
+import TopMenu from "../../../menu";
 
 function DetallesVino() {
   let { vinoId } = useParams();
@@ -28,6 +29,9 @@ function DetallesVino() {
 
   return (
     <div className="view">
+      <div>
+        <TopMenu/>
+      </div>
       <section className="vino-view">
         <h2 className="centrar">
           <span>Vino - {vino.nombre} </span>
@@ -121,9 +125,9 @@ function DetallesVino() {
       </section>
 
       <section className="bodega-view">
-        <h4 className="centrar">
+        <h2 className="centrar">
           <span>Bodega - {vino.bodega.nombre} </span>
-        </h4>
+        </h2>
         <table className="tabla-view">
           <tr>
             <td>Dirección:</td>

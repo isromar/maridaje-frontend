@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { comprobarLogin } from "../../utility/getData";
 import { mostrarMensaje } from "../../utility/utils";
 import Swal from "sweetalert2";
+import TopMenu from "../menu";
 //import { useHistory } from "react-router-dom";
 
 const BarraNavegacion = () => {
@@ -19,6 +20,14 @@ const BarraNavegacion = () => {
   
   const handleUsuarioChange = (event) => {
       setUsuario(event.target.value);
+  };
+
+  const handleLogout = () => {
+    // Aquí puedes agregar la lógica para cerrar sesión
+    localStorage.removeItem("usuario");
+    localStorage.removeItem("bodegaId");
+    localStorage.removeItem("acceso");
+    window.location.reload();
   };
 
   const handleFormSubmit = async (event) => {
@@ -46,6 +55,8 @@ const BarraNavegacion = () => {
 
               // Redirigir a la URL de la bodega después del acceso correcto
               //history.push(`/perfil-bodega/${options[0].bodegaId}`);
+
+              window.location.href = "/perfil-bodega";
 
               setTimeout(() => {
                   // Cerrar el mensaje después de 3 segundos
@@ -83,7 +94,10 @@ const BarraNavegacion = () => {
           value={contrasena}
           onChange={(e) => setContrasena(e.target.value)}
         />
-        <button type="submit">Entrar</button>
+        <button type="submit" class="btn btn-light">Entrar</button>
+        <button type="button" className="btn btn-light" onClick={handleLogout}>
+            Salir
+        </button>
       </form>
     </div>
   );

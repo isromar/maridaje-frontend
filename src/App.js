@@ -6,6 +6,7 @@ import DetallesVino from './components/views/vino/view';
 import EditarVino from './components/views/vino/edit';
 import BarraNavegacion from './components/barra-navegacion';
 import PerfilBodega from './components/views/bodega/view';
+import TopMenu from './components/menu';
 
 function App() {
   return (
@@ -14,6 +15,9 @@ function App() {
         <Route exact path="/" element={
           <div className="App">
             <header className="App-header">
+              <div>
+                <TopMenu />
+              </div>
               <div>
                 <BarraNavegacion />
               </div>

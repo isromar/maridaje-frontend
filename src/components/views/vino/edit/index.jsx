@@ -4,6 +4,7 @@ import { useParams } from "react-router-dom";
 import Select from "react-select";
 import { mostrarMensaje } from "../../../../utility/utils";
 import Swal from "sweetalert2";
+import TopMenu from "../../../menu";
 
 function EditarVino() {
   let { vinoId } = useParams();
@@ -121,6 +122,10 @@ function EditarVino() {
   };
 
   return (
+    <div>
+    <div>
+      <TopMenu/>
+    </div>
     <form className="view">
       <section className="vino-view">
         <h2 className="centrar">
@@ -277,6 +282,7 @@ function EditarVino() {
         </table>
       </section>
     </form>
+    </div>
   );
 }
 
