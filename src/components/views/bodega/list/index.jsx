@@ -22,7 +22,7 @@ const TablaVinosBodega = ({ busquedaNombreVino, selectedOption }) => {
       );
       const data = response["hydra:member"];
 
-      //F2345678E probar como CIF
+      //A1234567Z probar como CIF
 
       // Filtrar los vinos por la ID de la bodega deseada
       const vinosFiltradosPorBodega = data

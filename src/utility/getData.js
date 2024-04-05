@@ -32,7 +32,7 @@ export const getDataPerfilBodega = async (url, bodegaId = null) => {
     params.append('bodega.id', bodegaId);
   }
 
-  //F2345678E probar como CIF
+  //A1234567Z probar como CIF
 
   const urlConParametros = `${url}?${params.toString()}`;
   console.log(urlConParametros)

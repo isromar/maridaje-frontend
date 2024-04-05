@@ -146,9 +146,9 @@ function EditarVino() {
       const datosVino = {
         nombre: vino.nombre,
         maduracion: vino.maduracion,
-        tipoVino: tipoVinoSelected.value,
-        denominacionOrigen: denominacionOrigenSelected.value,
-        ecologico: vinoEcologicoSelected.value,
+        tipoVino: tipoVinoSelected,
+        denominacionOrigen: denominacionOrigenSelected,
+        ecologico: vinoEcologicoSelected,
         variedad_uva: variedadUvaSelected.map(uva => uva.value),
         // Agrega aquí el resto de campos que quieras guardar
       };
