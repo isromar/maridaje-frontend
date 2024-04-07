@@ -81,9 +81,6 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
 
   return (
     <div>
-      <div>
-        <TopMenu/>
-      </div>
       <div className="table-responsive">
         <table className="table table-striped tabla-vinos">
           <thead>
