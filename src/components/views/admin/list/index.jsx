@@ -56,7 +56,7 @@ const PerfilAdmin = () => {
     }
   };
 
-  const handleDeleteDenominacionOrigen = async () => {
+  const handleDeleteDenominacionOrigen = async () => {    
     if (denominacionOrigenSelected) {
       try {
         await fetch(`${apiUrl.denominacionDeOrigen}/${denominacionOrigenSelected.value}`, {
@@ -102,6 +102,23 @@ const PerfilAdmin = () => {
         nuevaVariedadUvaObj,
       ]);
       setNuevaVariedadUva("");
+    }
+  };
+
+  const handlDeleteVariedadUva = async () => {    
+    if (variedadUvaSelected) {
+      try {
+        await fetch(`${apiUrl.variedadesUva}/${variedadUvaSelected.value}`, {
+          method: "DELETE",
+        });
+        setVariedadesUva((prevVariedadesUva) =>
+        prevVariedadesUva.filter((option) => option.value !== variedadUvaSelected.value)
+        );
+        setVariedadUvaSelected(null);
+        setNuevaVariedadUva("");
+      } catch (error) {
+        console.error("Error al eliminar la variedad de uva:", error);
+      }
     }
   };
 
@@ -172,7 +189,7 @@ const PerfilAdmin = () => {
               value={denominacionOrigenSelected ? denominacionOrigenSelected.label : ""}
               readOnly
             />
-            <button onClick={() => handleDeleteDenominacionOrigen(denominacionOrigenSelected)}>Borrar</button>
+            <button className="delete-button" onClick={() => handleDeleteDenominacionOrigen(denominacionOrigenSelected)}>Borrar</button>
           </div>
         </section>
 
@@ -195,6 +212,15 @@ const PerfilAdmin = () => {
             />
             <button onClick={handleAddVariedadUva}>Añadir</button>
           </div>
+          <div className="input-container">
+            <input
+              type="text"
+              placeholder="Variedad de uva seleccionada"
+              value={variedadUvaSelected ? variedadUvaSelected.label : ""}
+              readOnly
+            />
+            <button className="delete-button" onClick={() => handlDeleteVariedadUva(variedadUvaSelected)}>Borrar</button>
+          </div>
         </section>
 
         <section>
@@ -215,6 +241,15 @@ const PerfilAdmin = () => {
               onChange={(e) => setNuevoTipoVino(e.target.value)}
             />
             <button onClick={handleAddTipoVino}>Añadir</button>
+          </div>
+          <div className="input-container">
+            <input
+              type="text"
+              placeholder="Tipo de vino seleccionado"
+              value={tipoVinoSelected ? tipoVinoSelected.label : ""}
+              readOnly
+            />
+            <button className="delete-button" onClick={() => handleDeleteDenominacionOrigen(denominacionOrigenSelected)}>Borrar</button>
           </div>
         </section>
 

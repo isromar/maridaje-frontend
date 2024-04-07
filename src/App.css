@@ -108,6 +108,14 @@
   cursor: pointer;
 }
 
+.input-container button.delete-button {
+  background-color: #FF0000; /* red */
+}
+
 .input-container button:hover {
   background-color: #45a049;
+}
+
+.input-container button.delete-button:hover {
+  background-color: #CC0000;
 }
