@@ -87,7 +87,7 @@ header h1{
   padding-top: 10px;
 }
 
-.perfil-bodega {
+.perfil-bodega, .perfil-admin {
   background-color: #4c1f27;
   color: white;
   height: 60px;

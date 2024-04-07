@@ -1,4 +1,5 @@
 import Swal from 'sweetalert2';
+import { apiUrl } from '../data/Url';
 
 export const mostrarMensaje = (titulo, texto, icono) => {
   return Swal.fire({

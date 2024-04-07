@@ -50,6 +50,7 @@ export const comprobarLogin = async (usuario) => {
   const params = new URLSearchParams();
   params.append('cif', usuario);  // Añade el paráemtro 'cif' a la url
   const urlConParametros = `${url}?${params.toString()}`;
+  
   const response = await fetch(urlConParametros); // Envía el parámetro con la url
   const data = await response.json();
   return data;

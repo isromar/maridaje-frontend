@@ -7,6 +7,7 @@ import EditarVino from './components/views/vino/edit';
 import BarraNavegacion from './components/barra-navegacion';
 import PerfilBodega from './components/views/bodega/view';
 import TopMenu from './components/menu';
+import PerfilAdmin from './components/views/admin/list';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
         <Route path="/view/:vinoId" element={<DetallesVino />} />
         <Route path="/edit/:vinoId" element={<EditarVino />} />
         <Route path="/perfil-bodega" element={<PerfilBodega nombre="Nombre de la bodega" />} /> {/* Reemplaza "Nombre de la bodega" con el nombre real de la bodega */}
+        <Route path="/perfil-admin" element={<PerfilAdmin nombre="Admin" />} /> 
       </Routes>
     </Router>
   );

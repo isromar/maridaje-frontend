@@ -10,6 +10,8 @@ const BarraNavegacion = () => {
   const [usuario, setUsuario] = useState("");
   const [contrasena, setContrasena] = useState("");
   const [acceso, setAcceso] = useState(false);
+  const [admin, setAdmin] = useState(false);
+  
 
   useEffect(() => {
     const accesoLocalStorage = localStorage.getItem("acceso");
@@ -27,6 +29,7 @@ const BarraNavegacion = () => {
     localStorage.removeItem("usuario");
     localStorage.removeItem("bodegaId");
     localStorage.removeItem("acceso");
+    localStorage.removeItem("admin");
     window.location.reload();
   };
 
@@ -56,7 +59,15 @@ const BarraNavegacion = () => {
               // Redirigir a la URL de la bodega después del acceso correcto
               //history.push(`/perfil-bodega/${options[0].bodegaId}`);
 
-              window.location.href = "/perfil-bodega";
+                // Verificar si el usuario es 'admin'
+                if (usuario === 'admin') {
+                  // Redirigir al perfil de administrador
+                  localStorage.setItem("admin", true);
+                  window.location.href = "/perfil-admin";
+                } else {
+                  // Redirigir al perfil de bodega
+                  window.location.href = "/perfil-bodega";
+                }
 
               setTimeout(() => {
                   // Cerrar el mensaje después de 3 segundos
