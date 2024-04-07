@@ -48,34 +48,37 @@ const PerfilAdmin = () => {
     }
   };
 
-  const handleAddDenominacionOrigen = () => {
+  const handleAddDenominacionOrigen = async () => {
     if (nuevaDenominacionOrigen) {
       const nuevaDenominacionOrigenObj = {
         nombre: nuevaDenominacionOrigen,
       };
-
+  
       try {
-        const response = fetch(`${apiUrl.denominacionDeOrigen}/${nuevaDenominacionOrigenObj.id}`, {
-          method: 'PUT',
+        const response = await fetch(`${apiUrl.denominacionDeOrigen}`, {
+          method: 'POST',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'application/ld+json',
           },
           body: JSON.stringify(nuevaDenominacionOrigenObj),
         });
   
         if (response.ok) {
-          // Lógica para manejar la actualización exitosa
-          mostrarMensaje('¡Actualizado!', 'La denominación de origen ha sido actualizada', 'success');
-          //fetchData(); // Llama a fetchData para actualizar la lista de denominaciones de origen
+          const nuevaDenominacionAgregada = await response.json();
+          setDenominacionDeOrigen((prevDenominacionDeOrigen) => [
+            ...prevDenominacionDeOrigen,
+            nuevaDenominacionAgregada,
+          ]);
+          fetchDenominacionDeOrigen();
+          setNuevaDenominacionOrigen("");
+          mostrarMensaje('Denominación de origen añadida', 'La nueva denominación de origen ha sido añadida con éxito', 'success');
         } else {
-          mostrarMensaje('¡Error!', 'La denominación de origen no se ha podido actualizar', 'error');
+          mostrarMensaje('Error al añadir la denominación de origen', 'Hubo un error al añadir la denominación de origen', 'error');
         }
       } catch (error) {
-        // Lógica para manejar errores de red u otros errores
-        mostrarMensaje('Error', 'No se pudo conectar con el servidor', 'error');
+        console.error(error);
+        mostrarMensaje('Error al añadir la denominación de origen', 'Hubo un error al añadir la denominación de origen', 'error');
       }
-
-      setNuevaDenominacionOrigen("");
     }
   };
 
