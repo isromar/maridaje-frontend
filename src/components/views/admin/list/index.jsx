@@ -3,6 +3,7 @@ import TopMenu from "../../../menu";
 import TablaVinosBodega from "../../bodega/list";
 import { apiUrl } from "../../../../data/Url";
 import Select from "react-select";
+import { mostrarMensaje } from "../../../../utility/utils";
 
 const PerfilAdmin = () => {
   const [variedadesUva, setVariedadesUva] = useState([]);
@@ -17,10 +18,15 @@ const PerfilAdmin = () => {
   const [tipoVinoSelected, setTipoVinoSelected] = useState("");
   const [nuevoTipoVino, setNuevoTipoVino] = useState("");
 
+  const [comidas, setComidas] = useState([]);
+  const [comidaSelected, setComidaSelected] = useState("");
+  const [nuevaComida, setNuevaComida] = useState("");
+
   useEffect(() => {
     fetchVariedadesUva();
     fetchDenominacionDeOrigen();
     fetchTiposDeVino();
+    fetchComidas();
   }, []);
 
 
@@ -45,13 +51,30 @@ const PerfilAdmin = () => {
   const handleAddDenominacionOrigen = () => {
     if (nuevaDenominacionOrigen) {
       const nuevaDenominacionOrigenObj = {
-        id: Date.now(),
         nombre: nuevaDenominacionOrigen,
       };
-      setDenominacionDeOrigen((prevDenominacionDeOrigen) => [
-        ...prevDenominacionDeOrigen,
-        nuevaDenominacionOrigenObj,
-      ]);
+
+      try {
+        const response = fetch(`${apiUrl.denominacionDeOrigen}/${nuevaDenominacionOrigenObj.id}`, {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(nuevaDenominacionOrigenObj),
+        });
+  
+        if (response.ok) {
+          // Lógica para manejar la actualización exitosa
+          mostrarMensaje('¡Actualizado!', 'La denominación de origen ha sido actualizada', 'success');
+          //fetchData(); // Llama a fetchData para actualizar la lista de denominaciones de origen
+        } else {
+          mostrarMensaje('¡Error!', 'La denominación de origen no se ha podido actualizar', 'error');
+        }
+      } catch (error) {
+        // Lógica para manejar errores de red u otros errores
+        mostrarMensaje('Error', 'No se pudo conectar con el servidor', 'error');
+      }
+
       setNuevaDenominacionOrigen("");
     }
   };
@@ -94,7 +117,6 @@ const PerfilAdmin = () => {
   const handleAddVariedadUva = () => {
     if (nuevaVariedadUva) {
       const nuevaVariedadUvaObj = {
-        id: Date.now(),
         nombre: nuevaVariedadUva,
       };
       setVariedadesUva((prevVariedadesUva) => [
@@ -122,6 +144,52 @@ const PerfilAdmin = () => {
     }
   };
 
+  const fetchComidas = async () => {
+    try {
+      const response = await fetch(apiUrl.comidas);
+      const data = await response.json();
+      if (data && data["hydra:member"]) {
+        const options = data["hydra:member"]
+          .map((tipo) => ({
+            value: tipo.id,
+            label: tipo.nombre,
+          }))
+          .sort((a, b) => a.label.localeCompare(b.label));
+        setComidas(options);
+      }
+    } catch (error) {
+      console.error("Error al obtener los datos:", error);
+    }
+  };
+
+  const handleAddComida = () => {
+    if (nuevaComida) {
+      const nuevaComidaObj = {
+        nombre: nuevaComida,
+      };
+      setComidas((prevComidas) => [...prevComidas, nuevaComidaObj]);
+      setNuevaComida("");
+    }
+    setNuevaComida("");
+  };
+
+  const handleDeleteComida = async () => {    
+    if (comidaSelected) {
+      try {
+        await fetch(`${apiUrl.comidas}/${comidaSelected.value}`, {
+          method: "DELETE",
+        });
+        setComidas((prevComidas) =>
+        prevComidas.filter((option) => option.value !== comidaSelected.value)
+        );
+        setComidaSelected(null);
+        setNuevaComida("");
+      } catch (error) {
+        console.error("Error al eliminar la comida", error);
+      }
+    }
+  };
+
   const fetchTiposDeVino = async () => {
     try {
       const response = await fetch(apiUrl.tiposDeVino);
@@ -143,7 +211,6 @@ const PerfilAdmin = () => {
   const handleAddTipoVino = () => {
     if (nuevoTipoVino) {
       const nuevoTipoVinoObj = {
-        id: Date.now(),
         nombre: nuevoTipoVino,
       };
       setTiposDeVino((prevTiposDeVino) => [...prevTiposDeVino, nuevoTipoVinoObj]);
@@ -156,104 +223,147 @@ const PerfilAdmin = () => {
       <div>
         <TopMenu />
       </div>
-      <div className="perfil-admin-content">
+
+      <div className="perfil-admin-title">
         <section className="perfil-admin centrar">
           <h2 className="centrar">
             <span>Administrador</span>
           </h2>
         </section>
         
-        <section>
-          <h2>Denominación de origen</h2>
-          <div className="select-container">
-            <Select
-              options={denominacionDeOrigen}
-              value={denominacionOrigenSelected}
-              onChange={setDenominacionOrigenSelected}
-              placeholder="Denominación de origen"
-            />
-          </div>
-          <div className="input-container">
-            <input
-              type="text"
-              placeholder="Nueva denominación de origen"
-              value={nuevaDenominacionOrigen}
-              onChange={(e) => setNuevaDenominacionOrigen(e.target.value)}
-            />
-            <button onClick={handleAddDenominacionOrigen}>Añadir</button>
-          </div>
-          <div className="input-container">
-            <input
-              type="text"
-              placeholder="Denominación de origen seleccionada"
-              value={denominacionOrigenSelected ? denominacionOrigenSelected.label : ""}
-              readOnly
-            />
-            <button className="delete-button" onClick={() => handleDeleteDenominacionOrigen(denominacionOrigenSelected)}>Borrar</button>
-          </div>
-        </section>
+        <div className="perfil-admin-content">
+          <section>
+            <h3>Denominación de origen</h3>
+            <div className="select-container">
+              <Select
+                options={denominacionDeOrigen}
+                value={denominacionOrigenSelected}
+                onChange={setDenominacionOrigenSelected}
+                placeholder="Denominación de origen"
+              />
+            </div>
+
+            <div className="input-container">
+              <input
+                type="text"
+                placeholder="Denominación de origen seleccionada"
+                value={denominacionOrigenSelected ? denominacionOrigenSelected.label : ""}
+                readOnly
+              />
+              <button className="delete-button" onClick={() => handleDeleteDenominacionOrigen(denominacionOrigenSelected)}>Borrar</button>
+            </div>
+
+            <div className="input-container">
+              <input
+                type="text"
+                placeholder="Nueva denominación de origen"
+                value={nuevaDenominacionOrigen}
+                onChange={(e) => setNuevaDenominacionOrigen(e.target.value)}
+              />
+              <button onClick={handleAddDenominacionOrigen}>Añadir</button>
+            </div>
+
+          </section>
+
+          <section>
+            <h3>Variedad de uva</h3>
+            <div className="select-container">
+              <Select
+                options={variedadesUva}
+                value={variedadUvaSelected}
+                onChange={setVariedadUvaSelected}
+                placeholder="Variedades de uva"
+              />
+            </div>
+          
+            <div className="input-container">
+              <input
+                type="text"
+                placeholder="Variedad de uva seleccionada"
+                value={variedadUvaSelected ? variedadUvaSelected.label : ""}
+                readOnly
+              />
+              <button className="delete-button" onClick={() => handlDeleteVariedadUva(variedadUvaSelected)}>Borrar</button>
+            </div>
+
+            <div className="input-container">
+              <input
+                type="text"
+                placeholder="Nueva variedad de uva"
+                value={nuevaVariedadUva}
+                onChange={(e) => setNuevaVariedadUva(e.target.value)}
+              />
+              <button onClick={handleAddVariedadUva}>Añadir</button>
+            </div>
+          </section>
+
+          <section>
+            <h3>Tipo de vino</h3>
+            <div className="select-container">
+              <Select
+                options={tiposDeVino}
+                value={tipoVinoSelected}
+                onChange={setTipoVinoSelected}
+                placeholder="Tipos de vino"
+              />
+            </div>
+            
+            <div className="input-container">
+              <input
+                type="text"
+                placeholder="Tipo de vino seleccionado"
+                value={tipoVinoSelected ? tipoVinoSelected.label : ""}
+                readOnly
+              />
+              <button className="delete-button" onClick={() => handleDeleteDenominacionOrigen(denominacionOrigenSelected)}>Borrar</button>
+            </div>
+
+            <div className="input-container">
+              <input
+                type="text"
+                placeholder="Nuevo tipo de vino"
+                value={nuevoTipoVino}
+                onChange={(e) => setNuevoTipoVino(e.target.value)}
+              />
+              <button onClick={handleAddTipoVino}>Añadir</button>
+            </div>
+          </section>
+
+          <section>
+            <h3>Comida</h3>
+            <div className="select-container">
+              <Select
+                options={comidas}
+                value={comidaSelected}
+                onChange={setComidaSelected}
+                placeholder="Tipos de comida"
+              />
+            </div>
+            
+            <div className="input-container">
+              <input
+                type="text"
+                placeholder="Tipo de vino seleccionado"
+                value={comidaSelected ? comidaSelected.label : ""}
+                readOnly
+              />
+              <button className="delete-button" onClick={() => handleDeleteComida(comidaSelected)}>Borrar</button>
+            </div>
+
+            <div className="input-container">
+              <input
+                type="text"
+                placeholder="Nueva comida"
+                value={nuevaComida}
+                onChange={(e) => setNuevaComida(e.target.value)}
+              />
+              <button onClick={handleAddComida}>Añadir</button>
+            </div>
+          </section>
+        </div>
 
         <section>
-          <h2>Variedades de uva</h2>
-          <div className="select-container">
-            <Select
-              options={variedadesUva}
-              value={variedadUvaSelected}
-              onChange={setVariedadUvaSelected}
-              placeholder="Variedades de uva"
-            />
-          </div>
-          <div className="input-container">
-            <input
-              type="text"
-              placeholder="Nueva variedad de uva"
-              value={nuevaVariedadUva}
-              onChange={(e) => setNuevaVariedadUva(e.target.value)}
-            />
-            <button onClick={handleAddVariedadUva}>Añadir</button>
-          </div>
-          <div className="input-container">
-            <input
-              type="text"
-              placeholder="Variedad de uva seleccionada"
-              value={variedadUvaSelected ? variedadUvaSelected.label : ""}
-              readOnly
-            />
-            <button className="delete-button" onClick={() => handlDeleteVariedadUva(variedadUvaSelected)}>Borrar</button>
-          </div>
-        </section>
-
-        <section>
-          <h2>Tipos de vino</h2>
-          <div className="select-container">
-            <Select
-              options={tiposDeVino}
-              value={tipoVinoSelected}
-              onChange={setTipoVinoSelected}
-              placeholder="Tipos de vino"
-            />
-          </div>
-          <div className="input-container">
-            <input
-              type="text"
-              placeholder="Nuevo tipo de vino"
-              value={nuevoTipoVino}
-              onChange={(e) => setNuevoTipoVino(e.target.value)}
-            />
-            <button onClick={handleAddTipoVino}>Añadir</button>
-          </div>
-          <div className="input-container">
-            <input
-              type="text"
-              placeholder="Tipo de vino seleccionado"
-              value={tipoVinoSelected ? tipoVinoSelected.label : ""}
-              readOnly
-            />
-            <button className="delete-button" onClick={() => handleDeleteDenominacionOrigen(denominacionOrigenSelected)}>Borrar</button>
-          </div>
-        </section>
-
-        <section>
+          <h3 className="perfil-admin-content">Vinos</h3>
           <TablaVinosBodega />
         </section>
       </div>
