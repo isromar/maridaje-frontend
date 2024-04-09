@@ -11,11 +11,18 @@ import Swal from "sweetalert2";
 const BodegaOptions = () => {
   const [bodegas, setBodegas] = useState([]);
   const [bodegaSelected, setBodegaSelected] = useState("");
+  const [editedBodega, setEditedBodega] = useState({
+    nombre: "",
+    direccion: "",
+    telefono: "",
+    cif: "",
+  });
+
   const [nuevaBodega, setNuevaBodega] = useState({
     nombre: "",
     direccion: "",
     telefono: "",
-    cif: ""
+    cif: "",
   });
 
   useEffect(() => {
@@ -25,7 +32,6 @@ const BodegaOptions = () => {
       "Espere mientras se cargan los datos",
       "info"
     );
-
     fetchBodegas();
 
     // Ocultar el mensaje después de 1 segundo
@@ -34,15 +40,13 @@ const BodegaOptions = () => {
     }, 2000);
   }, []);
 
+  useEffect(() => {
+    fetchBodegas();
+  }, [editedBodega, nuevaBodega]);
+
+
   const fetchBodegas = async () => {
     try {
-      // Mostrar mensaje de cargando datos
-      mostrarMensaje(
-        "Cargando datos...",
-        "Espere mientras se cargan los datos",
-        "info"
-      );
-
       const response = await fetch(apiUrl.bodegas);
       const data = await response.json();
       if (data && data["hydra:member"]) {
@@ -50,6 +54,10 @@ const BodegaOptions = () => {
           .map((bodega) => ({
             value: bodega.id,
             label: bodega.nombre,
+            nombre: bodega.nombre,
+            direccion: bodega.direccion,
+            telefono: bodega.telefono,
+            cif: bodega.cif,
           }))
           .sort((a, b) => a.label.localeCompare(b.label));
         setBodegas(options);
@@ -70,16 +78,81 @@ const BodegaOptions = () => {
     }
   };
 
+  const handleEditBodega = async () => {
+    if (bodegaSelected && bodegaSelected.nombre && bodegaSelected.cif) {
+      const updatedBodega = {
+        ...bodegaSelected,
+        nombre: editedBodega.nombre || bodegaSelected.nombre,
+        direccion: editedBodega.direccion || bodegaSelected.direccion,
+        telefono: editedBodega.telefono || bodegaSelected.telefono,
+        cif: editedBodega.cif || bodegaSelected.cif,
+      };
+
+      try {
+        const response = await fetch(
+          `${apiUrl.bodegas}/${bodegaSelected.value}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/ld+json",
+            },
+            body: JSON.stringify(updatedBodega),
+          }
+        );
+
+        if (response.ok) {
+          const updatedBodegaAgregada = await response.json();
+          setBodegas((prevBodegas) =>
+            prevBodegas.map((option) =>
+              option.value === bodegaSelected.value
+                ? updatedBodegaAgregada
+                : option
+            )
+          );
+
+          setEditedBodega({
+            nombre: "",
+            direccion: "",
+            telefono: "",
+            cif: "",
+          });
+
+          setBodegaSelected({
+            direccion: "",
+            telefono: "",
+            cif: "",
+          });
+
+          mostrarMensaje(
+            "Registro actualizado",
+            "Registro actualizado con éxito",
+            "success"
+          );
+        } else {
+          mostrarMensaje(
+            "Error al actualizar el registro",
+            "Hubo un error al actualizar el registro",
+            "error"
+          );
+        }
+      } catch (error) {
+        console.error(error);
+        mostrarMensaje(
+          "Error al actualizar el registro",
+          "Hubo un error al actualizar el registro",
+          "error"
+        );
+      }
+    }
+  };
+  
   const handleAddBodega = async () => {
-    if (
-      nuevaBodega.nombre &&
-      nuevaBodega.cif
-    ) {
+    if (nuevaBodega.nombre && nuevaBodega.cif) {
       const nuevaBodegaObj = {
         nombre: nuevaBodega.nombre,
         direccion: nuevaBodega.direccion,
         telefono: nuevaBodega.telefono,
-        cif: nuevaBodega.cif
+        cif: nuevaBodega.cif,
       };
 
       try {
@@ -101,7 +174,7 @@ const BodegaOptions = () => {
             nombre: "",
             direccion: "",
             telefono: "",
-            cif: ""
+            cif: "",
           });
 
           mostrarMensaje(
@@ -126,6 +199,7 @@ const BodegaOptions = () => {
       }
     }
   };
+
 
   const handleDeleteBodega = async () => {
     if (bodegaSelected) {
@@ -208,6 +282,58 @@ const BodegaOptions = () => {
               </button>
             </div>
 
+            <div className="input-container input-bodega">
+              <input
+                type="text"
+                placeholder="Nombre"
+                value={bodegaSelected ? bodegaSelected.nombre : ""}
+                onChange={(e) =>
+                  setBodegaSelected({
+                    ...bodegaSelected,
+                    nombre: e.target.value,
+                  })
+                }
+              />
+              <input
+                type="text"
+                placeholder="Dirección"
+                value={bodegaSelected ? bodegaSelected.direccion : ""}
+                onChange={(e) =>
+                  setBodegaSelected({
+                    ...bodegaSelected,
+                    direccion: e.target.value,
+                  })
+                }
+              />
+              <input
+                type="text"
+                placeholder="Teléfono"
+                value={bodegaSelected ? bodegaSelected.telefono : ""}
+                onChange={(e) =>
+                  setBodegaSelected({
+                    ...bodegaSelected,
+                    telefono: e.target.value,
+                  })
+                }
+              />
+              <input
+                type="text"
+                placeholder="CIF"
+                value={bodegaSelected ? bodegaSelected.cif : ""}
+                onChange={(e) =>
+                  setBodegaSelected({
+                    ...bodegaSelected,
+                    cif: e.target.value,
+                  })
+                }
+              />
+
+              <button onClick={handleEditBodega}>Guardar</button>
+            </div>
+          </section>
+
+          <section>
+            <h3>Añadir nueva bodega</h3>
             <div className="input-container input-bodega">
               <input
                 type="text"
