@@ -69,6 +69,7 @@
 .perfil-admin-content{
   margin-left: 10%;
 }
+
 .select-container {
   width: 100%;
   max-width: 400px;
@@ -107,7 +108,7 @@
 }
 
 .input-container button.delete-button {
-  background-color: #FF0000; /* red */
+  background-color: #FF0000;
 }
 
 .input-container button:hover {
@@ -116,4 +117,33 @@
 
 .input-container button.delete-button:hover {
   background-color: #CC0000;
+}
+
+.disabled {
+  background-color: #ddd;
+}
+
+.bodega-menu ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+  padding: 0;
+}
+
+.bodega-menu li {
+  margin: 0 10px;
+}
+
+.bodega-menu a {
+  text-decoration: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  background-color: #eee;
+  border-radius: 5px;
+  color: #4c1f27;
+}
+
+.bodega-menu a:hover {
+  background-color: #ccc;
 }

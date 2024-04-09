@@ -8,6 +8,10 @@ import BarraNavegacion from './components/barra-navegacion';
 import PerfilBodega from './components/views/bodega/view';
 import TopMenu from './components/menu';
 import PerfilAdmin from './components/views/admin/list';
+import ComidaOptions from './components/views/admin/comida';
+import DenominacionOrigenOptions from './components/views/admin/denominacionorigen';
+import TipoVinoOptions from './components/views/admin/tipovino';
+import VariedadUvaOptions from './components/views/admin/variedaduva';
 
 function App() {
   return (
@@ -42,6 +46,10 @@ function App() {
         <Route path="/edit/:vinoId" element={<EditarVino />} />
         <Route path="/perfil-bodega" element={<PerfilBodega nombre="Nombre de la bodega" />} /> {/* Reemplaza "Nombre de la bodega" con el nombre real de la bodega */}
         <Route path="/perfil-admin" element={<PerfilAdmin nombre="Admin" />} /> 
+        <Route path="/perfil-admin/comida" element={<ComidaOptions />} />
+        <Route path="/perfil-admin/denominacion-origen" element={<DenominacionOrigenOptions />} /> 
+        <Route path="/perfil-admin/tipo-vino" element={<TipoVinoOptions />} /> 
+        <Route path="/perfil-admin/variedad-uva" element={<VariedadUvaOptions />} /> 
       </Routes>
     </Router>
   );

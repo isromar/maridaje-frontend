@@ -54,31 +54,6 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
   setVinosFiltrados(sortedVinos); // Actualiza el estado con los vinos ordenados
   };
 
-  const handleDelete = (urlVinoId) => {
-    const vinoId = urlVinoId.split("/").pop();  // Obtiene la id del vino, ya que llega en urlVinoId como api/vinos/vinoId
-    mostrarMensajeConfirmacion('¿Quieres borrar este vino?', 'Esta acción no se puede deshacer', 'warning')
-      .then((result) => {
-        if (result.isConfirmed) {
-          // Lógica para eliminar el registro de la base de datos
-          fetch(`${apiUrl.vinos}/${vinoId}`, {
-            method: 'DELETE',
-          })
-          .then(response => {
-            if (response.ok) {
-              // Lógica para manejar la eliminación exitosa
-              mostrarMensaje('¡Borrado!', 'El registro ha sido eliminado', 'success');
-              fetchData(); // Llama a fetchData para actualizar la lista de vinos
-            } else {
-              mostrarMensaje('¡Error!', 'El registro no se ha podido eliminar', 'error');
-            }
-          })
-          .catch(error => {
-            // Lógica para manejar errores de red u otros errores
-          });
-        }
-      });
-  };
-
   return (
     <div>
       <div className="table-responsive">
