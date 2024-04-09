@@ -20,7 +20,7 @@ const DenominacionOrigenOptions = () => {
     // Ocultar el mensaje después de 1 segundo
     setTimeout(() => {
       Swal.close();
-    }, 1000);
+    }, 2000);
   }, []);
 
 

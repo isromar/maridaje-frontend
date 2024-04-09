@@ -5,6 +5,7 @@ import { Eye, Trash2, Edit } from "react-feather";
 import { mostrarMensajeConfirmacion, mostrarMensaje } from "../../../../utility/utils";
 import { Link } from 'react-router-dom';
 import TopMenu from "../../../menu";
+import Swal from "sweetalert2";
 
 /* Este componente muestra una tabla de vinos y permite ordenar los vinos por nombre y tipo. */
 const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
@@ -24,6 +25,17 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
       console.error("Error al obtener los datos:", error);
     }
   };
+
+    useEffect(() => {
+    mostrarMensaje('Cargando datos...', 'Espere mientras se cargan los datos', 'info');
+
+    fetchData();
+
+    // Ocultar el mensaje después de 1 segundo
+    setTimeout(() => {
+      Swal.close();
+    }, 2000);
+  }, [ ]);
 
   useEffect(() => {
     fetchData();
