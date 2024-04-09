@@ -87,6 +87,17 @@
   margin-right: 10px;
 }
 
+
+
+.input-bodega {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  width: 70%;
+
+}
+
+
 .input-container input {
   flex-grow: 1;
   padding: 8px;
@@ -147,3 +158,6 @@
 .bodega-menu a:hover {
   background-color: #ccc;
 }
+
+
+

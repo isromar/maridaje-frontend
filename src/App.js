@@ -12,6 +12,7 @@ import ComidaOptions from './components/views/admin/comida';
 import DenominacionOrigenOptions from './components/views/admin/denominacionorigen';
 import TipoVinoOptions from './components/views/admin/tipovino';
 import VariedadUvaOptions from './components/views/admin/variedaduva';
+import BodegaOptions from './components/views/admin/bodega';
 
 function App() {
   return (
@@ -50,6 +51,7 @@ function App() {
         <Route path="/perfil-admin/denominacion-origen" element={<DenominacionOrigenOptions />} /> 
         <Route path="/perfil-admin/tipo-vino" element={<TipoVinoOptions />} /> 
         <Route path="/perfil-admin/variedad-uva" element={<VariedadUvaOptions />} /> 
+        <Route path="/perfil-admin/bodega" element={<BodegaOptions />} /> 
       </Routes>
     </Router>
   );

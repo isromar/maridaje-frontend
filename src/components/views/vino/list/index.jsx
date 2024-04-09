@@ -2,9 +2,8 @@ import React, { useState, useEffect } from "react";
 import { getData } from "../../../../utility/getData";
 import { apiUrl } from "../../../../data/Url";
 import { Eye, Trash2, Edit } from "react-feather";
-import { mostrarMensajeConfirmacion, mostrarMensaje } from "../../../../utility/utils";
+import { mostrarMensaje } from "../../../../utility/utils";
 import { Link } from 'react-router-dom';
-import TopMenu from "../../../menu";
 import Swal from "sweetalert2";
 
 /* Este componente muestra una tabla de vinos y permite ordenar los vinos por nombre y tipo. */

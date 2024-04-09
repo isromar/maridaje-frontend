@@ -143,7 +143,7 @@ function EditarVino() {
   const saveData = async () => {
     try {
       // Preparar los datos a enviar
-      const datosVino = {
+      const datosVinoObj = {
         nombre: vino.nombre,
         maduracion: vino.maduracion,
         tipoVino: tipoVinoSelected,
@@ -157,9 +157,9 @@ function EditarVino() {
       const response = await fetch(`${apiUrl.vinos}/${vinoId}`, {
         method: 'PUT',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': 'application/ld+json',
         },
-        body: JSON.stringify(datosVino),
+        body: JSON.stringify(datosVinoObj),
       });
   
       if (response.ok) {

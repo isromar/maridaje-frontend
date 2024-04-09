@@ -27,8 +27,13 @@ const MenuElementosAdmin = () => {
             </Link>
           </li>
           <li>
-            <Link to="/vinos">
+            <Link to="/perfil-admin/vino">
               Vinos
+            </Link>
+          </li>
+          <li>
+            <Link to="/perfil-admin/bodega">
+              Bodega
             </Link>
           </li>
         </ul>
