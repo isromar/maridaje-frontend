@@ -43,7 +43,7 @@ function DetallesVino() {
               <input
                 type="text"
                 className="form-control disabled"
-                value={vino.tipoVino.nombre}
+                value={vino.tipoVino ? vino.tipoVino.nombre : ""}
                 disabled="disabled"
               />
             </td>
@@ -55,7 +55,7 @@ function DetallesVino() {
               <input
                 type="text"
                 className="form-control disabled"
-                value={vino.maduracion}
+                value={vino ? vino.maduracion : ""}
                 disabled="disabled"
               />
             </td>
@@ -67,7 +67,7 @@ function DetallesVino() {
               <input
                 type="text"
                 className="form-control disabled"
-                value={vino.denominacionOrigen.nombre}
+                value={vino.denominacionOrigen ? vino.denominacionOrigen.nombre: ""}
                 disabled="disabled"
               />
             </td>
@@ -138,7 +138,7 @@ function DetallesVino() {
 
       <section className="bodega-view">
         <h2 className="centrar">
-          <span>Bodega - {vino.bodega.nombre} </span>
+          <span>Bodega - {vino.bodega ? vino.bodega.nombre : ""}</span>
         </h2>
         <table className="tabla-view">
           <tr>
@@ -147,7 +147,7 @@ function DetallesVino() {
               <input
                 type="text"
                 className="form-control disabled"
-                value={vino.bodega.direccion}
+                value={vino.bodega ? vino.bodega.direccion : ""}
                 disabled="disabled"
               />
             </td>
@@ -159,7 +159,7 @@ function DetallesVino() {
               <input
                 type="text"
                 className="form-control disabled"
-                value={vino.bodega.telefono}
+                value={vino.bodega ? vino.bodega.telefono : ""}
                 disabled="disabled"
               />
             </td>
@@ -171,7 +171,7 @@ function DetallesVino() {
               <input
                 type="text"
                 className="form-control disabled"
-                value={vino.bodega.cif}
+                value={vino.bodega ? vino.bodega.cif : ""}
                 disabled="disabled"
               />
             </td>
