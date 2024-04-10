@@ -177,3 +177,13 @@
 .password {
   max-width: 100px;
 }
+
+.link-style {
+  background-color: #eee !important;
+  border: none;
+}
+
+.link-style:hover {
+  cursor: pointer;
+}
+

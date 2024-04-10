@@ -178,16 +178,17 @@ function DetallesVino() {
           </tr>
 
           <tr>
-            <td>Web:</td>
-            <td>
-              <input
-                type="text"
-                className="form-control disabled"
-                value={vino.bodega.web}
-                disabled="disabled"
-              />
-            </td>
-          </tr>
+  <td>Web:</td>
+  <td>
+    <input
+      type="text"
+      className="form-control disabled link-style"
+      value={vino.bodega.web}
+      readOnly
+      onClick={() => window.open(vino.bodega.web, "_blank")}
+    />
+  </td>
+</tr>
         </table>
       </section>
     </div>
