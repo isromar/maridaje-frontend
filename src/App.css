@@ -160,4 +160,20 @@
 }
 
 
+.nombre,
+.direccion {
+  min-width: 300px;
+}
 
+.web {
+  min-width: 250px;
+}
+
+.telefono,
+.cif {
+  max-width: 130px;
+}
+
+.password {
+  max-width: 100px;
+}

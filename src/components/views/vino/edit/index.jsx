@@ -15,6 +15,10 @@ function EditarVino() {
   const [denominacionOrigenSelected, setDenominacionOrigenSelected] =
     useState("");
   const [vinoEcologicoSelected, setVinoEcologicoSelected] = useState("");
+
+  const [vinoPrecio, setVinoPrecio] = useState([]);
+  const [vinoPrecioSelected, setVinoPrecioSelected] = useState("");
+
   const [comidas, setComidas] = useState("");
   const [comidaSelected, setComidaSelected] = useState("");
   const opcionesVinoEcologico = [
@@ -149,6 +153,7 @@ function EditarVino() {
         tipoVino: tipoVinoSelected,
         denominacionOrigen: denominacionOrigenSelected,
         ecologico: vinoEcologicoSelected,
+        precio: vinoPrecioSelected,
         variedad_uva: variedadUvaSelected.map(uva => uva.value),
         // Agrega aquí el resto de campos que quieras guardar
       };
@@ -249,6 +254,19 @@ function EditarVino() {
           </tr>
 
           <tr>
+            <td>Precio:</td>
+            <td>
+              <input
+                type="text"
+                className="form-control "
+                value={`${vino.precio} €`}
+                onChange={(event) => handleInputChange(event, 'precio')}
+              />
+            </td>
+          </tr>
+
+
+          <tr>
             <td>Marida con:</td>
             <td>
               <Select
@@ -342,7 +360,7 @@ function EditarVino() {
               <input
                 type="text"
                 className="form-control "
-                value={vino.bodega.cif}
+                value={vino.bodega.web}
               />
             </td>
           </tr>

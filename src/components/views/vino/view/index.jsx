@@ -86,6 +86,18 @@ function DetallesVino() {
           </tr>
 
           <tr>
+            <td>Precio:</td>
+            <td>
+              <input
+                type="text"
+                className="form-control disabled"
+                value={`${vino.precio} €`}
+                disabled="disabled"
+              />
+            </td>
+          </tr>
+
+          <tr>
             <td>Marida con:</td>
             <td>
               <span className="form-control disabled">
@@ -171,7 +183,7 @@ function DetallesVino() {
               <input
                 type="text"
                 className="form-control disabled"
-                value={vino.bodega.cif}
+                value={vino.bodega.web}
                 disabled="disabled"
               />
             </td>

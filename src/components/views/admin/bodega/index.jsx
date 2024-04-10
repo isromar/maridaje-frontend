@@ -16,6 +16,8 @@ const BodegaOptions = () => {
     direccion: "",
     telefono: "",
     cif: "",
+    web: "",
+    password: "",
   });
 
   const [nuevaBodega, setNuevaBodega] = useState({
@@ -23,6 +25,8 @@ const BodegaOptions = () => {
     direccion: "",
     telefono: "",
     cif: "",
+    web: "",
+    password: "",
   });
 
   useEffect(() => {
@@ -37,7 +41,7 @@ const BodegaOptions = () => {
     // Ocultar el mensaje después de 1 segundo
     setTimeout(() => {
       Swal.close();
-    }, 2000);
+    }, 3000);
   }, []);
 
   useEffect(() => {
@@ -58,6 +62,8 @@ const BodegaOptions = () => {
             direccion: bodega.direccion,
             telefono: bodega.telefono,
             cif: bodega.cif,
+            web: bodega.web,
+            password: bodega.password,
           }))
           .sort((a, b) => a.label.localeCompare(b.label));
         setBodegas(options);
@@ -67,8 +73,6 @@ const BodegaOptions = () => {
         console.error("No se encontraron datos.");
       }
     } catch (error) {
-      console.error("Error al obtener los datos:", error);
-
       // Mostrar mensaje de error
       mostrarMensaje(
         "Error al cargar los datos",
@@ -86,6 +90,8 @@ const BodegaOptions = () => {
         direccion: editedBodega.direccion || bodegaSelected.direccion,
         telefono: editedBodega.telefono || bodegaSelected.telefono,
         cif: editedBodega.cif || bodegaSelected.cif,
+        web: editedBodega.web || bodegaSelected.web,
+        password: editedBodega.password || bodegaSelected.password,
       };
 
       try {
@@ -115,12 +121,17 @@ const BodegaOptions = () => {
             direccion: "",
             telefono: "",
             cif: "",
+            web: "",
+            password: "",
           });
 
           setBodegaSelected({
+            nombre: "",
             direccion: "",
             telefono: "",
             cif: "",
+            web: "",
+            password: "",
           });
 
           mostrarMensaje(
@@ -147,12 +158,14 @@ const BodegaOptions = () => {
   };
   
   const handleAddBodega = async () => {
-    if (nuevaBodega.nombre && nuevaBodega.cif) {
+    if (nuevaBodega.nombre && nuevaBodega.cif && nuevaBodega.password) {
       const nuevaBodegaObj = {
         nombre: nuevaBodega.nombre,
         direccion: nuevaBodega.direccion,
         telefono: nuevaBodega.telefono,
         cif: nuevaBodega.cif,
+        web: nuevaBodega.web,
+        password: nuevaBodega.password,
       };
 
       try {
@@ -175,6 +188,8 @@ const BodegaOptions = () => {
             direccion: "",
             telefono: "",
             cif: "",
+            web: "",
+            password: "",
           });
 
           mostrarMensaje(
@@ -258,12 +273,13 @@ const BodegaOptions = () => {
           <section>
             <h3>Bodega</h3>
             <div className="select-container">
-              <Select
-                options={bodegas}
-                value={bodegaSelected}
-                onChange={setBodegaSelected}
-                placeholder="Bodegas"
-              />
+            <Select
+              options={bodegas}
+              value={bodegaSelected}
+              onChange={setBodegaSelected}
+              placeholder="Bodegas"
+              getOptionLabel={(option) => `${option.label} - ${option.cif}`}
+            />
             </div>
 
             <div className="input-container">
@@ -271,7 +287,7 @@ const BodegaOptions = () => {
                 className="disabled"
                 type="text"
                 placeholder="Bodega seleccionada"
-                value={bodegaSelected ? bodegaSelected.label : ""}
+                value={bodegaSelected ? `${bodegaSelected.label} - ${bodegaSelected.cif}` : ""}
                 readOnly
               />
               <button
@@ -284,6 +300,7 @@ const BodegaOptions = () => {
 
             <div className="input-container input-bodega">
               <input
+                className="nombre"
                 type="text"
                 placeholder="Nombre"
                 value={bodegaSelected ? bodegaSelected.nombre : ""}
@@ -295,6 +312,7 @@ const BodegaOptions = () => {
                 }
               />
               <input
+                className="direccion"
                 type="text"
                 placeholder="Dirección"
                 value={bodegaSelected ? bodegaSelected.direccion : ""}
@@ -306,6 +324,7 @@ const BodegaOptions = () => {
                 }
               />
               <input
+                className="telefono"
                 type="text"
                 placeholder="Teléfono"
                 value={bodegaSelected ? bodegaSelected.telefono : ""}
@@ -317,6 +336,7 @@ const BodegaOptions = () => {
                 }
               />
               <input
+                className="cif"
                 type="text"
                 placeholder="CIF"
                 value={bodegaSelected ? bodegaSelected.cif : ""}
@@ -327,8 +347,32 @@ const BodegaOptions = () => {
                   })
                 }
               />
+              <input
+                className="web"
+                type="text"
+                placeholder="Web"
+                value={bodegaSelected ? bodegaSelected.web : ""}
+                onChange={(e) =>
+                  setBodegaSelected({
+                    ...bodegaSelected,
+                    web: e.target.value,
+                  })
+                }
+              />
+              <input
+                className="password"
+                type="password"
+                placeholder="Contraseña"
+                value={bodegaSelected ? bodegaSelected.password : ""}
+                onChange={(e) =>
+                  setBodegaSelected({
+                    ...bodegaSelected,
+                    password: e.target.value,
+                  })
+                }
+              />      
 
-              <button onClick={handleEditBodega}>Guardar</button>
+              <button onClick={handleEditBodega}>Modificar</button>
             </div>
           </section>
 
@@ -336,6 +380,7 @@ const BodegaOptions = () => {
             <h3>Añadir nueva bodega</h3>
             <div className="input-container input-bodega">
               <input
+                className="nombre"
                 type="text"
                 placeholder="Nombre"
                 value={nuevaBodega.nombre}
@@ -344,6 +389,7 @@ const BodegaOptions = () => {
                 }
               />
               <input
+                className="direccion"
                 type="text"
                 placeholder="Dirección"
                 value={nuevaBodega.direccion}
@@ -352,6 +398,7 @@ const BodegaOptions = () => {
                 }
               />
               <input
+                className="telefono"
                 type="text"
                 placeholder="Teléfono"
                 value={nuevaBodega.telefono}
@@ -360,11 +407,30 @@ const BodegaOptions = () => {
                 }
               />
               <input
+                className="cif"
                 type="text"
                 placeholder="CIF"
                 value={nuevaBodega.cif}
                 onChange={(e) =>
                   setNuevaBodega({ ...nuevaBodega, cif: e.target.value })
+                }
+              />
+              <input
+                className="web"
+                type="text"
+                placeholder="Web"
+                value={nuevaBodega.web}
+                onChange={(e) =>
+                  setNuevaBodega({ ...nuevaBodega, web: e.target.value })
+                }
+              />
+              <input
+                className="password"
+                type="password"
+                placeholder="Contraseña"
+                value={nuevaBodega.password}
+                onChange={(e) =>
+                  setNuevaBodega({ ...nuevaBodega, password: e.target.value })
                 }
               />
 

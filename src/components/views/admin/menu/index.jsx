@@ -6,32 +6,32 @@ const MenuElementosAdmin = () => {
     <div className="bodega-menu">
       <nav>
         <ul>
-          <li>
+          <li className="menu-item">
             <Link to="/perfil-admin/denominacion-origen">
               Denominación de origen
             </Link>
           </li>
-          <li>
+          <li className="menu-item">
             <Link to="/perfil-admin/variedad-uva">
               Variedad de uva
             </Link>
           </li>
-          <li>
+          <li className="menu-item">
             <Link to="/perfil-admin/tipo-vino">
               Tipo de vino
             </Link>
           </li>
-          <li>
+          <li className="menu-item">
             <Link to="/perfil-admin/comida">
               Comida
             </Link>
           </li>
-          <li>
+          <li className="menu-item">
             <Link to="/perfil-admin/vino">
               Vinos
             </Link>
           </li>
-          <li>
+          <li className="menu-item">
             <Link to="/perfil-admin/bodega">
               Bodega
             </Link>
