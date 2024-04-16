@@ -45,7 +45,7 @@ function App() {
         } />
         <Route path="/view/:vinoId" element={<DetallesVino />} />
         <Route path="/edit/:vinoId" element={<EditarVino />} />
-        <Route path="/perfil-bodega" element={<PerfilBodega nombre="Nombre de la bodega" />} /> {/* Reemplaza "Nombre de la bodega" con el nombre real de la bodega */}
+        <Route path="/perfil-bodega/:bodegaId" element={<PerfilBodega nombre="nombre"/>} />
         <Route path="/perfil-admin" element={<PerfilAdmin nombre="Admin" />} /> 
         <Route path="/perfil-admin/comida" element={<ComidaOptions />} />
         <Route path="/perfil-admin/denominacion-origen" element={<DenominacionOrigenOptions />} /> 

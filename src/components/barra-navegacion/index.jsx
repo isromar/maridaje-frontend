@@ -67,7 +67,7 @@ const BarraNavegacion = () => {
                   window.location.href = "/perfil-admin";
                 } else {
                   // Redirigir al perfil de bodega
-                  window.location.href = "/perfil-bodega";
+                  window.location.href = `/perfil-bodega/${options[0].bodegaId}`;
                 }
 
               setTimeout(() => {

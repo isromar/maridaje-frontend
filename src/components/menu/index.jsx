@@ -18,15 +18,13 @@ const TopMenu = () => {
           </li>
           {usuario && bodegaId && acceso && !admin && (
             <li>
-              {/*<Link to={`/perfil-bodega/${bodegaId}`>*/}
-                <Link to="/perfil-bodega">
+              <Link to={`/perfil-bodega/${bodegaId}`}>
                 Perfil bodega
               </Link>
             </li>
           )}
           {usuario && bodegaId && acceso && admin && (
             <li>
-              {/*<Link to={`/perfil-bodega/${bodegaId}`>*/}
                 <Link to="/perfil-admin">
                 Perfil admin
               </Link>
