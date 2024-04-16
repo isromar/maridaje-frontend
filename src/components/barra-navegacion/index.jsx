@@ -69,7 +69,7 @@ const BarraNavegacion = () => {
               setTimeout(() => {
                   // Cerrar el mensaje después de 3 segundos
                   Swal.close();
-              }, 3000);
+              }, 4000);
             } else {
               mostrarMensaje(
               "Error de acceso",

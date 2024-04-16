@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
   const [orden, setOrden] = useState("asc"); // Estado para controlar el orden
   const [vinosFiltrados, setVinosFiltrados] = useState([]); // Estado para almacenar los vinos filtrados
-  const acceso = localStorage.getItem("acceso");
+  const usuario = localStorage.getItem("usuario");
 
   const fetchData = async () => {
     try {
@@ -149,7 +149,7 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
                     <Eye size={20} className="cursor-pointer" />
                   </Link>
 
-                  {acceso ? (
+                  {usuario === 'admin' ? (
                     <>
                       <Link to={`/edit/${vino["@id"].split("/").pop()}`}>
                         <Edit size={20} className="cursor-pointer" />
