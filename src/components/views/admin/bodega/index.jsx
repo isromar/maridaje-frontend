@@ -8,27 +8,12 @@ import {
 } from "../../../../utility/utils";
 import Swal from "sweetalert2";
 import AddBodega from "./add";
+import EditBodega from "./add/edit";
 
 const BodegaOptions = () => {
   const [bodegas, setBodegas] = useState([]);
   const [bodegaSelected, setBodegaSelected] = useState("");
-  const [editedBodega, setEditedBodega] = useState({
-    nombre: "",
-    direccion: "",
-    telefono: "",
-    cif: "",
-    web: "",
-    password: "",
-  });
 
-  const [nuevaBodega, setNuevaBodega] = useState({
-    nombre: "",
-    direccion: "",
-    telefono: "",
-    cif: "",
-    web: "",
-    password: "",
-  });
 
   useEffect(() => {
     // Mostrar mensaje de cargando datos
@@ -47,7 +32,7 @@ const BodegaOptions = () => {
 
   useEffect(() => {
     fetchBodegas();
-  }, [editedBodega, nuevaBodega]);
+  }, []);
 
 
   const fetchBodegas = async () => {
@@ -83,140 +68,17 @@ const BodegaOptions = () => {
     }
   };
 
-  const handleEditBodega = async () => {
-    if (bodegaSelected && bodegaSelected.nombre && bodegaSelected.cif) {
-      const updatedBodega = {
-        ...bodegaSelected,
-        nombre: editedBodega.nombre || bodegaSelected.nombre,
-        direccion: editedBodega.direccion || bodegaSelected.direccion,
-        telefono: editedBodega.telefono || bodegaSelected.telefono,
-        cif: editedBodega.cif || bodegaSelected.cif,
-        web: editedBodega.web || bodegaSelected.web,
-        password: editedBodega.password || bodegaSelected.password,
-      };
-
-      try {
-        const response = await fetch(
-          `${apiUrl.bodegas}/${bodegaSelected.value}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/ld+json",
-            },
-            body: JSON.stringify(updatedBodega),
-          }
-        );
-
-        if (response.ok) {
-          const updatedBodegaAgregada = await response.json();
-          setBodegas((prevBodegas) =>
-            prevBodegas.map((option) =>
-              option.value === bodegaSelected.value
-                ? updatedBodegaAgregada
-                : option
-            )
-          );
-
-          setEditedBodega({
-            nombre: "",
-            direccion: "",
-            telefono: "",
-            cif: "",
-            web: "",
-            password: "",
-          });
-
-          setBodegaSelected({
-            nombre: "",
-            direccion: "",
-            telefono: "",
-            cif: "",
-            web: "",
-            password: "",
-          });
-
-          mostrarMensaje(
-            "Registro actualizado",
-            "Registro actualizado con éxito",
-            "success"
-          );
-        } else {
-          mostrarMensaje(
-            "Error al actualizar el registro",
-            "Hubo un error al actualizar el registro",
-            "error"
-          );
-        }
-      } catch (error) {
-        console.error(error);
-        mostrarMensaje(
-          "Error al actualizar el registro",
-          "Hubo un error al actualizar el registro",
-          "error"
-        );
-      }
-    }
+  const handleEditBodega = (bodega) => {
+    // Implement the functionality to edit the selected bodega here
+    // Once the bodega is edited, you can call the setBodegas function to update the list of bodegas
+    setBodegas((prevBodegas) => {
+      const updatedBodegas = [...prevBodegas];
+      const index = updatedBodegas.findIndex((b) => b.value === bodega.value);
+      updatedBodegas[index] = bodega;
+      return updatedBodegas;
+    });
   };
   
-  const handleAddBodega = async () => {
-    if (nuevaBodega.nombre && nuevaBodega.cif && nuevaBodega.password) {
-      const nuevaBodegaObj = {
-        nombre: nuevaBodega.nombre,
-        direccion: nuevaBodega.direccion,
-        telefono: nuevaBodega.telefono,
-        cif: nuevaBodega.cif,
-        web: nuevaBodega.web,
-        password: nuevaBodega.password,
-      };
-
-      try {
-        const response = await fetch(`${apiUrl.bodegas}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/ld+json",
-          },
-          body: JSON.stringify(nuevaBodegaObj),
-        });
-
-        if (response.ok) {
-          const nuevaBodegaAgregada = await response.json();
-          setBodegas((prevBodegas) => [...prevBodegas, nuevaBodegaAgregada]);
-
-          fetchBodegas();
-
-          setNuevaBodega({
-            nombre: "",
-            direccion: "",
-            telefono: "",
-            cif: "",
-            web: "",
-            password: "",
-          });
-
-          mostrarMensaje(
-            "Registro añadido",
-            "Registro añadido con éxito",
-            "success"
-          );
-        } else {
-          mostrarMensaje(
-            "Error al añadir el registro",
-            "Hubo un error al añadir el registro",
-            "error"
-          );
-        }
-      } catch (error) {
-        console.error(error);
-        mostrarMensaje(
-          "Error al añadir el registro",
-          "Hubo un error al añadir el registro",
-          "error"
-        );
-      }
-    }
-  };
-
-
   const handleDeleteBodega = async () => {
     if (bodegaSelected) {
       mostrarMensajeConfirmacion(
@@ -236,7 +98,6 @@ const BodegaOptions = () => {
               );
 
               setBodegaSelected(null);
-              setNuevaBodega("");
 
               mostrarMensaje(
                 "Registro eliminado",
@@ -274,107 +135,15 @@ const BodegaOptions = () => {
           <section>
             <h3>Bodega</h3>
             <div className="select-container">
-            <Select
-              options={bodegas}
-              value={bodegaSelected}
-              onChange={setBodegaSelected}
-              placeholder="Bodegas"
-              getOptionLabel={(option) => `${option.label} - ${option.cif}`}
-            />
+              <Select
+                options={bodegas}
+                value={bodegaSelected}
+                onChange={setBodegaSelected}
+                placeholder="Bodegas"
+                getOptionLabel={(option) => `${option.label} - ${option.cif}`}
+              />
             </div>
-
-            <div className="input-container">
-              <input
-                className="disabled"
-                type="text"
-                placeholder="Bodega seleccionada"
-                value={bodegaSelected ? `${bodegaSelected.label} - ${bodegaSelected.cif}` : ""}
-                readOnly
-              />
-              <button
-                className="delete-button"
-                onClick={() => handleDeleteBodega(bodegaSelected)}
-              >
-                Borrar
-              </button>
-            </div>
-
-            <div className="input-container input-bodega">
-              <input
-                className="nombre"
-                type="text"
-                placeholder="Nombre"
-                value={bodegaSelected ? bodegaSelected.nombre : ""}
-                onChange={(e) =>
-                  setBodegaSelected({
-                    ...bodegaSelected,
-                    nombre: e.target.value,
-                  })
-                }
-              />
-              <input
-                className="direccion"
-                type="text"
-                placeholder="Dirección"
-                value={bodegaSelected ? bodegaSelected.direccion : ""}
-                onChange={(e) =>
-                  setBodegaSelected({
-                    ...bodegaSelected,
-                    direccion: e.target.value,
-                  })
-                }
-              />
-              <input
-                className="telefono"
-                type="text"
-                placeholder="Teléfono"
-                value={bodegaSelected ? bodegaSelected.telefono : ""}
-                onChange={(e) =>
-                  setBodegaSelected({
-                    ...bodegaSelected,
-                    telefono: e.target.value,
-                  })
-                }
-              />
-              <input
-                className="cif"
-                type="text"
-                placeholder="CIF"
-                value={bodegaSelected ? bodegaSelected.cif : ""}
-                onChange={(e) =>
-                  setBodegaSelected({
-                    ...bodegaSelected,
-                    cif: e.target.value,
-                  })
-                }
-              />
-              <input
-                className="web"
-                type="text"
-                placeholder="Web"
-                value={bodegaSelected ? bodegaSelected.web : ""}
-                onChange={(e) =>
-                  setBodegaSelected({
-                    ...bodegaSelected,
-                    web: e.target.value,
-                  })
-                }
-              />
-              <input
-                className="password"
-                type="password"
-                placeholder="Contraseña"
-                value={bodegaSelected ? bodegaSelected.password : ""}
-                onChange={(e) =>
-                  setBodegaSelected({
-                    ...bodegaSelected,
-                    password: e.target.value,
-                  })
-                }
-              />      
-
-              <button onClick={handleEditBodega}>Modificar</button>
-            </div>
+            <EditBodega bodegaSelected={bodegaSelected} handleEditBodega={handleEditBodega} />
           </section>
 
           <section>
