@@ -54,11 +54,7 @@ const BarraNavegacion = () => {
               setAcceso(true);
 
               localStorage.setItem("bodegaId", options[0].bodegaId);
-
               localStorage.setItem("acceso", true);
-
-              // Redirigir a la URL de la bodega después del acceso correcto
-              //history.push(`/perfil-bodega/${options[0].bodegaId}`);
 
                 // Verificar si el usuario es 'admin'
                 if (usuario === 'admin') {

@@ -9,8 +9,8 @@ const bodegaId = localStorage.getItem("bodegaId");
       <nav>
         <ul className="centered-links">
           <li className="menu-item">
-            <Link to={`/perfil-bodega/${bodegaId}/vinos`}>
-              Ver vinos
+            <Link to={`/perfil-bodega/${bodegaId}/lista-vinos`}>
+              Lista de vinos
             </Link>
           </li>
           <li className="menu-item">
