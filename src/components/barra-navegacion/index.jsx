@@ -8,7 +8,7 @@ import TopMenu from "../menu";
 const BarraNavegacion = () => {
   //const history = useHistory();
   const [usuario, setUsuario] = useState("");
-  const [contrasena, setContrasena] = useState("");
+  const [password, setPassword] = useState("");
   const [acceso, setAcceso] = useState(false);
   const [admin, setAdmin] = useState(false);
   
@@ -37,17 +37,18 @@ const BarraNavegacion = () => {
     event.preventDefault();
     const data = await comprobarLogin(usuario); // Llama a la función que comprueba si existe ese usuario en la bbdd 
     console.log(data);
-    if (usuario === "" && (contrasena !== "" || contrasena === '')) {
+    if (usuario === "" && (password !== "" || password === '')) {
     } else {
         if (data && data["hydra:member"].length > 0) {
             const options = data["hydra:member"].map((bodega) => ({
             value: bodega.id,
             label: bodega.cif,
             name: bodega.nombre,  // Obtener el nombre de la bodega
-            bodegaId: bodega.id
+            bodegaId: bodega.id,
+            password: bodega.password
             }));
 
-            if (options[0].label === usuario) {
+            if (options[0].label === usuario && password === options[0].password) { // Check if the password matches
               mostrarMensaje("Acceso correcto", `Te damos la bienvenida ${options[0].name}`, "success");
               localStorage.setItem("usuario", usuario);
               setAcceso(true);
@@ -73,7 +74,18 @@ const BarraNavegacion = () => {
                   // Cerrar el mensaje después de 3 segundos
                   Swal.close();
               }, 3000);
-            }
+            } else {
+              mostrarMensaje(
+              "Error de acceso",
+              "La bodega no está registrada o la contraseña es incorrecta",
+              "error"
+              );
+              setAcceso(false)
+              setTimeout(() => {
+              // Cerrar el mensaje después de 3 segundos
+              Swal.close();
+              }, 4000);
+        }
         } else {
             mostrarMensaje(
             "Error de acceso",
@@ -102,8 +114,8 @@ const BarraNavegacion = () => {
         <input
           type="password"
           placeholder="Contraseña"
-          value={contrasena}
-          onChange={(e) => setContrasena(e.target.value)}
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
         <button type="submit" class="btn btn-light">Entrar</button>
         <button type="button" className="btn btn-light" onClick={handleLogout}>

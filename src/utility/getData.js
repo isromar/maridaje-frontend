@@ -1,5 +1,6 @@
 import { apiUrl } from "../data/Url";
 
+
 /* Obtiene los datos según la url que se pasa por parámetro e incluye las opciones en la búsqueda en la bbdd si las hay */
 export const getData = async (url, busquedaNombreVino = '', selectedOption = null, bodegaId = null) => {
   if (busquedaNombreVino === '' && selectedOption === '') {

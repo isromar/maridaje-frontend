@@ -106,8 +106,6 @@ function EditarVino() {
   };
 
   useEffect(() => {
-    // Aquí deberías hacer una solicitud a tu API o base de datos para obtener los datos del vino por su ID
-    // Por ejemplo, con fetch o axios
     if (vinoId) {
       fetch(`${apiUrl.vinos}/${vinoId}`)
         .then((response) => response.json())
@@ -133,6 +131,8 @@ function EditarVino() {
       setDenominacionOrigenSelected(selectedOption);
     } else if (stateName === "vinoEcologicoSelected") {
       setVinoEcologicoSelected(selectedOption);
+    } else if (stateName === "variedadUvaSelected") {
+        setVariedadUvaSelected(selectedOption);
     }
   };
 
@@ -171,6 +171,10 @@ function EditarVino() {
         // Mostrar un mensaje de éxito
         mostrarMensaje('Guardado', 'Los datos del vino se han guardado correctamente', 'success');
   
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
         // Actualizar el estado del vino con los nuevos valores
         const updatedVino = await response.json();
         setVino(updatedVino);
@@ -271,16 +275,13 @@ function EditarVino() {
             <td>
               <Select
                 isMulti
-                value={vino.comida.map(comida => ({ value: comida["@id"], label: comida.nombre }))}
+                value={vino.comida.map(comida => ({ value: comida.id, label: comida.nombre }))}
                 onChange={(selectedOptions) => setComidaSelected(selectedOptions)}
-                options={vino.comida.map((itemComida) => ({
-                  value: itemComida["@id"],
-                  label: itemComida.nombre,
-                }))}
+                options={comidas}
                 placeholder={vino.comida && vino.comida.length > 0
                   ? [
                       {
-                        value: vino.comida[0]["@id"],
+                        value: vino.comida[0].id,
                         label: vino.comida[0].nombre
                       }
                     ]
@@ -297,7 +298,8 @@ function EditarVino() {
                 isMulti
                 value={vino.variedad_uva.map(uva => ({ value: uva.id, label: uva.nombre }))}
                 onChange={(selectedOptions) =>
-                  setVariedadUvaSelected(selectedOptions)
+                  //setVariedadUvaSelected(selectedOptions)
+                  handleChange("variedadUvaSelected", selectedOptions)
                 }
                 options={variedadesUva}
                 placeholder={vino.variedad_uva && vino.variedad_uva.length > 0
