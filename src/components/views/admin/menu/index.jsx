@@ -5,7 +5,7 @@ const MenuElementosAdmin = () => {
   return (
     <div className="admin-menu">
       <nav>
-        <ul>
+        <ul className="centered-links">
           <li className="menu-item">
             <Link to="/perfil-admin/denominacion-origen">
               Denominación de origen
@@ -26,14 +26,15 @@ const MenuElementosAdmin = () => {
               Comida
             </Link>
           </li>
-          <li className="menu-item">
-            <Link to="/perfil-admin/vino">
-              Vinos
-            </Link>
-          </li>
+
           <li className="menu-item">
             <Link to="/perfil-admin/bodega">
               Bodega
+            </Link>
+          </li>
+          <li className="menu-item">
+            <Link to="/perfil-admin/lista-vinos">
+              Lista de vinos
             </Link>
           </li>
         </ul>

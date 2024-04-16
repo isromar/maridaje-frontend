@@ -2,14 +2,15 @@ import React, { useState, useEffect } from "react";
 import { getData } from "../../../../utility/getData";
 import { apiUrl } from "../../../../data/Url";
 import { Eye, Trash2, Edit } from "react-feather";
-import { mostrarMensaje } from "../../../../utility/utils";
-import { Link } from 'react-router-dom';
+import { mostrarMensaje, mostrarMensajeConfirmacion } from "../../../../utility/utils";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 /* Este componente muestra una tabla de vinos y permite ordenar los vinos por nombre y tipo. */
 const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
   const [orden, setOrden] = useState("asc"); // Estado para controlar el orden
   const [vinosFiltrados, setVinosFiltrados] = useState([]); // Estado para almacenar los vinos filtrados
+  const acceso = localStorage.getItem("acceso");
 
   const fetchData = async () => {
     try {
@@ -25,8 +26,12 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
     }
   };
 
-    useEffect(() => {
-    mostrarMensaje('Cargando datos...', 'Espere mientras se cargan los datos', 'info');
+  useEffect(() => {
+    mostrarMensaje(
+      "Cargando datos...",
+      "Espere mientras se cargan los datos",
+      "info"
+    );
 
     fetchData();
 
@@ -34,7 +39,7 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
     setTimeout(() => {
       Swal.close();
     }, 2000);
-  }, [ ]);
+  }, []);
 
   useEffect(() => {
     fetchData();
@@ -45,7 +50,8 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
     const nextOrder = orden === "asc" ? "desc" : "asc";
     setOrden(nextOrder);
     let sortedVinos;
-    if (tipo === "Nombre") {  // Ordena los vinos por el nombre
+    if (tipo === "Nombre") {
+      // Ordena los vinos por el nombre
       sortedVinos = [...vinosFiltrados].sort((a, b) => {
         if (nextOrder === "asc") {
           return a.nombre.localeCompare(b.nombre);
@@ -53,7 +59,8 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
           return b.nombre.localeCompare(a.nombre);
         }
       });
-    } else if (tipo === "Tipo") { // Ordena los vinos por el tipo
+    } else if (tipo === "Tipo") {
+      // Ordena los vinos por el tipo
       sortedVinos = [...vinosFiltrados].sort((a, b) => {
         if (nextOrder === "asc") {
           return a.tipoVino.nombre.localeCompare(b.tipoVino.nombre);
@@ -62,7 +69,43 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
         }
       });
     }
-  setVinosFiltrados(sortedVinos); // Actualiza el estado con los vinos ordenados
+    setVinosFiltrados(sortedVinos); // Actualiza el estado con los vinos ordenados
+  };
+
+  const handleDelete = (urlVinoId) => {
+    const vinoId = urlVinoId.split("/").pop(); // Obtiene la id del vino, ya que llega en urlVinoId como api/vinos/vinoId
+    mostrarMensajeConfirmacion(
+      "¿Quieres borrar este vino?",
+      "Esta acción no se puede deshacer",
+      "warning"
+    ).then((result) => {
+      if (result.isConfirmed) {
+        // Lógica para eliminar el registro de la base de datos
+        fetch(`${apiUrl.vinos}/${vinoId}`, {
+          method: "DELETE",
+        })
+          .then((response) => {
+            if (response.ok) {
+              // Lógica para manejar la eliminación exitosa
+              mostrarMensaje(
+                "¡Borrado!",
+                "El registro ha sido eliminado",
+                "success"
+              );
+              fetchData(); // Llama a fetchData para actualizar la lista de vinos
+            } else {
+              mostrarMensaje(
+                "¡Error!",
+                "El registro no se ha podido eliminar",
+                "error"
+              );
+            }
+          })
+          .catch((error) => {
+            // Lógica para manejar errores de red u otros errores
+          });
+      }
+    });
   };
 
   return (
@@ -71,7 +114,10 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
         <table className="table table-striped tabla-vinos">
           <thead>
             <tr>
-              <th onClick={() => handleSort("Nombre")} className="cursor-pointer">
+              <th
+                onClick={() => handleSort("Nombre")}
+                className="cursor-pointer"
+              >
                 Nombre{orden === "asc" ? " ⇅" : " ⇅"}{" "}
                 {/* Agrega el símbolo de las flechas y el manejador de clic para ordenar*/}
               </th>{" "}
@@ -102,6 +148,19 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
                   <Link to={`/view/${vino["@id"].split("/").pop()}`}>
                     <Eye size={20} className="cursor-pointer" />
                   </Link>
+
+                  {acceso ? (
+                    <>
+                      <Link to={`/edit/${vino["@id"].split("/").pop()}`}>
+                        <Edit size={20} className="cursor-pointer" />
+                      </Link>
+                      <Trash2
+                        size={20}
+                        className="cursor-pointer"
+                        onClick={() => handleDelete(vino["@id"])}
+                      />
+                    </>
+                  ) : null}
                 </td>
               </tr>
             ))}

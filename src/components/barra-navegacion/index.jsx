@@ -103,25 +103,32 @@ const BarraNavegacion = () => {
 
   return (
     <div className="barra-navegacion">
-        {acceso && <a href="#">Perfil bodega</a>}
+        
       <form onSubmit={handleFormSubmit}>
-        <input
-          type="text"
-          placeholder={"Usuario"}
-          value={usuario}
-          onChange={handleUsuarioChange}
-        />
-        <input
-          type="password"
-          placeholder="Contraseña"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <button type="submit" class="btn btn-light">Entrar</button>
-        <button type="button" className="btn btn-light" onClick={handleLogout}>
+        {!acceso && (
+          <>
+          <input
+            type="text"
+            placeholder={"Usuario"}
+            value={usuario}
+            onChange={handleUsuarioChange}
+          />
+          <input
+            type="password"
+            placeholder="Contraseña"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <button type="submit" class="btn btn-light">Entrar</button>
+          </>
+          )}
+          {acceso && (
+          <button type="button" className="btn btn-light" onClick={handleLogout}>
             Salir
-        </button>
+          </button>
+          )}
       </form>
+  
     </div>
   );
 };

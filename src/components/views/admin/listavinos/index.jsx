@@ -1,17 +1,14 @@
 import React, { useState, useEffect } from "react";
 import TopMenu from "../../../menu";
-import TablaVinosBodega from "../../bodega/list";
-import { apiUrl } from "../../../../data/Url";
-import Select from "react-select";
-import { mostrarMensaje } from "../../../../utility/utils";
-import MenuElementosAdmin from "../menu";
 
-const PerfilAdmin = () => {
+import {
+  mostrarMensaje,
+  mostrarMensajeConfirmacion,
+} from "../../../../utility/utils";
+import Swal from "sweetalert2";
+import TablaVinos from "../../vino/list";
 
-  useEffect(() => {
-
-  }, []);
-
+const ListaVinosAdmin = () => {
   return (
     <div className="perfil-admin-container">
       <div>
@@ -24,13 +21,10 @@ const PerfilAdmin = () => {
             <span>Administrador</span>
           </h2>
         </section>
-        
-        <div>
-          <MenuElementosAdmin/>
-        </div>
+            <TablaVinos/>
       </div>
     </div>
   );
 };
 
-export default PerfilAdmin;
+export default ListaVinosAdmin;

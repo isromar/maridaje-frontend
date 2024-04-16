@@ -15,6 +15,7 @@ import VariedadUvaOptions from './components/views/admin/variedaduva';
 import BodegaOptions from './components/views/admin/bodega';
 import VinosBodega from './components/views/bodega/vino';
 import EditarBodega from './components/views/bodega/edit';
+import ListaVinosAdmin from './components/views/admin/listavinos';
 
 function App() {
   return (
@@ -49,7 +50,7 @@ function App() {
         <Route path="/edit/:vinoId" element={<EditarVino />} />
 
         <Route path="/perfil-bodega/:bodegaId" element={<PerfilBodega nombre="nombre"/>} />
-        <Route path="/perfil-bodega/:bodegaId/vinos" element={<VinosBodega />} />
+        <Route path="/perfil-bodega/:bodegaId/lista-vinos" element={<VinosBodega />} />
         <Route path="/perfil-bodega/:bodegaId/nuevo-vino" element={<VinosBodega />} />
         <Route path="/perfil-bodega/:bodegaId/editar-bodega" element={<EditarBodega />} />
 
@@ -59,6 +60,7 @@ function App() {
         <Route path="/perfil-admin/tipo-vino" element={<TipoVinoOptions />} /> 
         <Route path="/perfil-admin/variedad-uva" element={<VariedadUvaOptions />} /> 
         <Route path="/perfil-admin/bodega" element={<BodegaOptions />} />
+        <Route path="/perfil-admin/lista-vinos" element={<ListaVinosAdmin />} />
 
       </Routes>
     </Router>

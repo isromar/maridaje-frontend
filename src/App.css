@@ -80,7 +80,7 @@
 
 .input-container {
   display: flex;
-  flex-direction: column;
+  flex-direction:row;
   align-items: center;
   width: 100%;
   max-width: 400px;
@@ -92,7 +92,6 @@
   display: inline;
   align-items: center;
   width: 70%;
-
 }
 
 
