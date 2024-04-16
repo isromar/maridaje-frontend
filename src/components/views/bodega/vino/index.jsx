@@ -5,7 +5,7 @@ import { useParams } from "react-router-dom";
 import { obtenerNombreBodega } from "../../../../utility/utils";
 import MenuElementosBodega from "../menu";
 
-const PerfilBodega = () => {
+const VinosBodega = () => {
   const { bodegaId } = useParams();
   const [nombreBodega, setNombreBodega] = useState('');
 
@@ -25,15 +25,13 @@ const PerfilBodega = () => {
       <div>
         <section className="perfil-bodega centrar">
           <h2 className="centrar">
-            <span>Bodega - {nombreBodega} </span>
+            <span>Vinos - {nombreBodega} </span>
           </h2>
         </section>
-        <div>
-          <MenuElementosBodega/>
-        </div>
+        <TablaVinosBodega />
       </div>
     </div>
   );
 };
 
-export default PerfilBodega;
+export default VinosBodega;

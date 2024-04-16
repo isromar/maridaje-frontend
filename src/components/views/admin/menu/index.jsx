@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 const MenuElementosAdmin = () => {
   return (
-    <div className="bodega-menu">
+    <div className="admin-menu">
       <nav>
         <ul>
           <li className="menu-item">

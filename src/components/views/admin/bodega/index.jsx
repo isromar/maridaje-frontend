@@ -7,6 +7,7 @@ import {
   mostrarMensajeConfirmacion,
 } from "../../../../utility/utils";
 import Swal from "sweetalert2";
+import AddBodega from "./add";
 
 const BodegaOptions = () => {
   const [bodegas, setBodegas] = useState([]);
@@ -377,64 +378,8 @@ const BodegaOptions = () => {
           </section>
 
           <section>
-            <h3>Añadir nueva bodega</h3>
-            <div className="input-container input-bodega">
-              <input
-                className="nombre"
-                type="text"
-                placeholder="Nombre"
-                value={nuevaBodega.nombre}
-                onChange={(e) =>
-                  setNuevaBodega({ ...nuevaBodega, nombre: e.target.value })
-                }
-              />
-              <input
-                className="direccion"
-                type="text"
-                placeholder="Dirección"
-                value={nuevaBodega.direccion}
-                onChange={(e) =>
-                  setNuevaBodega({ ...nuevaBodega, direccion: e.target.value })
-                }
-              />
-              <input
-                className="telefono"
-                type="text"
-                placeholder="Teléfono"
-                value={nuevaBodega.telefono}
-                onChange={(e) =>
-                  setNuevaBodega({ ...nuevaBodega, telefono: e.target.value })
-                }
-              />
-              <input
-                className="cif"
-                type="text"
-                placeholder="CIF"
-                value={nuevaBodega.cif}
-                onChange={(e) =>
-                  setNuevaBodega({ ...nuevaBodega, cif: e.target.value })
-                }
-              />
-              <input
-                className="web"
-                type="text"
-                placeholder="Web"
-                value={nuevaBodega.web}
-                onChange={(e) =>
-                  setNuevaBodega({ ...nuevaBodega, web: e.target.value })
-                }
-              />
-              <input
-                className="password"
-                type="password"
-                placeholder="Contraseña"
-                value={nuevaBodega.password}
-                onChange={(e) =>
-                  setNuevaBodega({ ...nuevaBodega, password: e.target.value })
-                }
-              />
-
-              <button onClick={handleAddBodega}>Añadir</button>
+            <div>
+                <AddBodega/>
             </div>
           </section>
         </div>

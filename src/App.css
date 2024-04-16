@@ -134,18 +134,18 @@
   background-color: #ddd;
 }
 
-.bodega-menu ul {
+.admin-menu ul, .bodega-menu ul {
   list-style: none;
   display: flex;
   margin: 0;
   padding: 0;
 }
 
-.bodega-menu li {
+.admin-menu a, .bodega-menu li {
   margin: 0 10px;
 }
 
-.bodega-menu a {
+.admin-menu a, .bodega-menu a {
   text-decoration: none;
   padding: 5px 10px;
   border-radius: 5px;
@@ -155,10 +155,9 @@
   color: #4c1f27;
 }
 
-.bodega-menu a:hover {
+.admin-menu a:hover, .bodega-menu a:hover {
   background-color: #ccc;
 }
-
 
 .nombre,
 .direccion {
@@ -185,5 +184,12 @@
 
 .link-style:hover {
   cursor: pointer;
+}
+
+.centered-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
