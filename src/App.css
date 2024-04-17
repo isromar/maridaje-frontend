@@ -190,3 +190,19 @@
   height: 100%;
 }
 
+
+.admin-menu a, .bodega-menu a {
+  color: #4c1f27; /* Color de texto por defecto */
+  text-decoration: none;
+  padding: 8px 16px; /* Ajuste de padding para dar espacio al texto */
+  font-size: 1.5em; /* Tamaño de letra grande */
+  border: none;
+  border-radius: 0;
+  background-color: transparent;
+  transition: color 0.3s ease; /* Transición suave para el color */
+}
+
+.admin-menu a:hover, .bodega-menu a:hover {
+  color: white;
+  background-color: #4c1f27;
+}
