@@ -55,6 +55,14 @@ const EditarBodega = () => {
   };
 
   const handleEditBodega = async () => {
+    if (!bodegaSelected.nombre || !bodegaSelected.cif || !bodegaSelected.password) {
+      mostrarMensaje(
+        "Campos obligatorios",
+        "Por favor, asegúrate de rellenar los campos Nombre, CIF y Contraseña",
+        "warning"
+      );
+      return;
+    }
     if (bodegaSelected && bodegaSelected.nombre && bodegaSelected.cif) {
       const updatedBodega = {
         ...bodegaSelected,

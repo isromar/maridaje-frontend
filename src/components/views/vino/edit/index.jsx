@@ -9,18 +9,21 @@ import TopMenu from "../../../menu";
 function EditarVino() {
   let { vinoId } = useParams();
   const [vino, setVino] = useState(null);
+
   const [tiposDeVino, setTiposDeVino] = useState([]);
   const [tipoVinoSelected, setTipoVinoSelected] = useState("");
+
   const [denominacionOrigenOptions, setDenominacionOrigenOptions] = useState([]);
   const [denominacionOrigenSelected, setDenominacionOrigenSelected] =
     useState("");
-  const [vinoEcologicoSelected, setVinoEcologicoSelected] = useState("");
 
   const [vinoPrecio, setVinoPrecio] = useState([]);
   const [vinoPrecioSelected, setVinoPrecioSelected] = useState("");
 
   const [comidas, setComidas] = useState("");
   const [comidaSelected, setComidaSelected] = useState("");
+
+  const [vinoEcologicoSelected, setVinoEcologicoSelected] = useState("");
   const opcionesVinoEcologico = [
     { value: "si", label: "sí" },
     { value: "no", label: "no" },

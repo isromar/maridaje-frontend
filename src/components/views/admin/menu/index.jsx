@@ -38,6 +38,11 @@ const MenuElementosAdmin = () => {
               Lista de vinos
             </Link>
           </li>
+          <li className="menu-item">
+            <Link to="/perfil-admin/nuevo-vino" className="menu-link">
+              Añadir vino
+            </Link>
+          </li>
         </ul>
       </nav>
     </div>

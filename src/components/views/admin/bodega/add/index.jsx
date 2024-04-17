@@ -63,6 +63,14 @@ const AddBodega = ({updateBodegas}) => {
   };
 
   const handleAddBodega = async (event) => {
+    if (!nuevaBodega.nombre || !nuevaBodega.cif || !nuevaBodega.password) {
+      mostrarMensaje(
+        "Campos obligatorios",
+        "Por favor, asegúrate de rellenar los campos Nombre, CIF y Contraseña",
+        "warning"
+      );
+      return;
+    }
     event.preventDefault();
     if (nuevaBodega.nombre && nuevaBodega.cif && nuevaBodega.password) {
       const nuevaBodegaObj = {
@@ -99,7 +107,7 @@ const AddBodega = ({updateBodegas}) => {
           });
 
           updateBodegas();
-          
+
           mostrarMensaje(
             "Registro añadido",
             "Registro añadido con éxito",
