@@ -206,3 +206,7 @@
   color: white;
   background-color: #4c1f27;
 }
+
+.input-datos-bodega {
+  display: inline-block;
+}
