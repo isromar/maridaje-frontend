@@ -3,7 +3,7 @@ import { mostrarMensaje } from "../../../../../utility/utils";
 import Swal from "sweetalert2";
 import { apiUrl } from "../../../../../data/Url";
 
-const AddBodega = () => {
+const AddBodega = ({updateBodegas}) => {
   const [bodegas, setBodegas] = useState([]);
 
   const [nuevaBodega, setNuevaBodega] = useState({
@@ -62,7 +62,8 @@ const AddBodega = () => {
     }
   };
 
-  const handleAddBodega = async () => {
+  const handleAddBodega = async (event) => {
+    event.preventDefault();
     if (nuevaBodega.nombre && nuevaBodega.cif && nuevaBodega.password) {
       const nuevaBodegaObj = {
         nombre: nuevaBodega.nombre,
@@ -97,6 +98,8 @@ const AddBodega = () => {
             password: "",
           });
 
+          updateBodegas();
+          
           mostrarMensaje(
             "Registro añadido",
             "Registro añadido con éxito",

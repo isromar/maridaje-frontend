@@ -49,6 +49,9 @@ const BodegaOptions = () => {
     fetchBodegas();
   }, [editedBodega, nuevaBodega]);
 
+  const updateBodegas = () => {
+    fetchBodegas();
+  };
 
   const fetchBodegas = async () => {
     try {
@@ -379,7 +382,7 @@ const BodegaOptions = () => {
 
           <section>
             <div>
-                <AddBodega/>
+                <AddBodega updateBodegas={updateBodegas} />
             </div>
           </section>
         </div>
