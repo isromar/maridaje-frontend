@@ -10,6 +10,7 @@ const DenominacionOrigenOptions = () => {
   const [denominacionDeOrigen, setDenominacionDeOrigen] = useState([]);
   const [denominacionOrigenSelected, setDenominacionOrigenSelected] = useState(null);
   const [nuevaDenominacionOrigen, setNuevaDenominacionOrigen] = useState("");
+  const [denominacionOrigenEdited, setDenominacionOrigenEdited] = useState("");
   
   useEffect(() => {
     // Mostrar mensaje de cargando datos
@@ -23,6 +24,9 @@ const DenominacionOrigenOptions = () => {
     }, 2000);
   }, []);
 
+  useEffect(() => {
+    setDenominacionOrigenEdited(denominacionOrigenSelected);
+  }, [denominacionOrigenSelected]);
 
   const fetchDenominacionDeOrigen = async () => {
     try {
@@ -52,7 +56,82 @@ const DenominacionOrigenOptions = () => {
     }
   };
 
+
+  const handleEditDenominacionOrigen = async () => {
+    if (!denominacionOrigenEdited) {
+      mostrarMensaje(
+        "Error al actualizar el registro",
+        "Por favor, asegúrate de rellenar el campo",
+        "warning"
+      );
+      return;
+    }
+  
+    const updatedDenominacionOrigen = {
+      ...denominacionOrigenSelected,
+      nombre: denominacionOrigenEdited, // Nuevo label actualizado
+    };
+  
+    try {
+      const response = await fetch(
+        `${apiUrl.denominacionDeOrigen}/${denominacionOrigenSelected.value}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/ld+json",
+          },
+          body: JSON.stringify(updatedDenominacionOrigen),
+        }
+      );
+  
+      if (response.ok) {
+        const updatedDenominacionOrigenAgregada = await response.json();
+        setDenominacionDeOrigen((prevDenominacionDeOrigen) =>
+          prevDenominacionDeOrigen.map((option) =>
+            option.value === denominacionOrigenSelected.value
+              ? updatedDenominacionOrigenAgregada
+              : option
+          )
+        );
+  
+        fetchDenominacionDeOrigen();
+
+        setDenominacionOrigenSelected(updatedDenominacionOrigenAgregada);
+        setDenominacionOrigenEdited("");
+  
+        mostrarMensaje(
+          "Registro actualizado",
+          "Registro actualizado con éxito",
+          "success"
+        );
+      } else {
+        mostrarMensaje(
+          "Error al actualizar el registro",
+          "Hubo un error al actualizar el registro",
+          "error"
+        );
+      }
+    } catch (error) {
+      console.error(error);
+      mostrarMensaje(
+        "Error al actualizar el registro",
+        "Hubo un error al actualizar el registro",
+        "error"
+      );
+    }
+  }; 
+
+
   const handleAddDenominacionOrigen = async () => {
+    if (!nuevaDenominacionOrigen) {
+      mostrarMensaje(
+        "Error al actualizar el registro",
+        "Por favor, asegúrate de rellenar el campo",
+        "warning"
+      );
+      return;
+    }
+
     if (nuevaDenominacionOrigen) {
       const nuevaDenominacionOrigenObj = {
         nombre: nuevaDenominacionOrigen,
@@ -139,13 +218,23 @@ const DenominacionOrigenOptions = () => {
 
             <div className="input-container">
               <input
-                class="disabled"              
+                className="disabled"              
                 type="text"
                 placeholder="Denominación de origen seleccionada"
                 value={denominacionOrigenSelected ? denominacionOrigenSelected.label : ""}
                 readOnly
               />
               <button className="delete-button" onClick={() => handleDeleteDenominacionOrigen(denominacionOrigenSelected)}>Borrar</button>
+            </div>
+
+            <div className="input-container">
+              <input
+                type="text"
+                placeholder="Editar denominación de origen"
+                value={denominacionOrigenEdited ? denominacionOrigenEdited.label : ""}
+                onChange={(e) => setDenominacionOrigenEdited(e.target.value)}
+              />
+              <button onClick={handleEditDenominacionOrigen}>Editar</button>
             </div>
 
             <div className="input-container">

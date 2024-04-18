@@ -9,6 +9,7 @@ const ComidaOptions = () => {
   const [comidas, setComidas] = useState([]);
   const [comidaSelected, setComidaSelected] = useState("");
   const [nuevaComida, setNuevaComida] = useState("");
+  const [comidaEdited, setComidaEdited] = useState("");
 
   useEffect(() => {
     // Mostrar mensaje de cargando datos
@@ -22,6 +23,9 @@ const ComidaOptions = () => {
     }, 2000);
   }, []);
 
+  useEffect(() => {
+    setComidaEdited(comidaSelected);
+  }, [comidaSelected]);
   
   const fetchComidas = async () => {
     try {
@@ -52,7 +56,80 @@ const ComidaOptions = () => {
   };
 
 
+  const handleEditComida = async () => {
+    if (!comidaEdited) {
+      mostrarMensaje(
+        "Error al actualizar el registro",
+        "Por favor, asegúrate de rellenar el campo",
+        "warning"
+      );
+      return;
+    }
+  
+    const updatedComida = {
+      ...comidaSelected,
+      nombre: comidaEdited, // Nuevo label actualizado
+    };
+  
+    try {
+      const response = await fetch(
+        `${apiUrl.comidas}/${comidaSelected.value}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/ld+json",
+          },
+          body: JSON.stringify(updatedComida),
+        }
+      );
+  
+      if (response.ok) {
+        const updatedComidaAgregada = await response.json();
+        setComidas((prevComidas) =>
+          prevComidas.map((option) =>
+            option.value === comidaSelected.value
+              ? updatedComidaAgregada
+              : option
+          )
+        );
+  
+        fetchComidas();
+  
+        setComidaSelected(updatedComidaAgregada);
+        setComidaEdited("");
+  
+        mostrarMensaje(
+          "Registro actualizado",
+          "Registro actualizado con éxito",
+          "success"
+        );
+      } else {
+        mostrarMensaje(
+          "Error al actualizar el registro",
+          "Hubo un error al actualizar el registro",
+          "error"
+        );
+      }
+    } catch (error) {
+      console.error(error);
+      mostrarMensaje(
+        "Error al actualizar el registro",
+        "Hubo un error al actualizar el registro",
+        "error"
+      );
+    }
+  };
+  
+
   const handleAddComida = async () => {
+    if (!nuevaComida) {
+      mostrarMensaje(
+        "Error al actualizar el registro",
+        "Por favor, asegúrate de rellenar el campo",
+        "warning"
+      );
+      return;
+    }
     if (nuevaComida) {
       const nuevaComidaObj = {
         nombre: nuevaComida,
@@ -146,6 +223,16 @@ const ComidaOptions = () => {
                 readOnly
               />
               <button className="delete-button" onClick={() => handleDeleteComida(comidaSelected)}>Borrar</button>
+            </div>
+
+            <div className="input-container">
+              <input
+                type="text"
+                placeholder="Editar comida"
+                value={comidaEdited ? comidaEdited.label : ""}
+                onChange={(e) => setComidaEdited(e.target.value)}
+              />
+              <button onClick={handleEditComida}>Editar</button>
             </div>
 
             <div className="input-container">
