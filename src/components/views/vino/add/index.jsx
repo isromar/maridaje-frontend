@@ -10,13 +10,15 @@ function NuevoVino() {
   const { bodegaId } = useParams();
 
   const [tiposDeVino, setTiposDeVino] = useState([]);
-  const [tipoVinoSelected, setTipoVinoSelected] = useState("");
 
-  const [vinoEcologicoSelected, setVinoEcologicoSelected] = useState("");
   const opcionesVinoEcologico = [
     { value: "si", label: "sí" },
     { value: "no", label: "no" },
   ];
+
+  const [denominacionOrigen, setDenominacionOrigen] = useState(
+    []
+  );
 
   const [nuevoVino, setNuevoVino] = useState({
     bodegaId: "",
@@ -25,11 +27,12 @@ function NuevoVino() {
     maduracion: "",
     ecologico: false, // Inicializa la propiedad "ecologico" con el valor "false"
     precio: 0,
+    denominacionOrigen: "",
   });
-  
 
   useEffect(() => {
     fetchTiposDeVino();
+    fetchDenominacionDeOrigen();
   }, []);
 
   const fetchTiposDeVino = async () => {
@@ -50,19 +53,61 @@ function NuevoVino() {
     }
   };
 
+  const fetchDenominacionDeOrigen = async () => {
+    try {
+      // Mostrar mensaje de cargando datos
+      mostrarMensaje(
+        "Cargando datos...",
+        "Espere mientras se cargan los datos",
+        "info"
+      );
+
+      const response = await fetch(apiUrl.denominacionDeOrigen);
+      const data = await response.json();
+      if (data && data["hydra:member"]) {
+        const options = data["hydra:member"]
+          .map((denominacion) => ({
+            value: denominacion.id,
+            label: denominacion.nombre,
+          }))
+          .sort((a, b) => a.label.localeCompare(b.label));
+        setDenominacionOrigen(options);
+
+        Swal.close();
+      } else {
+        console.error("No se encontraron datos.");
+      }
+    } catch (error) {
+      console.error("Error al obtener los datos:", error);
+
+      // Mostrar mensaje de error
+      mostrarMensaje(
+        "Error al cargar los datos",
+        "Ha ocurrido un error al cargar los datos",
+        "error"
+      );
+    }
+  };
+
   const handleChange = (selectedOption, stateName) => {
     if (stateName === "tipoVinoSelected") {
       setNuevoVino({ ...nuevoVino, tipoVino: selectedOption });
+    } else if (stateName === "denominacionOrigenSelected") {
+      setNuevoVino({
+        ...nuevoVino,
+        denominacionOrigen: selectedOption,
+      });
     }
   };
+
 
   const handleSubmit = async (event) => {
     if (!nuevoVino.nombre || !nuevoVino.tipoVino) {
       mostrarMensaje(
         "Campos obligatorios",
-        "Por favor, rellena los campos Nombre, Tipo de Vino y Contraseña",
+        "Por favor, rellena los campos Nombre, Tipo de Vino y Marida con",
         "warning",
-        4000,
+        4000
       );
       event.preventDefault();
       return;
@@ -71,6 +116,9 @@ function NuevoVino() {
 
     const bodegaIri = `${apiUrl.bodegas}/${bodegaId}`;
     const tipoVinoIri = `${apiUrl.tiposDeVino}/${nuevoVino.tipoVino.value}`;
+    const denominacionOrigenIri = `${apiUrl.denominacionDeOrigen}/${nuevoVino.denominacionOrigen.value}`;
+
+    console.log(denominacionOrigenIri);
 
     const nuevoVinoCompleto = {
       ...nuevoVino,
@@ -79,6 +127,7 @@ function NuevoVino() {
       tipoVino: tipoVinoIri,
       maduracion: nuevoVino.maduracion,
       precio: parseFloat(nuevoVino.precio),
+      denominacionOrigen: denominacionOrigenIri,
     };
     console.log(nuevoVinoCompleto);
 
@@ -175,7 +224,17 @@ function NuevoVino() {
 
             <tr>
               <td>Denominación de origen:</td>
-              <td></td>
+              <td>
+                <Select
+                  type="text"
+                  placeholder="Selecciona..."
+                  value={nuevoVino.denominacionOrigen}
+                  onChange={(denominacionOrigenSelected) =>
+                    handleChange(denominacionOrigenSelected, "denominacionOrigenSelected")
+                  }
+                  options={denominacionOrigen}
+                />
+              </td>
             </tr>
 
             <tr>
