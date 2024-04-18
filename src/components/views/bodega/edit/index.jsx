@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from "react";
 import TopMenu from "../../../menu";
 import { apiUrl } from "../../../../data/Url";
-import {
-  mostrarMensaje,
-} from "../../../../utility/utils";
+import { mostrarMensaje } from "../../../../utility/utils";
 import Swal from "sweetalert2";
 import { getDataPerfilBodega } from "../../../../utility/getData";
 
@@ -18,7 +16,6 @@ const EditarBodega = () => {
     web: "",
     password: "",
   });
-
 
   useEffect(() => {
     // Mostrar mensaje de cargando datos
@@ -40,9 +37,11 @@ const EditarBodega = () => {
     if (bodegaId) {
       const response = await fetch(apiUrl.bodegas);
       const data = await response.json();
-      
-      const bodega = data["hydra:member"].find((bodega) => bodega.id === parseInt(bodegaId));
-  
+
+      const bodega = data["hydra:member"].find(
+        (bodega) => bodega.id === parseInt(bodegaId)
+      );
+
       if (bodega) {
         const label = bodega.nombre;
         const value = bodega.id;
@@ -55,7 +54,11 @@ const EditarBodega = () => {
   };
 
   const handleEditBodega = async () => {
-    if (!bodegaSelected.nombre || !bodegaSelected.cif || !bodegaSelected.password) {
+    if (
+      !bodegaSelected.nombre ||
+      !bodegaSelected.cif ||
+      !bodegaSelected.password
+    ) {
       mostrarMensaje(
         "Campos obligatorios",
         "Por favor, asegúrate de rellenar los campos Nombre, CIF y Contraseña",
@@ -75,16 +78,13 @@ const EditarBodega = () => {
       };
 
       try {
-        const response = await fetch(
-          `${apiUrl.bodegas}/${bodegaSelected.id}`,
-          {
-            method: "PUT",
-            headers: {
-              "Content-Type": "application/ld+json",
-            },
-            body: JSON.stringify(updatedBodega),
-          }
-        );
+        const response = await fetch(`${apiUrl.bodegas}/${bodegaSelected.id}`, {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/ld+json",
+          },
+          body: JSON.stringify(updatedBodega),
+        });
 
         if (response.ok) {
           const updatedBodegaAgregada = await response.json();
@@ -121,7 +121,7 @@ const EditarBodega = () => {
       }
     }
   };
-  
+
   return (
     <div className="perfil-admin-container">
       <div>
@@ -140,83 +140,102 @@ const EditarBodega = () => {
             <h3>Bodega</h3>
 
             <div className="input-container input-bodega">
-              <input
-                className="nombre"
-                type="text"
-                placeholder="Nombre"
-                value={bodegaSelected ? bodegaSelected.nombre : ""}
-                onChange={(e) =>
-                  setBodegaSelected({
-                    ...bodegaSelected,
-                    nombre: e.target.value,
-                  })
-                }
-              />
-              <input
-                className="direccion"
-                type="text"
-                placeholder="Dirección"
-                value={bodegaSelected ? bodegaSelected.direccion : ""}
-                onChange={(e) =>
-                  setBodegaSelected({
-                    ...bodegaSelected,
-                    direccion: e.target.value,
-                  })
-                }
-              />
-              <input
-                className="telefono"
-                type="text"
-                placeholder="Teléfono"
-                value={bodegaSelected ? bodegaSelected.telefono : ""}
-                onChange={(e) =>
-                  setBodegaSelected({
-                    ...bodegaSelected,
-                    telefono: e.target.value,
-                  })
-                }
-              />
-              <input
-                className="cif"
-                type="text"
-                placeholder="CIF"
-                value={bodegaSelected ? bodegaSelected.cif : ""}
-                onChange={(e) =>
-                  setBodegaSelected({
-                    ...bodegaSelected,
-                    cif: e.target.value,
-                  })
-                }
-              />
-              <input
-                className="web"
-                type="text"
-                placeholder="Web"
-                value={bodegaSelected ? bodegaSelected.web : ""}
-                onChange={(e) =>
-                  setBodegaSelected({
-                    ...bodegaSelected,
-                    web: e.target.value,
-                  })
-                }
-              />
-              <input
-                className="password"
-                type="password"
-                placeholder="Contraseña"
-                value={bodegaSelected ? bodegaSelected.password : ""}
-                onChange={(e) =>
-                  setBodegaSelected({
-                    ...bodegaSelected,
-                    password: e.target.value,
-                  })
-                }
-              />      
+              <div class="input-datos-bodega">
+                <div className="input-label">Nombre</div>
+                <input
+                  className="nombre"
+                  type="text"
+                  placeholder="Nombre"
+                  value={bodegaSelected ? bodegaSelected.nombre : ""}
+                  onChange={(e) =>
+                    setBodegaSelected({
+                      ...bodegaSelected,
+                      nombre: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div class="input-datos-bodega">
+                <div className="input-label">Dirección</div>
+                <input
+                  className="direccion"
+                  type="text"
+                  placeholder="Dirección"
+                  value={bodegaSelected ? bodegaSelected.direccion : ""}
+                  onChange={(e) =>
+                    setBodegaSelected({
+                      ...bodegaSelected,
+                      direccion: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div class="input-datos-bodega">
+                <div className="input-label">Teléfono</div>
+                <input
+                  className="telefono"
+                  type="text"
+                  placeholder="Teléfono"
+                  value={bodegaSelected ? bodegaSelected.telefono : ""}
+                  onChange={(e) =>
+                    setBodegaSelected({
+                      ...bodegaSelected,
+                      telefono: e.target.value,
+                    })
+                  }
+                />
+              </div>
+
+              <div class="input-datos-bodega">
+                <div className="input-label">CIF</div>
+                <input
+                  className="cif"
+                  type="text"
+                  placeholder="CIF"
+                  value={bodegaSelected ? bodegaSelected.cif : ""}
+                  onChange={(e) =>
+                    setBodegaSelected({
+                      ...bodegaSelected,
+                      cif: e.target.value,
+                    })
+                  }
+                />
+              </div>
+              <div class="input-datos-bodega">
+                <div className="input-label">Web</div>
+                <input
+                  className="web"
+                  type="text"
+                  placeholder="Web"
+                  value={bodegaSelected ? bodegaSelected.web : ""}
+                  onChange={(e) =>
+                    setBodegaSelected({
+                      ...bodegaSelected,
+                      web: e.target.value,
+                    })
+                  }
+                />
+              </div>
+
+              <div class="input-datos-bodega">
+                <div className="input-label">Contraseña</div>
+                <input
+                  className="password"
+                  type="password"
+                  placeholder="Contraseña"
+                  value={bodegaSelected ? bodegaSelected.password : ""}
+                  onChange={(e) =>
+                    setBodegaSelected({
+                      ...bodegaSelected,
+                      password: e.target.value,
+                    })
+                  }
+                />
+              </div>
 
               <button onClick={handleEditBodega}>Modificar</button>
             </div>
           </section>
-
         </div>
       </div>
     </div>
