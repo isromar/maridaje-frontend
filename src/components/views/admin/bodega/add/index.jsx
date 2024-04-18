@@ -2,10 +2,11 @@ import React, { useState, useEffect } from "react";
 import { mostrarMensaje } from "../../../../../utility/utils";
 import Swal from "sweetalert2";
 import { apiUrl } from "../../../../../data/Url";
+import EncryptionUtils from "../../../../../utility/encrypt";
+
 
 const AddBodega = ({updateBodegas}) => {
   const [bodegas, setBodegas] = useState([]);
-
   const [nuevaBodega, setNuevaBodega] = useState({
     nombre: "",
     direccion: "",
@@ -73,13 +74,14 @@ const AddBodega = ({updateBodegas}) => {
     }
     event.preventDefault();
     if (nuevaBodega.nombre && nuevaBodega.cif && nuevaBodega.password) {
+      const encryptedPassword = EncryptionUtils.encryptPassword(nuevaBodega.password);
       const nuevaBodegaObj = {
         nombre: nuevaBodega.nombre,
         direccion: nuevaBodega.direccion,
         telefono: nuevaBodega.telefono,
         cif: nuevaBodega.cif,
         web: nuevaBodega.web,
-        password: nuevaBodega.password,
+        password: encryptedPassword, // Encrypt the password
       };
 
       try {
@@ -88,22 +90,20 @@ const AddBodega = ({updateBodegas}) => {
           headers: {
             "Content-Type": "application/ld+json",
           },
-          body: JSON.stringify(nuevaBodegaObj),
+          body: JSON.stringify(nuevaBodegaObj), // Send the encrypted password
         });
 
         if (response.ok) {
           const nuevaBodegaAgregada = await response.json();
           setBodegas((prevBodegas) => [...prevBodegas, nuevaBodegaAgregada]);
-
-          fetchBodegas();
-
+          // Store the encrypted password in the state
           setNuevaBodega({
             nombre: "",
             direccion: "",
             telefono: "",
             cif: "",
             web: "",
-            password: "",
+            password: encryptedPassword, // Store the encrypted password
           });
 
           updateBodegas();
