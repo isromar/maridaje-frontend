@@ -10,6 +10,7 @@ const TipoVinoOptions = () => {
   const [tiposDeVino, setTiposDeVino] = useState([]);
   const [tipoVinoSelected, setTipoVinoSelected] = useState("");
   const [nuevoTipoVino, setNuevoTipoVino] = useState("");
+  const [tipoVinoEdited, setTipoVinoEdited] = useState("");
   
   useEffect(() => {
     // Mostrar mensaje de cargando datos
@@ -23,6 +24,9 @@ const TipoVinoOptions = () => {
     }, 2000);
   }, []);
 
+  useEffect(() => {
+    setTipoVinoEdited(tipoVinoSelected);
+  }, [tipoVinoSelected]);
 
   const fetchTiposDeVino = async () => {
     try {
@@ -52,7 +56,82 @@ const TipoVinoOptions = () => {
     }
   };
 
+  const handleEditTipoVino = async () => {
+    if (!tipoVinoEdited) {
+      mostrarMensaje(
+        "Error al actualizar el registro",
+        "Por favor, asegúrate de rellenar el campo",
+        "warning"
+      );
+      return;
+    }
+  
+    const updatedTipoVino = {
+      ...tipoVinoSelected,
+      nombre: tipoVinoEdited, // Nuevo label actualizado
+    };
+  
+    try {
+      const response = await fetch(
+        `${apiUrl.tiposDeVino}/${tipoVinoSelected.value}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/ld+json",
+          },
+          body: JSON.stringify(updatedTipoVino),
+        }
+      );
+  
+      if (response.ok) {
+        const updatedTipoVinoAgregado = await response.json();
+        setTiposDeVino((prevTipoVino) =>
+          prevTipoVino.map((option) =>
+            option.value === tipoVinoSelected.value
+              ? updatedTipoVinoAgregado
+              : option
+          )
+        );
+  
+        fetchTiposDeVino();
+
+        setTipoVinoSelected(updatedTipoVinoAgregado);
+        setTipoVinoEdited("");
+  
+        mostrarMensaje(
+          "Registro actualizado",
+          "Registro actualizado con éxito",
+          "success"
+        );
+      } else {
+        mostrarMensaje(
+          "Error al actualizar el registro",
+          "Hubo un error al actualizar el registro",
+          "error"
+        );
+      }
+    } catch (error) {
+      console.error(error);
+      mostrarMensaje(
+        "Error al actualizar el registro",
+        "Hubo un error al actualizar el registro",
+        "error"
+      );
+    }
+};
+
+
   const handleAddTipoVino = async () => {
+    if (!nuevoTipoVino) {
+      mostrarMensaje(
+        "Error al actualizar el registro",
+        "Por favor, asegúrate de rellenar el campo",
+        "warning"
+      );
+      return;
+    }
+
+    
     if (nuevoTipoVino) {
       const nuevoTipoVinoObj = {
         nombre: nuevoTipoVino,
@@ -148,6 +227,16 @@ const TipoVinoOptions = () => {
                 readOnly
               />
               <button className="delete-button" onClick={() => handleDeleteTipoVino(tipoVinoSelected)}>Borrar</button>
+            </div>
+
+            <div className="input-container">
+              <input
+                type="text"
+                placeholder="Editar tipo de vino"
+                value={tipoVinoEdited ? tipoVinoEdited.label : ""}
+                onChange={(e) => setTipoVinoEdited(e.target.value)}
+              />
+              <button onClick={handleEditTipoVino}>Editar</button>
             </div>
 
             <div className="input-container">

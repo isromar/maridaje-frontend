@@ -10,6 +10,7 @@ const VariedadUvaOptions = () => {
   const [variedadesUva, setVariedadesUva] = useState([]);
   const [variedadUvaSelected, setVariedadUvaSelected] = useState(null);
   const [nuevaVariedadUva, setNuevaVariedadUva] = useState("");
+  const [variedadUvaEdited, setVariedadUvaEdited] = useState("");
   
   useEffect(() => {
     // Mostrar mensaje de cargando datos
@@ -23,6 +24,9 @@ const VariedadUvaOptions = () => {
     }, 2000);
   }, []);
 
+  useEffect(() => {
+    setVariedadUvaEdited(variedadUvaSelected);
+  }, [variedadUvaSelected]);
 
   const fetchVariedadesUva = async () => {
     try {
@@ -52,7 +56,81 @@ const VariedadUvaOptions = () => {
     }
   };
 
+
+  const handleEditVariedadUva = async () => {
+    if (!variedadUvaEdited) {
+      mostrarMensaje(
+        "Error al actualizar el registro",
+        "Por favor, asegúrate de rellenar el campo",
+        "warning"
+      );
+      return;
+    }
+  
+    const updatedVariedadUva = {
+      ...variedadUvaSelected,
+      nombre: variedadUvaEdited, // Nuevo label actualizado
+    };
+  
+    try {
+      const response = await fetch(
+        `${apiUrl.variedadesUva}/${variedadUvaSelected.value}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/ld+json",
+          },
+          body: JSON.stringify(updatedVariedadUva),
+        }
+      );
+  
+      if (response.ok) {
+        const updatedVariedadUvaAgregada = await response.json();
+        setVariedadesUva((prevVariedadesUva) =>
+        prevVariedadesUva.map((option) =>
+            option.value === variedadUvaSelected.value
+              ? updatedVariedadUvaAgregada
+              : option
+          )
+        );
+  
+        fetchVariedadesUva();
+  
+        setVariedadUvaSelected(updatedVariedadUvaAgregada);
+        setVariedadUvaEdited("");
+  
+        mostrarMensaje(
+          "Registro actualizado",
+          "Registro actualizado con éxito",
+          "success"
+        );
+      } else {
+        mostrarMensaje(
+          "Error al actualizar el registro",
+          "Hubo un error al actualizar el registro",
+          "error"
+        );
+      }
+    } catch (error) {
+      console.error(error);
+      mostrarMensaje(
+        "Error al actualizar el registro",
+        "Hubo un error al actualizar el registro",
+        "error"
+      );
+    }
+  };
+  
   const handleAddVariedadUva = async () => {
+    if (!nuevaVariedadUva) {
+      mostrarMensaje(
+        "Error al actualizar el registro",
+        "Por favor, asegúrate de rellenar el campo",
+        "warning"
+      );
+      return;
+    }
+
     if (nuevaVariedadUva) {
       const nuevaVariedadUvaObj = {
         nombre: nuevaVariedadUva,
@@ -128,24 +206,35 @@ return (
        
         <section>
           <h3>Variedad de uva</h3>
-            <div className="select-container">
-              <Select
-                options={variedadesUva}
-                value={variedadUvaSelected}
-                onChange={setVariedadUvaSelected}
-                placeholder="Variedades de uva"
-              />
-            </div>
+          <div className="select-container">
+            <Select
+              options={variedadesUva}
+              value={variedadUvaSelected}
+              onChange={setVariedadUvaSelected}
+              placeholder="Variedades de uva"
+            />
+          </div>
           
           <div className="input-container">
+            <input
+              className="disabled"              
+              type="text"
+              placeholder="Variedad de uva seleccionada"
+              value={variedadUvaSelected ? variedadUvaSelected.label : ""}
+              readOnly
+            />
+            <button className="delete-button" onClick={() => handlDeleteVariedadUva(variedadUvaSelected)}>Borrar</button>
+          </div>
+
+
+            <div className="input-container">
               <input
-                className="disabled"              
                 type="text"
-                placeholder="Variedad de uva seleccionada"
-                value={variedadUvaSelected ? variedadUvaSelected.label : ""}
-                readOnly
+                placeholder="Editar variedad de uva"
+                value={variedadUvaEdited ? variedadUvaEdited.label : ""}
+                onChange={(e) => setVariedadUvaEdited(e.target.value)}
               />
-              <button className="delete-button" onClick={() => handlDeleteVariedadUva(variedadUvaSelected)}>Borrar</button>
+              <button onClick={handleEditVariedadUva}>Editar</button>
             </div>
 
           <div className="input-container">
