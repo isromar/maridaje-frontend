@@ -139,7 +139,7 @@ return (
           
           <div className="input-container">
               <input
-                class="disabled"              
+                className="disabled"              
                 type="text"
                 placeholder="Variedad de uva seleccionada"
                 value={variedadUvaSelected ? variedadUvaSelected.label : ""}
