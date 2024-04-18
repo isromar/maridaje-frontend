@@ -182,10 +182,11 @@ function NuevoVino() {
       <form className="view" onSubmit={handleSubmit}>
         <section className="view">
           <h2 className="centrar">Nuevo Vino</h2>
-          <button type="submit" className="btn btn-primary">
-            Crear Vino
-          </button>
+
           <table className="tabla-view">
+          <button type="submit" className="btn btn-light">
+            Guardar vino
+          </button>
             <tr>
               <td>Nombre:</td>
               <td>
