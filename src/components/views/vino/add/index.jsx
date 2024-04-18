@@ -13,6 +13,7 @@ function NuevoVino() {
   const [denominacionOrigen, setDenominacionOrigen] = useState(
     []
   );
+  const [ecologico, setEcologico] = useState(false)
 
   const opcionesVinoEcologico = [
     { value: "si", label: "sí" },
@@ -24,7 +25,7 @@ function NuevoVino() {
     nombre: "",
     tipoVino: "",
     maduracion: "",
-    ecologico: false, // Inicializa la propiedad "ecologico" con el valor "false"
+    ecologico: "no",
     precio: 0,
     denominacionOrigen: null,
   });
@@ -96,6 +97,11 @@ function NuevoVino() {
         ...nuevoVino,
         denominacionOrigen: selectedOption,
       });
+    } else if (stateName === "vinoEcologicoSelected") {
+      setNuevoVino({
+        ...nuevoVino,
+        ecologico: selectedOption.value,
+      });
     }
   };
 
@@ -131,6 +137,7 @@ function NuevoVino() {
       maduracion: nuevoVino.maduracion,
       precio: parseFloat(nuevoVino.precio),
       denominacionOrigen: denominacionOrigenIri,
+      ecologico: nuevoVino.ecologico === "si" ? true : false,
     };
     console.log(nuevoVinoCompleto);
 
@@ -157,6 +164,7 @@ function NuevoVino() {
           ecologico: false, // Inicializa la propiedad "ecologico" con el valor "false"
           precio: 0,
           denominacionOrigen: null,
+          ecologico: "no",
         });
       } else {
         mostrarMensaje("Error", "Hubo un error al crear el vino", "error");
@@ -239,15 +247,13 @@ function NuevoVino() {
             <tr>
               <td>Ecológico:</td>
               <td>
-                <Select
-                  value={nuevoVino.ecologico}
-                  defaultValue={nuevoVino.ecologico} // Establece el valor inicial del componente
-                  onChange={(vinoEcologicoSelected) =>
-                    handleChange(vinoEcologicoSelected, "vinoEcologicoSelected")
-                  }
-                  options={opcionesVinoEcologico}
-                  placeholder="Selecciona..."
-                />
+              <Select
+      type="text"
+      placeholder="Selecciona..."
+      value={opcionesVinoEcologico.find(opcion => opcion.value === nuevoVino.ecologico)}
+      onChange={(selectedOption) => setNuevoVino({ ...nuevoVino, ecologico: selectedOption.value })}
+      options={opcionesVinoEcologico}
+    />
               </td>
             </tr>
 
