@@ -10,24 +10,23 @@ function NuevoVino() {
   const { bodegaId } = useParams();
 
   const [tiposDeVino, setTiposDeVino] = useState([]);
+  const [denominacionOrigen, setDenominacionOrigen] = useState(
+    []
+  );
 
   const opcionesVinoEcologico = [
     { value: "si", label: "sí" },
     { value: "no", label: "no" },
   ];
 
-  const [denominacionOrigen, setDenominacionOrigen] = useState(
-    []
-  );
-
   const [nuevoVino, setNuevoVino] = useState({
-    bodegaId: "",
+    bodega: "",
     nombre: "",
     tipoVino: "",
     maduracion: "",
     ecologico: false, // Inicializa la propiedad "ecologico" con el valor "false"
     precio: 0,
-    denominacionOrigen: "",
+    denominacionOrigen: null,
   });
 
   useEffect(() => {
@@ -116,9 +115,13 @@ function NuevoVino() {
 
     const bodegaIri = `${apiUrl.bodegas}/${bodegaId}`;
     const tipoVinoIri = `${apiUrl.tiposDeVino}/${nuevoVino.tipoVino.value}`;
-    const denominacionOrigenIri = `${apiUrl.denominacionDeOrigen}/${nuevoVino.denominacionOrigen.value}`;
 
-    console.log(denominacionOrigenIri);
+    let denominacionOrigenIri = null;
+    if (nuevoVino.denominacionOrigen && nuevoVino.denominacionOrigen.value) {
+      denominacionOrigenIri = `${apiUrl.denominacionDeOrigen}/${nuevoVino.denominacionOrigen.value}`;
+    }
+
+    console.log(nuevoVino);
 
     const nuevoVinoCompleto = {
       ...nuevoVino,
@@ -148,21 +151,17 @@ function NuevoVino() {
         );
         // Restablecer el formulario después de la creación exitosa
         setNuevoVino({
-          bodegaId: "",
           nombre: "",
           tipoVino: "",
           maduracion: "",
-          denominacionOrigen: "",
-          ecologico: false,
-          precio: "",
-          variedadUva: "",
-          comida: "",
+          ecologico: false, // Inicializa la propiedad "ecologico" con el valor "false"
+          precio: 0,
+          denominacionOrigen: null,
         });
       } else {
         mostrarMensaje("Error", "Hubo un error al crear el vino", "error");
       }
     } catch (error) {
-      console.error(error);
       mostrarMensaje("Error", "Hubo un error al crear el vino", "error");
     }
   };
