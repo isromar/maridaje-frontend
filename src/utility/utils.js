@@ -2,11 +2,12 @@ import Swal from 'sweetalert2';
 import { apiUrl } from '../data/Url';
 import { getDataPerfilBodega } from './getData';
 
-export const mostrarMensaje = (titulo, texto, icono) => {
+export const mostrarMensaje = (titulo, texto, icono, tiempo = 3000) => {
   return Swal.fire({
     title: titulo,
     text: texto,
-    icon: icono
+    icon: icono,
+    timer: tiempo,
   });
 };
 

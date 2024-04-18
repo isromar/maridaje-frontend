@@ -60,7 +60,7 @@ const TipoVinoOptions = () => {
     if (!tipoVinoEdited) {
       mostrarMensaje(
         "Error al actualizar el registro",
-        "Por favor, asegúrate de rellenar el campo",
+        "Por favor, rellena el campo",
         "warning"
       );
       return;
@@ -125,7 +125,7 @@ const TipoVinoOptions = () => {
     if (!nuevoTipoVino) {
       mostrarMensaje(
         "Error al actualizar el registro",
-        "Por favor, asegúrate de rellenar el campo",
+        "Por favor, rellena el campo",
         "warning"
       );
       return;

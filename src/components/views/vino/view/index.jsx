@@ -23,6 +23,8 @@ function DetallesVino() {
     }, 1000);
   }, [vinoId]);
 
+  console.log(vino)
+  
   if (!vino) {
     return <div>Cargando...</div>;
   }

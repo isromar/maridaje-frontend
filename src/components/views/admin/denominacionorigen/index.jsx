@@ -61,7 +61,7 @@ const DenominacionOrigenOptions = () => {
     if (!denominacionOrigenEdited) {
       mostrarMensaje(
         "Error al actualizar el registro",
-        "Por favor, asegúrate de rellenar el campo",
+        "Por favor, rellena el campo",
         "warning"
       );
       return;
@@ -126,7 +126,7 @@ const DenominacionOrigenOptions = () => {
     if (!nuevaDenominacionOrigen) {
       mostrarMensaje(
         "Error al actualizar el registro",
-        "Por favor, asegúrate de rellenar el campo",
+        "Por favor, rellena el campo",
         "warning"
       );
       return;

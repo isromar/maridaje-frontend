@@ -61,7 +61,7 @@ const VariedadUvaOptions = () => {
     if (!variedadUvaEdited) {
       mostrarMensaje(
         "Error al actualizar el registro",
-        "Por favor, asegúrate de rellenar el campo",
+        "Por favor, rellena el campo",
         "warning"
       );
       return;
@@ -125,7 +125,7 @@ const VariedadUvaOptions = () => {
     if (!nuevaVariedadUva) {
       mostrarMensaje(
         "Error al actualizar el registro",
-        "Por favor, asegúrate de rellenar el campo",
+        "Por favor, rellena el campo",
         "warning"
       );
       return;

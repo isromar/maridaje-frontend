@@ -128,6 +128,7 @@ function EditarVino() {
   }
 
   const handleChange = (selectedOption, stateName) => {
+
     if (stateName === "tipoVinoSelected") {
       setTipoVinoSelected(selectedOption);
     } else if (stateName === "denominacionOrigenSelected") {
@@ -265,7 +266,7 @@ function EditarVino() {
             <td>
               <input
                 type="text"
-                className="form-control "
+                className="form-control"
                 value={`${vino.precio} €`}
                 onChange={(event) => handleInputChange(event, 'precio')}
               />

@@ -90,7 +90,7 @@ const BodegaOptions = () => {
     if (!bodegaSelected.nombre || !bodegaSelected.cif || !bodegaSelected.password) {
       mostrarMensaje(
         "Campos obligatorios",
-        "Por favor, asegúrate de rellenar los campos Nombre, CIF y Contraseña",
+        "Por favor, rellena los campos Nombre, CIF y Contraseña",
         "warning"
       );
       return;

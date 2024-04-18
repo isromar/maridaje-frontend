@@ -61,7 +61,7 @@ const EditarBodega = () => {
     ) {
       mostrarMensaje(
         "Campos obligatorios",
-        "Por favor, asegúrate de rellenar los campos Nombre, CIF y Contraseña",
+        "Por favor, rellena los campos Nombre, CIF y Contraseña",
         "warning"
       );
       return;
