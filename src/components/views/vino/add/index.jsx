@@ -10,15 +10,16 @@ function NuevoVino() {
   const { bodegaId } = useParams();
 
   const [tiposDeVino, setTiposDeVino] = useState([]);
-  const [denominacionOrigen, setDenominacionOrigen] = useState(
-    []
-  );
-  const [ecologico, setEcologico] = useState(false)
+  const [denominacionOrigen, setDenominacionOrigen] = useState([]);
+  const [ecologico, setEcologico] = useState(false);
 
   const opcionesVinoEcologico = [
     { value: "si", label: "sí" },
     { value: "no", label: "no" },
   ];
+  const [comidas, setComidas] = useState([]);
+  const [comidaSelected, setComidaSelected] = useState("");
+  const [nuevoVinoComidas, setNuevoVinoComidas] = useState([])
 
   const [nuevoVino, setNuevoVino] = useState({
     bodega: "",
@@ -31,8 +32,15 @@ function NuevoVino() {
   });
 
   useEffect(() => {
+    // Mostrar mensaje de cargando datos
+    mostrarMensaje(
+      "Cargando datos...",
+      "Espere mientras se cargan los datos",
+      "info"
+    );
     fetchTiposDeVino();
     fetchDenominacionDeOrigen();
+    fetchComidas();
   }, []);
 
   const fetchTiposDeVino = async () => {
@@ -55,13 +63,6 @@ function NuevoVino() {
 
   const fetchDenominacionDeOrigen = async () => {
     try {
-      // Mostrar mensaje de cargando datos
-      mostrarMensaje(
-        "Cargando datos...",
-        "Espere mientras se cargan los datos",
-        "info"
-      );
-
       const response = await fetch(apiUrl.denominacionDeOrigen);
       const data = await response.json();
       if (data && data["hydra:member"]) {
@@ -72,6 +73,42 @@ function NuevoVino() {
           }))
           .sort((a, b) => a.label.localeCompare(b.label));
         setDenominacionOrigen(options);
+
+        Swal.close();
+      } else {
+        console.error("No se encontraron datos.");
+      }
+    } catch (error) {
+      console.error("Error al obtener los datos:", error);
+
+      // Mostrar mensaje de error
+      mostrarMensaje(
+        "Error al cargar los datos",
+        "Ha ocurrido un error al cargar los datos",
+        "error"
+      );
+    }
+  };
+
+  const fetchComidas = async () => {
+    try {
+      // Mostrar mensaje de cargando datos
+      mostrarMensaje(
+        "Cargando datos...",
+        "Espere mientras se cargan los datos",
+        "info"
+      );
+
+      const response = await fetch(apiUrl.comidas);
+      const data = await response.json();
+      if (data && data["hydra:member"]) {
+        const options = data["hydra:member"]
+          .map((comida) => ({
+            value: comida.id,
+            label: comida.nombre,
+          }))
+          .sort((a, b) => a.label.localeCompare(b.label));
+        setComidas(options);
 
         Swal.close();
       } else {
@@ -102,9 +139,10 @@ function NuevoVino() {
         ...nuevoVino,
         ecologico: selectedOption.value,
       });
+    } else if (stateName === "comidasSelected") {
+      setNuevoVinoComidas(selectedOption.map((option) => option.value));
     }
   };
-
 
   const handleSubmit = async (event) => {
     if (!nuevoVino.nombre || !nuevoVino.tipoVino) {
@@ -121,13 +159,11 @@ function NuevoVino() {
 
     const bodegaIri = `${apiUrl.bodegas}/${bodegaId}`;
     const tipoVinoIri = `${apiUrl.tiposDeVino}/${nuevoVino.tipoVino.value}`;
-
     let denominacionOrigenIri = null;
     if (nuevoVino.denominacionOrigen && nuevoVino.denominacionOrigen.value) {
       denominacionOrigenIri = `${apiUrl.denominacionDeOrigen}/${nuevoVino.denominacionOrigen.value}`;
     }
-
-    console.log(nuevoVino);
+    const comidasIris = nuevoVinoComidas.map((comidaId) => `${apiUrl.comidas}/${comidaId}`);
 
     const nuevoVinoCompleto = {
       ...nuevoVino,
@@ -138,6 +174,7 @@ function NuevoVino() {
       precio: parseFloat(nuevoVino.precio),
       denominacionOrigen: denominacionOrigenIri,
       ecologico: nuevoVino.ecologico === "si" ? true : false,
+      comida: comidasIris,
     };
     console.log(nuevoVinoCompleto);
 
@@ -150,22 +187,27 @@ function NuevoVino() {
         body: JSON.stringify(nuevoVinoCompleto),
       });
 
+      
       if (response.ok) {
+        // Crear las relaciones entre el vino y las comidas seleccionadas
+        const data = await response.json();
+        const vinoId = data['@id'].split('/').pop();
+
+        const comidasIris = nuevoVinoComidas.map((comidaId) => `${apiUrl.comidas}/${comidaId}`);
+
+        const vinoComidas = comidasIris.map((comidaIri) => ({
+          vino: vinoId,
+          comida:comidaIri,
+        }));
+        
+
         mostrarMensaje(
           "Vino creado",
           "El vino se ha creado con éxito",
           "success"
         );
         // Restablecer el formulario después de la creación exitosa
-        setNuevoVino({
-          nombre: "",
-          tipoVino: "",
-          maduracion: "",
-          ecologico: false, // Inicializa la propiedad "ecologico" con el valor "false"
-          precio: 0,
-          denominacionOrigen: null,
-          ecologico: "no",
-        });
+        setNuevoVinoComidas([]);
       } else {
         mostrarMensaje("Error", "Hubo un error al crear el vino", "error");
       }
@@ -184,9 +226,9 @@ function NuevoVino() {
           <h2 className="centrar">Nuevo Vino</h2>
 
           <table className="tabla-view">
-          <button type="submit" className="btn btn-light">
-            Guardar vino
-          </button>
+            <button type="submit" className="btn btn-light">
+              Guardar vino
+            </button>
             <tr>
               <td>Nombre:</td>
               <td>
@@ -238,7 +280,10 @@ function NuevoVino() {
                   placeholder="Selecciona..."
                   value={nuevoVino.denominacionOrigen}
                   onChange={(denominacionOrigenSelected) =>
-                    handleChange(denominacionOrigenSelected, "denominacionOrigenSelected")
+                    handleChange(
+                      denominacionOrigenSelected,
+                      "denominacionOrigenSelected"
+                    )
                   }
                   options={denominacionOrigen}
                 />
@@ -248,13 +293,20 @@ function NuevoVino() {
             <tr>
               <td>Ecológico:</td>
               <td>
-              <Select
-      type="text"
-      placeholder="Selecciona..."
-      value={opcionesVinoEcologico.find(opcion => opcion.value === nuevoVino.ecologico)}
-      onChange={(selectedOption) => setNuevoVino({ ...nuevoVino, ecologico: selectedOption.value })}
-      options={opcionesVinoEcologico}
-    />
+                <Select
+                  type="text"
+                  placeholder="Selecciona..."
+                  value={opcionesVinoEcologico.find(
+                    (opcion) => opcion.value === nuevoVino.ecologico
+                  )}
+                  onChange={(selectedOption) =>
+                    setNuevoVino({
+                      ...nuevoVino,
+                      ecologico: selectedOption.value,
+                    })
+                  }
+                  options={opcionesVinoEcologico}
+                />
               </td>
             </tr>
 
@@ -272,9 +324,24 @@ function NuevoVino() {
               </td>
             </tr>
 
+
             <tr>
               <td>Marida con:</td>
-              <td></td>
+              <td>
+                <Select
+                  type="text"
+                  placeholder="Selecciona..."
+                  isMulti
+                  value={nuevoVino.comidas}
+                  onChange={(comidasSelected) =>
+                    handleChange(
+                      comidasSelected,
+                      "comidasSelected"
+                    )
+                  }
+                  options={comidas}
+                />
+              </td>
             </tr>
 
             <tr>
