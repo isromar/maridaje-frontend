@@ -19,7 +19,11 @@ function NuevoVino() {
   ];
   const [comidas, setComidas] = useState([]);
   const [comidaSelected, setComidaSelected] = useState("");
-  const [nuevoVinoComidas, setNuevoVinoComidas] = useState([])
+  const [nuevoVinoComidas, setNuevoVinoComidas] = useState([]);
+
+  const [variedadesUva, setVariedadesUva] = useState([]);
+  const [variedadUvaSelected, setVariedadUvaSelected] = useState(null);
+  const [nuevoVinoVariedadUvas, setNuevoVinoVariedadUvas] = useState([]);
 
   const [nuevoVino, setNuevoVino] = useState({
     bodega: "",
@@ -32,15 +36,17 @@ function NuevoVino() {
   });
 
   useEffect(() => {
-    // Mostrar mensaje de cargando datos
-    mostrarMensaje(
-      "Cargando datos...",
-      "Espere mientras se cargan los datos",
-      "info"
-    );
     fetchTiposDeVino();
     fetchDenominacionDeOrigen();
     fetchComidas();
+    fetchVariedadesUva();
+
+      // Mostrar mensaje de cargando datos
+      mostrarMensaje(
+        "Cargando datos...",
+        "Espere mientras se cargan los datos",
+        "info"
+      );
   }, []);
 
   const fetchTiposDeVino = async () => {
@@ -126,6 +132,31 @@ function NuevoVino() {
     }
   };
 
+  const fetchVariedadesUva = async () => {
+    try {
+      const response = await fetch(apiUrl.variedadesUva);
+      const data = await response.json();
+      if (data && data["hydra:member"]) {
+        const options = data["hydra:member"]
+          .map((variedad) => ({
+            value: variedad.id,
+            label: variedad.nombre,
+          }))
+          .sort((a, b) => a.label.localeCompare(b.label));
+          setVariedadesUva(options);
+
+          Swal.close();
+        } else {
+          console.error("No se encontraron datos.");
+        }
+    } catch (error) {
+      console.error("Error al obtener los datos:", error);
+
+      // Mostrar mensaje de error
+      mostrarMensaje('Error al cargar los datos', 'Ha ocurrido un error al cargar los datos', 'error');
+    }
+  };
+
   const handleChange = (selectedOption, stateName) => {
     if (stateName === "tipoVinoSelected") {
       setNuevoVino({ ...nuevoVino, tipoVino: selectedOption });
@@ -141,6 +172,8 @@ function NuevoVino() {
       });
     } else if (stateName === "comidasSelected") {
       setNuevoVinoComidas(selectedOption.map((option) => option.value));
+    } else if (stateName === "variedadUvaSelected") {
+      setNuevoVinoVariedadUvas(selectedOption.map((option) => option.value));
     }
   };
 
@@ -162,8 +195,19 @@ function NuevoVino() {
     let denominacionOrigenIri = null;
     if (nuevoVino.denominacionOrigen && nuevoVino.denominacionOrigen.value) {
       denominacionOrigenIri = `${apiUrl.denominacionDeOrigen}/${nuevoVino.denominacionOrigen.value}`;
-    }
-    const comidasIris = nuevoVinoComidas.map((comidaId) => `${apiUrl.comidas}/${comidaId}`);
+    }    
+    const comidasIris = nuevoVinoComidas.map(
+      (comidaId) => `${apiUrl.comidas}/${comidaId}`
+    );
+    const variedadUvasIris = nuevoVinoVariedadUvas.map(
+      (variedadUvaId) => `${apiUrl.variedadesUva}/${variedadUvaId}`
+    );
+
+    console.log(variedadUvasIris)
+    console.log(nuevoVinoComidas)
+
+    console.log(comidasIris)
+
 
     const nuevoVinoCompleto = {
       ...nuevoVino,
@@ -175,6 +219,7 @@ function NuevoVino() {
       denominacionOrigen: denominacionOrigenIri,
       ecologico: nuevoVino.ecologico === "si" ? true : false,
       comida: comidasIris,
+      variedadUva: variedadUvasIris,
     };
     console.log(nuevoVinoCompleto);
 
@@ -187,19 +232,10 @@ function NuevoVino() {
         body: JSON.stringify(nuevoVinoCompleto),
       });
 
-      
       if (response.ok) {
         // Crear las relaciones entre el vino y las comidas seleccionadas
         const data = await response.json();
-        const vinoId = data['@id'].split('/').pop();
-
-        const comidasIris = nuevoVinoComidas.map((comidaId) => `${apiUrl.comidas}/${comidaId}`);
-
-        const vinoComidas = comidasIris.map((comidaIri) => ({
-          vino: vinoId,
-          comida:comidaIri,
-        }));
-        
+        const vinoId = data["@id"].split("/").pop();
 
         mostrarMensaje(
           "Vino creado",
@@ -324,7 +360,6 @@ function NuevoVino() {
               </td>
             </tr>
 
-
             <tr>
               <td>Marida con:</td>
               <td>
@@ -334,10 +369,7 @@ function NuevoVino() {
                   isMulti
                   value={nuevoVino.comidas}
                   onChange={(comidasSelected) =>
-                    handleChange(
-                      comidasSelected,
-                      "comidasSelected"
-                    )
+                    handleChange(comidasSelected, "comidasSelected")
                   }
                   options={comidas}
                 />
@@ -346,7 +378,18 @@ function NuevoVino() {
 
             <tr>
               <td>Variedad de uva:</td>
-              <td></td>
+              <td>
+                <Select
+                  type="text"
+                  placeholder="Selecciona..."
+                  isMulti
+                  value={nuevoVino.variedadUva}
+                  onChange={(variedadUvaSelected) =>
+                    handleChange(variedadUvaSelected, "variedadUvaSelected")
+                  }
+                  options={variedadesUva}
+                />
+              </td>
             </tr>
           </table>
         </section>
