@@ -20,6 +20,7 @@ function NuevoVino() {
   const [comidas, setComidas] = useState([]);
   const [comidaSelected, setComidaSelected] = useState("");
   const [nuevoVinoComidas, setNuevoVinoComidas] = useState([]);
+  const [hayComidasEnElInput, setHayComidasEnElInput] = useState(0);
 
   const [variedadesUva, setVariedadesUva] = useState([]);
   const [variedadUvaSelected, setVariedadUvaSelected] = useState(null);
@@ -41,13 +42,17 @@ function NuevoVino() {
     fetchComidas();
     fetchVariedadesUva();
 
-      // Mostrar mensaje de cargando datos
-      mostrarMensaje(
-        "Cargando datos...",
-        "Espere mientras se cargan los datos",
-        "info"
-      );
+    // Mostrar mensaje de cargando datos
+    mostrarMensaje(
+      "Cargando datos...",
+      "Espere mientras se cargan los datos",
+      "info",
+      6000
+    );
   }, []);
+
+  useEffect(() => {
+  }, [nuevoVino]);
 
   const fetchTiposDeVino = async () => {
     try {
@@ -143,17 +148,21 @@ function NuevoVino() {
             label: variedad.nombre,
           }))
           .sort((a, b) => a.label.localeCompare(b.label));
-          setVariedadesUva(options);
+        setVariedadesUva(options);
 
-          Swal.close();
-        } else {
-          console.error("No se encontraron datos.");
-        }
+        Swal.close();
+      } else {
+        console.error("No se encontraron datos.");
+      }
     } catch (error) {
       console.error("Error al obtener los datos:", error);
 
       // Mostrar mensaje de error
-      mostrarMensaje('Error al cargar los datos', 'Ha ocurrido un error al cargar los datos', 'error');
+      mostrarMensaje(
+        "Error al cargar los datos",
+        "Ha ocurrido un error al cargar los datos",
+        "error"
+      );
     }
   };
 
@@ -171,6 +180,7 @@ function NuevoVino() {
         ecologico: selectedOption.value,
       });
     } else if (stateName === "comidasSelected") {
+      setHayComidasEnElInput(1);
       setNuevoVinoComidas(selectedOption.map((option) => option.value));
     } else if (stateName === "variedadUvaSelected") {
       setNuevoVinoVariedadUvas(selectedOption.map((option) => option.value));
@@ -178,7 +188,7 @@ function NuevoVino() {
   };
 
   const handleSubmit = async (event) => {
-    if (!nuevoVino.nombre || !nuevoVino.tipoVino) {
+    if (!nuevoVino.nombre || !nuevoVino.tipoVino || hayComidasEnElInput === 0) {
       mostrarMensaje(
         "Campos obligatorios",
         "Por favor, rellena los campos Nombre, Tipo de Vino y Marida con",
@@ -195,19 +205,13 @@ function NuevoVino() {
     let denominacionOrigenIri = null;
     if (nuevoVino.denominacionOrigen && nuevoVino.denominacionOrigen.value) {
       denominacionOrigenIri = `${apiUrl.denominacionDeOrigen}/${nuevoVino.denominacionOrigen.value}`;
-    }    
+    }
     const comidasIris = nuevoVinoComidas.map(
       (comidaId) => `${apiUrl.comidas}/${comidaId}`
     );
     const variedadUvasIris = nuevoVinoVariedadUvas.map(
       (variedadUvaId) => `${apiUrl.variedadesUva}/${variedadUvaId}`
     );
-
-    console.log(variedadUvasIris)
-    console.log(nuevoVinoComidas)
-
-    console.log(comidasIris)
-
 
     const nuevoVinoCompleto = {
       ...nuevoVino,
@@ -243,7 +247,16 @@ function NuevoVino() {
           "success"
         );
         // Restablecer el formulario después de la creación exitosa
-        setNuevoVinoComidas([]);
+        setNuevoVino({
+          nombre: "",
+          tipoVino: "",
+          maduracion: "",
+          ecologico: "no",
+          precio: 0,
+          denominacionOrigen: null,
+        });
+
+
       } else {
         mostrarMensaje("Error", "Hubo un error al crear el vino", "error");
       }
