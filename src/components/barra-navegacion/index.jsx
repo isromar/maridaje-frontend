@@ -30,7 +30,7 @@ const BarraNavegacion = () => {
     localStorage.removeItem("bodegaId");
     localStorage.removeItem("acceso");
     localStorage.removeItem("admin");
-    window.location.reload();
+    window.location.href = "/";
   };
 
   const handleFormSubmit = async (event) => {

@@ -17,7 +17,7 @@ const NuevoVinoAdmin = () => {
         </section>
         
         <div className="perfil-admin-content">
-
+          
         </div>
 
       </div>

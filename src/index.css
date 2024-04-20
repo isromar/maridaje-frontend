@@ -115,9 +115,13 @@ section h2, section h4 {
 .barra-navegacion {
   display: flex;
   justify-content: flex-end; /* Alinea los elementos a la derecha */
-  background-color: #4c1f27;
   height: 60px;
   padding-top: 10px;
+}
+
+.barra-navegacion form {
+  display: flex;
+  justify-content: flex-end;
 }
 
 .barra-navegacion form input {
@@ -125,8 +129,10 @@ section h2, section h4 {
 }
 
 .barra-navegacion form button {
-  padding: 0 10px 0 10px; /* Espacio entre los inputs */
+  padding: 0 15px 0 15px; /* Espacio entre los inputs */
   margin-right: 5px;
+  background-color: #ddd;
+  font-weight: 600;
 }
 
 /* Estilos para el enlace "Perfil bodega" */
@@ -140,4 +146,9 @@ section h2, section h4 {
 /* Estilos para el enlace "Perfil bodega" al pasar el ratón por encima */
 .barra-navegacion a:hover {
   background-color:#ccc; /* Cambiar color de fondo al pasar el ratón por encima */
+}
+
+.barra-navegacion {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
 }

@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import BarraNavegacion from "../../../barra-navegacion";
 
 const MenuElementosAdmin = () => {
   return (

@@ -47,7 +47,7 @@ function NuevoVino() {
       "Cargando datos...",
       "Espere mientras se cargan los datos",
       "info",
-      6000
+      5000
     );
   }, []);
 

@@ -4,7 +4,6 @@ import ComponenteSuperior from './components/filtros';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import DetallesVino from './components/views/vino/view';
 import EditarVino from './components/views/vino/edit';
-import BarraNavegacion from './components/barra-navegacion';
 import PerfilBodega from './components/views/bodega/view';
 import TopMenu from './components/menu';
 import PerfilAdmin from './components/views/admin/list';
@@ -20,6 +19,20 @@ import NuevoVinoAdmin from './components/views/admin/nuevovino';
 import NuevoVino from './components/views/vino/add';
 
 function App() {
+  const usuario = localStorage.getItem("usuario");
+  const adminRoutes = (
+    <>
+      <Route path="/perfil-admin" element={<PerfilAdmin nombre="Admin" />} /> 
+      <Route path="/perfil-admin/comida" element={<ComidaOptions />} />
+      <Route path="/perfil-admin/denominacion-origen" element={<DenominacionOrigenOptions />} /> 
+      <Route path="/perfil-admin/tipo-vino" element={<TipoVinoOptions />} /> 
+      <Route path="/perfil-admin/variedad-uva" element={<VariedadUvaOptions />} /> 
+      <Route path="/perfil-admin/bodega" element={<BodegaOptions />} />
+      <Route path="/perfil-admin/lista-vinos" element={<ListaVinosAdmin />} />
+      <Route path="/perfil-admin/nuevo-vino" element={<NuevoVinoAdmin />} />
+    </>
+  );
+
   return (
     <Router>
       <Routes>
@@ -29,10 +42,7 @@ function App() {
               <div>
                 <TopMenu/>
               </div>
-              <div>
-                <BarraNavegacion />
-              </div>
-              <div>
+              <div class="fondo-titulo">
                 <h1>Maridaje con vinos de la Comunidad Valenciana </h1>
               </div>
               <br />
@@ -56,14 +66,7 @@ function App() {
         <Route path="/perfil-bodega/:bodegaId/nuevo-vino" element={<NuevoVino />} />
         <Route path="/perfil-bodega/:bodegaId/editar-bodega" element={<EditarBodega />} />
 
-        <Route path="/perfil-admin" element={<PerfilAdmin nombre="Admin" />} /> 
-        <Route path="/perfil-admin/comida" element={<ComidaOptions />} />
-        <Route path="/perfil-admin/denominacion-origen" element={<DenominacionOrigenOptions />} /> 
-        <Route path="/perfil-admin/tipo-vino" element={<TipoVinoOptions />} /> 
-        <Route path="/perfil-admin/variedad-uva" element={<VariedadUvaOptions />} /> 
-        <Route path="/perfil-admin/bodega" element={<BodegaOptions />} />
-        <Route path="/perfil-admin/lista-vinos" element={<ListaVinosAdmin />} />
-        <Route path="/perfil-admin/nuevo-vino" element={<NuevoVinoAdmin />} />
+        {usuario === 'admin' ? adminRoutes : null}
 
       </Routes>
     </Router>

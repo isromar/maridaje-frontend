@@ -30,13 +30,24 @@
   color: #4c1f27;
 }
 
+.input-acceso {
+  background-color: white;
+  display: flex;
+  align-content: right;
+}
+
+.input-acceso:hover {
+  background-color: white;
+}
+
 .top-menu nav ul {
   list-style-type: none;
   display: flex;
-  justify-content: center;
+  justify-content: center; /* Centra los elementos en el eje horizontal */
   margin: 0;
+  margin-left: 45%;
   padding: 0;
-  font-size: 1.5em; /* Tamaño de letra grande */
+  font-size: 1.8em;
   font-weight: bold;
 }
 
@@ -45,7 +56,6 @@
 }
 
 .top-menu nav ul li a {
-  display: inline-block;
   padding: 8px 16px;
   text-decoration: none;
   color: #4c1f27; /* Color de texto por defecto */
@@ -55,7 +65,20 @@
   transition: color 0.3s ease; /* Transición suave para el color */
 }
 
+.menu-li {
+  margin: 0 20px; /* Aumentar el espacio entre los elementos */
+}
+
+.input-acceso {
+  margin-left: auto; /* Alinea el elemento a la derecha */
+  font-size: 0.7em;
+}
+
 .top-menu nav ul li a:hover {
+  color: white;
+}
+
+.top-menu nav ul li.menu-li:hover {
   color: white;
   border-color: #4c1f27; 
   background-color: #4c1f27;
@@ -93,7 +116,6 @@
   align-items: center;
   width: 70%;
 }
-
 
 .input-container input {
   flex-grow: 1;
@@ -210,3 +232,20 @@
 .input-datos-bodega {
   display: inline-block;
 }
+
+.barra-navegacion {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 10px;
+  font-size: 0.8em;
+}
+
+.formulario {
+  float: right;
+}
+
+.fondo-titulo {
+  background-color: #4c1f27;
+  padding: 1px 0px 2px 0px;
+  color: white;
+}
+

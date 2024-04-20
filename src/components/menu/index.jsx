@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import BarraNavegacion from "../barra-navegacion";
 
 const TopMenu = () => {
   const usuario = localStorage.getItem("usuario");
@@ -11,25 +12,28 @@ const TopMenu = () => {
     <div className="top-menu">
       <nav>
         <ul>
-          <li>
+          <li class="menu-li">
             <Link to="/">
               Inicio
             </Link>
           </li>
           {usuario && bodegaId && acceso && !admin && (
-            <li>
-              <Link to={`/perfil-bodega/${bodegaId}`}>
-                Perfil bodega
-              </Link>
-            </li>
+          <li class="menu-li li-bodega">
+            <Link to={`/perfil-bodega/${bodegaId}`}>
+              Perfil bodega
+            </Link>
+          </li>
           )}
           {usuario && bodegaId && acceso && admin && (
-            <li>
-                <Link to="/perfil-admin">
-                Perfil admin
+          <li class="menu-li li-admin">
+              <Link to="/perfil-admin">
+              Perfil admin
               </Link>
-            </li>
+          </li>
           )}
+            <span class="input-acceso">
+              <BarraNavegacion/>
+            </span>
         </ul>
       </nav>
     </div>

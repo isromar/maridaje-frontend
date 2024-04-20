@@ -199,7 +199,7 @@ const DenominacionOrigenOptions = () => {
       <div className="perfil-admin-title">
         <section className="perfil-admin centrar">
           <h2 className="centrar">
-            <span>Administración</span>
+            <span>Administrador</span>
           </h2>
         </section>
         
