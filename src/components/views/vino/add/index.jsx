@@ -11,21 +11,15 @@ function NuevoVino() {
 
   const [tiposDeVino, setTiposDeVino] = useState([]);
   const [denominacionOrigen, setDenominacionOrigen] = useState([]);
-  const [ecologico, setEcologico] = useState(false);
-
   const opcionesVinoEcologico = [
     { value: "si", label: "sí" },
     { value: "no", label: "no" },
   ];
   const [comidas, setComidas] = useState([]);
-  const [comidaSelected, setComidaSelected] = useState("");
   const [nuevoVinoComidas, setNuevoVinoComidas] = useState([]);
   const [hayComidasEnElInput, setHayComidasEnElInput] = useState(0);
-
   const [variedadesUva, setVariedadesUva] = useState([]);
-  const [variedadUvaSelected, setVariedadUvaSelected] = useState(null);
   const [nuevoVinoVariedadUvas, setNuevoVinoVariedadUvas] = useState([]);
-
   const [nuevoVino, setNuevoVino] = useState({
     bodega: "",
     nombre: "",
@@ -37,19 +31,34 @@ function NuevoVino() {
   });
 
   useEffect(() => {
-    fetchTiposDeVino();
-    fetchDenominacionDeOrigen();
-    fetchComidas();
-    fetchVariedadesUva();
+    let isMounted = true;
 
-    // Mostrar mensaje de cargando datos
-    mostrarMensaje(
-      "Cargando datos...",
-      "Espere mientras se cargan los datos",
-      "info",
-      5000
-    );
-  }, []);
+    const fetchData = async () => {
+        mostrarMensaje(
+            "Cargando datos...",
+            "Espere mientras se cargan los datos",
+            "info"
+        );
+
+        await Promise.all([
+            fetchTiposDeVino(),
+            fetchDenominacionDeOrigen(),
+            fetchComidas(),
+            fetchVariedadesUva()
+        ]);
+
+        if (isMounted) {
+            // Cerrar el mensaje después de completar todas las solicitudes
+            Swal.close();
+        }
+    };
+
+    fetchData();
+
+    return () => {
+        isMounted = false;
+    };
+}, []);
 
   useEffect(() => {
   }, [nuevoVino]);
