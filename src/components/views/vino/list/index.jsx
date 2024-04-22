@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react";
 import { getData } from "../../../../utility/getData";
 import { apiUrl } from "../../../../data/Url";
 import { Eye, Trash2, Edit } from "react-feather";
-import { mostrarMensaje, mostrarMensajeConfirmacion } from "../../../../utility/utils";
+import {
+  mostrarMensaje,
+  mostrarMensajeConfirmacion,
+} from "../../../../utility/utils";
 import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
@@ -54,18 +57,22 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
       // Ordena los vinos por el nombre
       sortedVinos = [...vinosFiltrados].sort((a, b) => {
         if (nextOrder === "asc") {
-          return a.nombre.localeCompare(b.nombre);
+          return a.nombre && b.nombre ? a.nombre.localeCompare(b.nombre) : 0;
         } else {
-          return b.nombre.localeCompare(a.nombre);
+          return a.nombre && b.nombre ? b.nombre.localeCompare(a.nombre) : 0;
         }
       });
     } else if (tipo === "Tipo") {
       // Ordena los vinos por el tipo
       sortedVinos = [...vinosFiltrados].sort((a, b) => {
         if (nextOrder === "asc") {
-          return a.tipoVino.nombre.localeCompare(b.tipoVino.nombre);
+          return a.tipoVino.nombre && b.tipoVino.nombre
+            ? a.tipoVino.nombre.localeCompare(b.tipoVino.nombre)
+            : 0;
         } else {
-          return b.tipoVino.nombre.localeCompare(a.tipoVino.nombre);
+          return a.tipoVino.nombre && b.tipoVino.nombre
+            ? b.tipoVino.nombre.localeCompare(a.tipoVino.nombre)
+            : 0;
         }
       });
     }
@@ -110,63 +117,77 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
 
   return (
     <div>
-      <div className="table-responsive">
-        <table className="table table-striped tabla-vinos">
-          <thead>
-            <tr>
-              <th
-                onClick={() => handleSort("Nombre")}
-                className="cursor-pointer"
-              >
-                Nombre{orden === "asc" ? " ⇅" : " ⇅"}{" "}
-                {/* Agrega el símbolo de las flechas y el manejador de clic para ordenar*/}
-              </th>{" "}
-              <th onClick={() => handleSort("Tipo")} className="cursor-pointer">
-                Tipo{orden === "asc" ? " ⇅" : " ⇅"}{" "}
-              </th>{" "}
-              <th>Maridaje</th>
-              <th>Acciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            {vinosFiltrados.map((vino, index) => (
-              <tr key={vino["@id"]}>
-                <td>{vino.nombre}</td>
-                <td>{vino.tipoVino.nombre}</td>
-                <td>
-                  {vino.comida
-                    .sort((a, b) => a.nombre.localeCompare(b.nombre)) // Ordenar por el nombre de la comida
-                    .map((itemComida, index) => (
-                      <span key={itemComida["@id"]}>
-                        {itemComida.nombre}
-                        {index < vino.comida.length - 1 && ", "}{" "}
-                        {/* Esto es para poner comas entre los valores, menos al último*/}
-                      </span>
-                    ))}
-                </td>
-                <td>
-                  <Link to={`/view/${vino["@id"].split("/").pop()}`}>
-                    <Eye size={20} className="cursor-pointer" />
-                  </Link>
-
-                  {usuario === 'admin' ? (
-                    <>
-                      <Link to={`/edit/${vino["@id"].split("/").pop()}`}>
-                        <Edit size={20} className="cursor-pointer" />
-                      </Link>
-                      <Trash2
-                        size={20}
-                        className="cursor-pointer"
-                        onClick={() => handleDelete(vino["@id"])}
-                      />
-                    </>
-                  ) : null}
-                </td>
+      {vinosFiltrados.length === 0 ? (
+        <h5>No hay registros</h5>
+      ) : (
+        <div className="table-responsive">
+          <table className="table table-striped tabla-vinos">
+            <thead>
+              <tr>
+                <th
+                  onClick={() => handleSort("Nombre")}
+                  className="cursor-pointer"
+                >
+                  Nombre{orden === "asc" ? " ⇅" : " ⇅"}{" "}
+                  {/* Agrega el símbolo de las flechas y el manejador de clic para ordenar*/}
+                </th>{" "}
+                <th
+                  onClick={() => handleSort("Tipo")}
+                  className="cursor-pointer"
+                >
+                  Tipo{orden === "asc" ? " ⇅" : " ⇅"}{" "}
+                </th>{" "}
+                <th>Maridaje</th>
+                <th>Acciones</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {vinosFiltrados.map((vino, index) => (
+                <tr key={vino["@id"]}>
+                  <td>{vino.nombre}</td>
+                  <td>{vino.tipoVino.nombre}</td>
+                  <td>
+                    <td>
+                      {vino.comida.length > 0
+                        ? vino.comida
+                            .sort((a, b) =>
+                              a.nombre && b.nombre
+                                ? a.nombre.localeCompare(b.nombre)
+                                : 0
+                            )
+                            .map((itemComida, index) => (
+                              <span key={itemComida["@id"]}>
+                                {itemComida.nombre}
+                                {index < vino.comida.length - 1 && ", "}
+                              </span>
+                            ))
+                        : ""}
+                    </td>
+                  </td>
+                  <td>
+                    <Link to={`/view/${vino["@id"].split("/").pop()}`}>
+                      <Eye size={20} className="cursor-pointer" />
+                    </Link>
+
+                    {usuario === "admin" ? (
+                      <>
+                        <Link to={`/edit/${vino["@id"].split("/").pop()}`}>
+                          <Edit size={20} className="cursor-pointer" />
+                        </Link>
+                        <Trash2
+                          size={20}
+                          className="cursor-pointer"
+                          onClick={() => handleDelete(vino["@id"])}
+                        />
+                      </>
+                    ) : null}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };
