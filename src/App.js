@@ -42,7 +42,7 @@ function App() {
               <div>
                 <TopMenu/>
               </div>
-              <div class="fondo-titulo">
+              <div className="fondo-titulo">
                 <h1>Maridaje con vinos de la Comunidad Valenciana </h1>
               </div>
               <br />

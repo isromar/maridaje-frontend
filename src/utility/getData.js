@@ -36,7 +36,6 @@ export const getDataPerfilBodega = async (url, bodegaId = null) => {
   //A1234567A probar como CIF
 
   const urlConParametros = `${url}?${params.toString()}`;
-  console.log(urlConParametros)
   const response = await fetch(urlConParametros); // Envía el parámetro con la url
   const data = await response.json();
   return data;

@@ -216,7 +216,7 @@ const ComidaOptions = () => {
             
             <div className="input-container">
               <input
-                class="disabled"
+                className="disabled"
                 type="text"
                 placeholder="Comida seleccionada"
                 value={comidaSelected ? comidaSelected.label : ""}

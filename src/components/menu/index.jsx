@@ -12,26 +12,26 @@ const TopMenu = () => {
     <div className="top-menu">
       <nav>
         <ul>
-          <li class="menu-li">
+          <li className="menu-li">
             <Link to="/">
               Inicio
             </Link>
           </li>
           {usuario && bodegaId && acceso && !admin && (
-          <li class="menu-li li-bodega">
+          <li className="menu-li li-bodega">
             <Link to={`/perfil-bodega/${bodegaId}`}>
               Perfil bodega
             </Link>
           </li>
           )}
           {usuario && bodegaId && acceso && admin && (
-          <li class="menu-li li-admin">
+          <li className="menu-li li-admin">
               <Link to="/perfil-admin">
               Perfil admin
               </Link>
           </li>
           )}
-            <span class="input-acceso">
+            <span className="input-acceso">
               <BarraNavegacion/>
             </span>
         </ul>

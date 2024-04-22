@@ -140,7 +140,7 @@ const EditarBodega = () => {
             <h3>Bodega</h3>
 
             <div className="input-container input-bodega">
-              <div class="input-datos-bodega">
+              <div className="input-datos-bodega">
                 <div className="input-label">Nombre</div>
                 <input
                   className="nombre"
@@ -155,7 +155,7 @@ const EditarBodega = () => {
                   }
                 />
               </div>
-              <div class="input-datos-bodega">
+              <div className="input-datos-bodega">
                 <div className="input-label">Dirección</div>
                 <input
                   className="direccion"
@@ -170,7 +170,7 @@ const EditarBodega = () => {
                   }
                 />
               </div>
-              <div class="input-datos-bodega">
+              <div className="input-datos-bodega">
                 <div className="input-label">Teléfono</div>
                 <input
                   className="telefono"
@@ -186,7 +186,7 @@ const EditarBodega = () => {
                 />
               </div>
 
-              <div class="input-datos-bodega">
+              <div className="input-datos-bodega">
                 <div className="input-label">CIF</div>
                 <input
                   className="cif"
@@ -201,7 +201,7 @@ const EditarBodega = () => {
                   }
                 />
               </div>
-              <div class="input-datos-bodega">
+              <div className="input-datos-bodega">
                 <div className="input-label">Web</div>
                 <input
                   className="web"
@@ -217,7 +217,7 @@ const EditarBodega = () => {
                 />
               </div>
 
-              <div class="input-datos-bodega">
+              <div className="input-datos-bodega">
                 <div className="input-label">Contraseña</div>
                 <input
                   className="password"

@@ -22,8 +22,6 @@ function DetallesVino() {
       Swal.close(); // Cierra el mensaje después de un segundo
     }, 1000);
   }, [vinoId]);
-
-  console.log(vino)
   
   if (!vino) {
     return <div>Cargando...</div>;

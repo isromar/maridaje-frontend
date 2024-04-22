@@ -8,7 +8,6 @@ const BuscadorVinos = ({ setSelectedOption, setBusquedaNombreVino, busquedaNombr
     const nuevaBusqueda = event.target.value;
     // Realizar aquí la lógica para obtener las opciones coincidentes
     setBusquedaNombreVino(nuevaBusqueda);
-    console.log(nuevaBusqueda)
     setSelectedOption(null); // Restablecer el valor del Select
   };
 

@@ -141,7 +141,7 @@ const TipoVinoOptions = () => {
             
             <div className="input-container">
             <input
-                class="disabled"
+                className="disabled"
                 type="text"
                 placeholder="Tipo de vino seleccionado"
                 value={tipoVinoSelected ? tipoVinoSelected.label : ""}

@@ -248,13 +248,15 @@ function NuevoVino() {
       if (response.ok) {
         // Crear las relaciones entre el vino y las comidas seleccionadas
         const data = await response.json();
-        const vinoId = data["@id"].split("/").pop();
+        //const vinoId = data["@id"].split("/").pop();
 
         mostrarMensaje(
           "Vino creado",
           "El vino se ha creado con éxito",
           "success"
-        );
+        )
+        .then(data => console.log(data))
+
         // Restablecer el formulario después de la creación exitosa
         setNuevoVino({
           nombre: "",
@@ -279,14 +281,15 @@ function NuevoVino() {
       <div>
         <TopMenu />
       </div>
-      <form className="view" onSubmit={handleSubmit}>
+      <form className="view" id="form-nuevo-vino" onSubmit={handleSubmit}>
         <section className="view">
           <h2 className="centrar">Nuevo Vino</h2>
-
-          <table className="tabla-view">
-            <button type="submit" className="btn btn-light">
+          <button type="submit" className="btn btn-light button-guardar">
               Guardar vino
             </button>
+
+          <table className="tabla-view">
+
             <tr>
               <td>Nombre:</td>
               <td>
