@@ -42,6 +42,8 @@ function App() {
               <div>
                 <TopMenu/>
               </div>
+            </header>
+            <body className="App-body">
               <div className="fondo-titulo">
                 <h1>Maridaje con vinos de la Comunidad Valenciana </h1>
               </div>
@@ -55,7 +57,7 @@ function App() {
               </div>
               <br />
               <img src={logo} className="App-logo" alt="logo" />
-            </header>
+            </body>
           </div>
         } />
         <Route path="/view/:vinoId" element={<DetallesVino />} />
