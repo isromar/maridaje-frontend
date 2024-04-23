@@ -36,7 +36,7 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route exact path="/" element={
+        <Route exact path="/maridaje/" element={
           <div className="App">
             <header className="App-header">
               <div>
