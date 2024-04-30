@@ -12,10 +12,10 @@ export const apiUrl = {
 
 
 export const apiUrl = {
-  comidas: 'https://isabelrodenas.es/maridaje/api/comidas',
-  bodegas: 'https://isabelrodenas.es/maridaje/api/bodegas',
-  vinos: 'https://isabelrodenas.es/maridaje/api/vinos',
-  variedadesUva: 'https://isabelrodenas.es/maridaje/api/variedad_uvas',
-  tiposDeVino: 'https://isabelrodenas.es/maridaje/api/tipo_vinos',
-  denominacionDeOrigen: 'https://isabelrodenas.es/maridaje/api/denominacion_origens',
+  comidas: 'http://maridaje.isabelrodenas.es/api/comidas',
+  bodegas: 'http://maridaje.isabelrodenas.es/api/bodegas',
+  vinos: 'http://maridaje.isabelrodenas.es/api/vinos',
+  variedadesUva: 'http://maridaje.isabelrodenas.es/api/variedad_uvas',
+  tiposDeVino: 'http://maridaje.isabelrodenas.es/api/tipo_vinos',
+  denominacionDeOrigen: 'http://maridaje.isabelrodenas.es/api/denominacion_origens',
 };
