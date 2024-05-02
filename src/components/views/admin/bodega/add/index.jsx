@@ -35,6 +35,7 @@ const AddBodega = ({updateBodegas}) => {
       const data = await response.json();
       if (data && data["hydra:member"]) {
         const options = data["hydra:member"]
+        .filter((bodega) => bodega.id !== 88 && bodega.cif !== "admin")
           .map((bodega) => ({
             value: bodega.id,
             label: bodega.nombre,
