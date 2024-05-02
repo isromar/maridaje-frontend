@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import TopMenu from "../../../menu";
 import Select from "react-select";
 
-const NuevoVino = async () => {
+function NuevoVino() {
   const { bodegaId } = useParams();
 
   const [tiposDeVino, setTiposDeVino] = useState([]);
@@ -234,7 +234,6 @@ const NuevoVino = async () => {
       comida: comidasIris,
       variedadUva: variedadUvasIris,
     };
-    console.log(nuevoVinoCompleto);
 
     try {
       const response = await fetch(apiUrl.vinos, {
@@ -248,15 +247,13 @@ const NuevoVino = async () => {
       if (response.ok) {
         // Crear las relaciones entre el vino y las comidas seleccionadas
         const data = await response.json();
-        //const vinoId = data["@id"].split("/").pop();
+        const vinoId = data["@id"].split("/").pop();
 
         mostrarMensaje(
           "Vino creado",
           "El vino se ha creado con éxito",
           "success"
-        )
-        .then(data => console.log(data))
-
+        );
         // Restablecer el formulario después de la creación exitosa
         setNuevoVino({
           nombre: "",
@@ -281,14 +278,18 @@ const NuevoVino = async () => {
       <div>
         <TopMenu />
       </div>
-      <form className="view" id="form-nuevo-vino" onSubmit={handleSubmit}>
+      <form className="view" onSubmit={handleSubmit}>
         <section className="view">
           <h2 className="centrar">Nuevo Vino</h2>
-          <button type="submit" className="btn btn-light button-guardar">
-              Guardar vino
-            </button>
 
           <table className="tabla-view">
+            <tr>
+              <td>
+              <button type="submit" className="btn btn-light">
+                Guardar vino
+              </button>
+              </td>
+            </tr>
 
             <tr>
               <td>Nombre:</td>
