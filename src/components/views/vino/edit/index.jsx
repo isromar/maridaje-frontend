@@ -29,8 +29,6 @@ function EditarVino() {
     precio: "",
     denominacionOrigen: "",
   });
-
-
   
 
   let { vinoId } = useParams();
@@ -47,14 +45,30 @@ function EditarVino() {
   const [vinoPrecio, setVinoPrecio] = useState([]);
   const [vinoPrecioSelected, setVinoPrecioSelected] = useState("");
 
-
-  const [comidaSelected, setComidaSelected] = useState("");
-
   const [vinoEcologicoSelected, setVinoEcologicoSelected] = useState("");
 
   const [variedadUvaSelected, setVariedadUvaSelected] =
     useState([]);
 
+  const [comidaSelected, setComidaSelected] = useState([]);
+
+  useEffect(() => {
+    if (vino && vino.comida) {
+      setComidaSelected(
+        vino.comida.map((comida) => ({ value: comida.id, label: comida.nombre }))
+      );
+    } else {
+      setComidaSelected([]); // Establecer como un array vacío si vino.comida no existe
+    }
+  
+    if (vino && vino.variedad_uva) {
+      setVariedadUvaSelected(
+        vino.variedad_uva.map((uva) => ({ value: uva.id, label: uva.nombre }))
+      );
+    } else {
+      setVariedadUvaSelected([]); // Establecer como un array vacío si vino.variedad_uva no existe
+    }
+  }, [vino]);
 
 
   useEffect(() => {
@@ -86,9 +100,6 @@ function EditarVino() {
         isMounted = false;
     };
 }, []);
-
-  useEffect(() => {
-  }, [nuevoVino]);
 
   const fetchDenominacionDeOrigen = async () => {
     try {
@@ -133,8 +144,10 @@ function EditarVino() {
         ecologico: selectedOption.value,
       });
     } else if (stateName === "comidasSelected") {
-      setHayComidasEnElInput(1);
-      setNuevoVinoComidas(selectedOption.map((option) => option.value));
+      setNuevoVino({
+        ...nuevoVino,
+        ecologico: selectedOption.value,
+      });
     } else if (stateName === "variedadUvaSelected") {
       setNuevoVinoVariedadUvas(selectedOption.map((option) => option.value));
     }
@@ -219,9 +232,6 @@ function EditarVino() {
       mostrarMensaje("Error", "Hubo un error al crear el vino", "error");
     }
   };
-
-
-
 
   const fetchTiposDeVino = async () => {
     try {
@@ -374,8 +384,6 @@ function EditarVino() {
   };
 
 
-
-
   return (
     <div>
       <div>
@@ -400,7 +408,7 @@ function EditarVino() {
                   onChange={(e) =>
                     setNuevoVino({ ...nuevoVino, nombre: e.target.value })
                   }
-                  placeholder={vino.nombre}
+                  placeholder={vino && vino.nombre ? vino.nombre : ""}
                 />
               </td>
             </tr>
@@ -410,7 +418,7 @@ function EditarVino() {
               <td>
                 <Select
                   type="text"
-                  placeholder={vino.tipoVino.nombre}
+                  placeholder={vino.tipoVino.nombre || ""}
                   value={nuevoVino.tipoVino}
                   onChange={(tipoVinoSelected) =>
                     handleChange(tipoVinoSelected, "tipoVinoSelected")
@@ -425,7 +433,8 @@ function EditarVino() {
               <td>
                 <input
                   type="text"
-                  placeholder={vino.maduracion || ""}              className="form-control"
+                  placeholder={vino.maduracion || ""}              
+                  className="form-control"
                   value={nuevoVino.maduracion}
                   onChange={(e) =>
                     setNuevoVino({ ...nuevoVino, maduracion: e.target.value })
@@ -492,18 +501,9 @@ function EditarVino() {
               <td>
                 <Select
                   isMulti
-                  value={vino.comida.map(comida => ({ value: comida.id, label: comida.nombre }))}
+                  value={comidaSelected}
                   onChange={(selectedOptions) => setComidaSelected(selectedOptions)}
                   options={comidas}
-                  placeholder={vino.comida && vino.comida.length > 0
-                    ? [
-                        {
-                          value: vino.comida[0].id,
-                          label: vino.comida[0].nombre
-                        }
-                      ]
-                    : ""
-                  }
                 />
               </td>
             </tr>
@@ -513,21 +513,9 @@ function EditarVino() {
               <td>
               <Select
                 isMulti
-                value={vino.variedad_uva.map(uva => ({ value: uva.id, label: uva.nombre }))}
-                onChange={(selectedOptions) =>
-                  //setVariedadUvaSelected(selectedOptions)
-                  handleChange("variedadUvaSelected", selectedOptions)
-                }
+                value={variedadUvaSelected}
+                onChange={(selectedOptions) => setVariedadUvaSelected(selectedOptions)}
                 options={variedadesUva}
-                placeholder={vino.variedad_uva && vino.variedad_uva.length > 0
-                  ? [
-                      {
-                        value: vino.variedad_uva[0].id,
-                        label: vino.variedad_uva[0].nombre
-                      }
-                    ]
-                  : ""
-              }
               />
               </td>
             </tr>
