@@ -6,7 +6,7 @@ import Swal from "sweetalert2";
 import TopMenu from "../../../menu";
 import Select from "react-select";
 
-function NuevoVino() {
+const NuevoVino = async () => {
   const { bodegaId } = useParams();
 
   const [tiposDeVino, setTiposDeVino] = useState([]);

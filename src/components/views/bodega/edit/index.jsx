@@ -131,7 +131,7 @@ const EditarBodega = () => {
       <div className="perfil-admin-title">
         <section className="perfil-admin centrar">
           <h2 className="centrar">
-            <span>Administrador</span>
+            <span>Datos bodega</span>
           </h2>
         </section>
 
