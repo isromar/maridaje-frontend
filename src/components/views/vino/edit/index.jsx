@@ -52,10 +52,7 @@ function EditarVino() {
 
   const [vinoEcologicoSelected, setVinoEcologicoSelected] = useState("");
 
-  const [variedadUvaSelected, setVariedadUvaSelected] =
-    useState([]);
-
-
+  const [variedadUvaSelected, setVariedadUvaSelected] = useState([]);
 
   useEffect(() => {
     let isMounted = true;
@@ -88,7 +85,29 @@ function EditarVino() {
 }, []);
 
   useEffect(() => {
-  }, [nuevoVino]);
+    if (vinoId) {
+      fetch(`${apiUrl.vinos}/${vinoId}`)
+        .then((response) => response.json())
+        .then((data) => {
+          setVino(data);
+        });
+      }
+  }, []);
+
+  useEffect(() => {
+    if (vino) {
+      setNuevoVino({
+        bodega: vino.bodega,
+        nombre: vino.nombre,
+        tipoVino: vino.tipoVino,
+        maduracion: vino.maduracion,
+        ecologico: vino.ecologico,
+        precio: vino.precio,
+        denominacionOrigen: vino.denominacionOrigen,
+      });
+    }
+  }, [vino]);
+
 
   const fetchDenominacionDeOrigen = async () => {
     try {
@@ -141,7 +160,7 @@ function EditarVino() {
   };
 
   const handleSubmit = async (event) => {
-    if (!nuevoVino.nombre || !nuevoVino.tipoVino || hayComidasEnElInput === 0) {
+    if (!nuevoVino.nombre || !nuevoVino.tipoVino) {
       mostrarMensaje(
         "Campos obligatorios",
         "Por favor, rellena los campos Nombre, Tipo de Vino y Marida con",
@@ -178,11 +197,10 @@ function EditarVino() {
       comida: comidasIris,
       variedadUva: variedadUvasIris,
     };
-    console.log(nuevoVinoCompleto);
 
     try {
-      const response = await fetch(apiUrl.vinos, {
-        method: "POST",
+      const response = await fetch(apiUrl.vinos/vinoId, {
+        method: "PUT",
         headers: {
           "Content-Type": "application/ld+json",
         },
@@ -299,23 +317,7 @@ function EditarVino() {
     }
   };
 
-  useEffect(() => {
-    if (vinoId) {
-      fetch(`${apiUrl.vinos}/${vinoId}`)
-        .then((response) => response.json())
-        .then((data) => {
-          setVino(data);
-          console.log(data);
-        });
-    }
-}, []);
 
-  useEffect(() => {
-    fetchTiposDeVino();
-    fetchDenominacionOrigen();
-    fetchVariedadesUva();
-    fetchComidas();
-  }, []);
 
   if (!vino) {
     return <div>Cargando...</div>;
@@ -328,53 +330,6 @@ function EditarVino() {
       [key]: value,
     }));
   };
-
-  const saveData = async () => {
-    try {
-      // Preparar los datos a enviar
-      const datosVinoObj = {
-        nombre: vino.nombre,
-        maduracion: vino.maduracion,
-        tipoVino: tipoVinoSelected,
-        denominacionOrigen: denominacionOrigenSelected,
-        ecologico: vinoEcologicoSelected,
-        precio: vinoPrecioSelected,
-        variedad_uva: variedadUvaSelected.map(uva => uva.value),
-        // Agrega aquí el resto de campos que quieras guardar
-      };
-  
-      // Enviar los datos al servidor
-      const response = await fetch(`${apiUrl.vinos}/${vinoId}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/ld+json',
-        },
-        body: JSON.stringify(datosVinoObj),
-      });
-  
-      if (response.ok) {
-        // Mostrar un mensaje de éxito
-        mostrarMensaje('Guardado', 'Los datos del vino se han guardado correctamente', 'success');
-  
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-        // Actualizar el estado del vino con los nuevos valores
-        const updatedVino = await response.json();
-        setVino(updatedVino);
-      } else {
-        // Mostrar un mensaje de error
-        mostrarMensaje('Error', 'Ha ocurrido un error al guardar los datos', 'error');
-      }
-    } catch (error) {
-      console.error('Error al guardar los datos:', error);
-      mostrarMensaje('Error', 'Ha ocurrido un error al guardar los datos', 'error');
-    }
-  };
-
-
-
 
   return (
     <div>
@@ -400,7 +355,7 @@ function EditarVino() {
                   onChange={(e) =>
                     setNuevoVino({ ...nuevoVino, nombre: e.target.value })
                   }
-                  placeholder={vino.nombre}
+                  placeholder="Nombre"
                 />
               </td>
             </tr>
@@ -410,8 +365,8 @@ function EditarVino() {
               <td>
                 <Select
                   type="text"
-                  placeholder={vino.tipoVino.nombre}
-                  value={nuevoVino.tipoVino}
+                  value={nuevoVino.tipoVino.label}
+                  placeholder={vino && vino.tipoVino ? vino.tipoVino.nombre : "Selecciona..."}
                   onChange={(tipoVinoSelected) =>
                     handleChange(tipoVinoSelected, "tipoVinoSelected")
                   }
@@ -425,7 +380,8 @@ function EditarVino() {
               <td>
                 <input
                   type="text"
-                  placeholder={vino.maduracion || ""}              className="form-control"
+                  placeholder={vino.maduracion || ""}
+                  className="form-control"
                   value={nuevoVino.maduracion}
                   onChange={(e) =>
                     setNuevoVino({ ...nuevoVino, maduracion: e.target.value })
@@ -439,8 +395,8 @@ function EditarVino() {
               <td>
                 <Select
                   type="text"
-                  placeholder={vino.denominacionOrigen.nombre || ""}
-                  value={nuevoVino.denominacionOrigen}
+                  value={nuevoVino.denominacionOrigen.nombre || ""}
+                  placeholder={vino && vino.denominacionOrigen ? vino.denominacionOrigen.nombre : "Selecciona..."}
                   onChange={(denominacionOrigenSelected) =>
                     handleChange(
                       denominacionOrigenSelected,
@@ -477,9 +433,8 @@ function EditarVino() {
               <td>
                 <input
                   type="text"
-                  placeholder={vino.precio || 0}
                   className="form-control"
-                  value={nuevoVino.precio}
+                  value={nuevoVino.precio || 0}
                   onChange={(e) =>
                     setNuevoVino({ ...nuevoVino, precio: e.target.value })
                   }
