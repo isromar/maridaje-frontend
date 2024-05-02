@@ -339,11 +339,16 @@ function EditarVino() {
       <form className="view" id="form-nuevo-vino" onSubmit={handleSubmit}>
         <section className="view">
           <h2 className="centrar">Editar Vino - {vino.nombre}</h2>
-          <button type="submit" className="btn btn-light button-guardar">
-              Guardar vino
-            </button>
+
 
           <table className="tabla-view">
+            <tr>
+              <td>
+              <button type="submit" className="btn btn-light button-guardar">
+              Guardar vino
+            </button>
+              </td>
+            </tr>
 
             <tr>
               <td>Nombre:</td>

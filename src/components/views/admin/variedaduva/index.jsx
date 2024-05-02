@@ -204,9 +204,9 @@ return (
       <div className="perfil-admin-content">
 
        
-        <section>
+        <section className="row">
           <h3>Variedad de uva</h3>
-          <div className="select-container">
+          <div className="select-container col-12 col-md-4">
             <Select
               options={variedadesUva}
               value={variedadUvaSelected}
@@ -215,7 +215,7 @@ return (
             />
           </div>
           
-          <div className="input-container">
+          <div className="input-container col-12 col-md-4">
             <input
               className="disabled"              
               type="text"
@@ -227,7 +227,7 @@ return (
           </div>
 
 
-            <div className="input-container">
+            <div className="input-container col-12 col-md-4">
               <input
                 type="text"
                 placeholder="Editar variedad de uva"
@@ -237,7 +237,7 @@ return (
               <button onClick={handleEditVariedadUva}>Editar</button>
             </div>
 
-          <div className="input-container">
+          <div className="input-container col-12 col-md-4">
             <input
               type="text"
               placeholder="Nueva variedad de uva"

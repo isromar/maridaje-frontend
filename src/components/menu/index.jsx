@@ -10,31 +10,31 @@ const TopMenu = () => {
 
   return (
     <div className="top-menu">
-      <nav>
-        <ul>
-          <li className="menu-li">
-            <Link to="/">
+      <nav className="nav justify-content-center">
+        <ul className="d-flex">
+          <li className="nav-item menu-li">
+            <Link to="/" className="nav-link">
               Inicio
             </Link>
           </li>
           {usuario && bodegaId && acceso && !admin && (
-          <li className="menu-li li-bodega">
-            <Link to={`/perfil-bodega/${bodegaId}`}>
+          <li className="nav-item li-bodega">
+            <Link to={`/perfil-bodega/${bodegaId}`} className="nav-link">
               Perfil bodega
             </Link>
           </li>
           )}
           {usuario && bodegaId && acceso && admin && (
-          <li className="menu-li li-admin">
-              <Link to="/perfil-admin">
+          <li className="nav-item li-admin">
+              <Link to="/perfil-admin" className="nav-link">
               Perfil admin
               </Link>
           </li>
           )}
-            <span className="input-acceso">
-              <BarraNavegacion/>
-            </span>
         </ul>
+        <span className="input-acceso">
+          <BarraNavegacion/>
+        </span>
       </nav>
     </div>
   );

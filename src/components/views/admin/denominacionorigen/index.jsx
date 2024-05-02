@@ -205,9 +205,9 @@ const DenominacionOrigenOptions = () => {
         
         <div className="perfil-admin-content">
 
-        <section>
+        <section className="row">
             <h3>Denominación de origen</h3>
-            <div className="select-container">
+            <div className="select-container col-12 col-md-4">
               <Select
                 options={denominacionDeOrigen}
                 value={denominacionOrigenSelected}
@@ -216,7 +216,7 @@ const DenominacionOrigenOptions = () => {
               />
             </div>
 
-            <div className="input-container">
+            <div className="input-container col-12 col-md-4">
               <input
                 className="disabled"              
                 type="text"
@@ -227,7 +227,7 @@ const DenominacionOrigenOptions = () => {
               <button className="delete-button" onClick={() => handleDeleteDenominacionOrigen(denominacionOrigenSelected)}>Borrar</button>
             </div>
 
-            <div className="input-container">
+            <div className="input-container col-12 col-md-4">
               <input
                 type="text"
                 placeholder="Editar denominación de origen"
@@ -237,7 +237,7 @@ const DenominacionOrigenOptions = () => {
               <button onClick={handleEditDenominacionOrigen}>Editar</button>
             </div>
 
-            <div className="input-container">
+            <div className="input-container col-12 col-md-4">
               <input
                 type="text"
                 placeholder="Nueva denominación de origen"

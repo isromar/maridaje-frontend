@@ -14,25 +14,13 @@
 }
 
 .App-header {
- /* background-color: #282c34;*/
-  /*background-color: #722f37; /* Color de vino en formato hexadecimal */
-  /*background-color: #4c1f27; /* Color de vino en formato hexadecimal 
-  min-height: 100vh;*/
   display: flex;
   flex-direction: column;
   align-items: center;
-  /*justify-content: center;*/
-  /*font-size: calc(10px + 2vmin);*/
 }
 
 .App-body {
-  /* background-color: #282c34;*/
-   /*background-color: #722f37; /* Color de vino en formato hexadecimal */
-   /*background-color: #4c1f27; /* Color de vino en formato hexadecimal 
-   min-height: 100vh;*/
    align-items: center;
-   /*justify-content: center;*/
-   /*font-size: calc(10px + 2vmin);*/
    color: #4c1f27;
 }
 
@@ -53,46 +41,33 @@
 .top-menu nav ul {
   list-style-type: none;
   display: flex;
-  justify-content: center; /* Centra los elementos en el eje horizontal */
-  margin: 0;
-  margin-left: 45%;
-  padding: 0;
-  font-size: 1.8em;
+  font-size: 1.9em;
   font-weight: bold;
+  margin-bottom: 0 !important;
+
 }
 
-.top-menu nav ul li {
-  margin: 0 20px; /* Aumentar el espacio entre los elementos */
+.top-menu nav ul a:visited {
+  color: #4c1f27;
 }
 
 .top-menu nav ul li a {
-  padding: 8px 16px;
-  text-decoration: none;
-  color: #4c1f27; /* Color de texto por defecto */
-  background-color: transparent; /* Sin fondo de color */
-  border: none; /* Sin borde */
-  border-radius: 0; /* Sin bordes redondeados */
-  transition: color 0.3s ease; /* Transición suave para el color */
-}
-
-.menu-li {
-  margin: 0 20px; /* Aumentar el espacio entre los elementos */
-}
-
-.input-acceso {
-  margin-left: auto; /* Alinea el elemento a la derecha */
-  font-size: 0.7em;
+  color: #4c1f27;
 }
 
 .top-menu nav ul li:hover a {
   color: white;
 }
 
-.top-menu nav ul li.menu-li:hover {
-  color: white;
-  border-color: #4c1f27; 
+.top-menu nav ul li:hover {
   background-color: #4c1f27;
 }
+/*
+.input-acceso {
+  margin-left: auto;
+  font-size: 0.7em;
+}
+*/
 
 .btn-nuevo-vino, .btn-editar-vino {
   margin-bottom: 3%;
@@ -241,12 +216,6 @@
 
 .input-datos-bodega {
   display: inline-block;
-}
-
-.barra-navegacion {
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 10px;
-  font-size: 0.8em;
 }
 
 .formulario {

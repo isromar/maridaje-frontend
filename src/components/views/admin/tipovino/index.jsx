@@ -207,9 +207,9 @@ const TipoVinoOptions = () => {
         <div className="perfil-admin-content">
 
          
-          <section>
+          <section className="row">
             <h3>Tipo de vino</h3>
-            <div className="select-container">
+            <div className="select-containe col-12 col-md-4">
               <Select
                 options={tiposDeVino}
                 value={tipoVinoSelected}
@@ -218,7 +218,7 @@ const TipoVinoOptions = () => {
               />
             </div>
             
-            <div className="input-container">
+            <div className="input-container col-12 col-md-4">
             <input
                 className="disabled"
                 type="text"
@@ -229,7 +229,7 @@ const TipoVinoOptions = () => {
               <button className="delete-button" onClick={() => handleDeleteTipoVino(tipoVinoSelected)}>Borrar</button>
             </div>
 
-            <div className="input-container">
+            <div className="input-container col-12 col-md-4">
               <input
                 type="text"
                 placeholder="Editar tipo de vino"
@@ -239,7 +239,7 @@ const TipoVinoOptions = () => {
               <button onClick={handleEditTipoVino}>Editar</button>
             </div>
 
-            <div className="input-container">
+            <div className="input-container col-12 col-md-4">
               <input
                 type="text"
                 placeholder="Nuevo tipo de vino"

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const BuscadorVinos = ({ setSelectedOption, setBusquedaNombreVino, busquedaNombreVino, setPlaceholder, placeholder }) => {
+const BuscadorVinos = ({ setSelectedOption, setBusquedaNombreVino, busquedaNombreVino }) => {
   //const [busqueda, setBusqueda] = useState("");
   //const [placeholder, setPlaceholder] = useState("Nombre del vino...");
 
@@ -10,14 +10,9 @@ const BuscadorVinos = ({ setSelectedOption, setBusquedaNombreVino, busquedaNombr
     setBusquedaNombreVino(nuevaBusqueda);
     setSelectedOption(null); // Restablecer el valor del Select
   };
-
-  const handleFocus = () => {
-    setPlaceholder('');
-  };
-
+  
   const handleBlur = (e) => {
     if (e.target.value === '') {
-      setPlaceholder("Nombre del vino...");
       setSelectedOption(null);
     }
   };
@@ -26,11 +21,10 @@ const BuscadorVinos = ({ setSelectedOption, setBusquedaNombreVino, busquedaNombr
     <div className="input input-group">
       <input
         type="text"
-        className="buscador-vinos centrar"
+        className="buscador-vinos centrar form-control"
         value={busquedaNombreVino}
         onChange={handleBusquedaChange}
-        placeholder={placeholder}
-        onFocus={handleFocus}
+        placeholder="Nombre del vino"
         onBlur={handleBlur}
       />
     </div>

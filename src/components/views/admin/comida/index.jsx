@@ -203,9 +203,9 @@ const ComidaOptions = () => {
         <div className="perfil-admin-content">
 
          
-          <section>
+          <section className="row">
             <h3>Comida</h3>
-            <div className="select-container">
+            <div className="select-container col-12 col-md-4">
               <Select
                 options={comidas}
                 value={comidaSelected}
@@ -214,7 +214,7 @@ const ComidaOptions = () => {
               />
             </div>
             
-            <div className="input-container">
+            <div className="input-container col-12 col-md-4">
               <input
                 className="disabled"
                 type="text"
@@ -225,7 +225,7 @@ const ComidaOptions = () => {
               <button className="delete-button" onClick={() => handleDeleteComida(comidaSelected)}>Borrar</button>
             </div>
 
-            <div className="input-container">
+            <div className="input-container col-12 col-md-4">
               <input
                 type="text"
                 placeholder="Editar comida"
@@ -235,7 +235,7 @@ const ComidaOptions = () => {
               <button onClick={handleEditComida}>Editar</button>
             </div>
 
-            <div className="input-container">
+            <div className="input-container col-12 col-md-4">
               <input
                 type="text"
                 placeholder="Nueva comida"
