@@ -11,7 +11,7 @@ export const apiUrl = {
 
 
 export const apiUrl = {
-  comidas: 'https://maridajmaridaje.isabelrodenas.es/api/comidas',
+  comidas: 'https://maridaje.isabelrodenas.es/api/comidas',
   bodegas: 'https://maridaje.isabelrodenas.es/api/bodegas',
   vinos: 'https://maridaje.isabelrodenas.es/api/vinos',
   variedadesUva: 'https://maridaje.isabelrodenas.es/api/variedad_uvas',
