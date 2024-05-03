@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import setBasePath from "../../utility/redirectUtils";
 
 const BarraNavegacion = () => {
-  //const history = useHistory();
   const [usuario, setUsuario] = useState("");
   const [password, setPassword] = useState("");
   const [acceso, setAcceso] = useState(false);

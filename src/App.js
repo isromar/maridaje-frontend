@@ -17,6 +17,7 @@ import EditarBodega from './components/views/bodega/edit';
 import ListaVinosAdmin from './components/views/admin/listavinos';
 import NuevoVinoAdmin from './components/views/admin/nuevovino';
 import NuevoVino from './components/views/vino/add';
+import ErrorBoundary from './components/error';
 
 function App() {
   const usuario = localStorage.getItem("usuario");
@@ -35,6 +36,7 @@ function App() {
 
   return (
     <Router basename="/maridaje">
+      <ErrorBoundary>
       <Routes>
         <Route exact path="/" element={
           <div className="App">
@@ -71,6 +73,7 @@ function App() {
         {usuario === 'admin' ? adminRoutes : null}
 
       </Routes>
+      </ErrorBoundary>
     </Router>
   );
 }

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Select from "react-select";
 import { apiUrl } from "../../data/Url";
+import ErrorBoundary from "../error";
 
 const ComidaSelect = ({ selectedOption, setSelectedOption, setBusquedaNombreVino, setPlaceholder }) => {
   const [comidas, setComidas] = useState([]); // Inicializa el estado con un array vacío
@@ -35,6 +36,7 @@ const ComidaSelect = ({ selectedOption, setSelectedOption, setBusquedaNombreVino
 
   return (
     <>
+    <ErrorBoundary>
       <div className="select">
         <Select
           //options={comidas}
@@ -45,6 +47,7 @@ const ComidaSelect = ({ selectedOption, setSelectedOption, setBusquedaNombreVino
           placeholder="Selecciona comida..."
         />
       </div>
+      </ErrorBoundary>
     </>
   );
 };
