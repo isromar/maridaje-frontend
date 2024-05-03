@@ -23,7 +23,7 @@ export const getData = async (url, busquedaNombreVino = '', selectedOption = nul
     method: 'GET',
     headers: {
       'Content-Type': 'application/ld+json',
-      'Origin': 'http://maridaje.isabelrodenas.es/api' 
+      'Origin': 'https://maridaje.isabelrodenas.es/api' 
     }
   });
   const data = await response.json();

@@ -1,4 +1,4 @@
-
+/*
 export const apiUrl = {
     comidas: 'http://localhost:8000/api/comidas',
     bodegas: 'http://localhost:8000/api/bodegas',
@@ -7,9 +7,9 @@ export const apiUrl = {
     tiposDeVino: 'http://localhost:8000/api/tipo_vinos',
     denominacionDeOrigen: 'http://localhost:8000/api/denominacion_origens',
   };
+*/
 
 
-/*
 export const apiUrl = {
   comidas: 'https://isabelrodenas.es/maridaje/api/comidas',
   bodegas: 'https://isabelrodenas.es/maridaje/api/bodegas',
@@ -18,4 +18,3 @@ export const apiUrl = {
   tiposDeVino: 'https://isabelrodenas.es/maridaje/api/tipo_vinos',
   denominacionDeOrigen: 'https://isabelrodenas.es/maridaje/api/denominacion_origens',
 };
-*/
