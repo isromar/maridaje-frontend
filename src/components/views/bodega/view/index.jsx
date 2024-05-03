@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from "react";
-import TablaVinosBodega from "../list";
 import TopMenu from "../../../menu";
 import { useParams } from "react-router-dom";
 import { obtenerNombreBodega } from "../../../../utility/utils";
 import MenuElementosBodega from "../menu";
 import Swal from 'sweetalert2';
+import setBasePath from "../../../../utility/redirectUtils";
+
 
 const PerfilBodega = () => {
   const { bodegaId } = useParams();
@@ -22,7 +23,8 @@ const PerfilBodega = () => {
         );
         setAcceso(false);
         setTimeout(() => {
-          window.location.href = `/perfil-bodega/${bodegaIdLocalStorage}`;
+          const path = `/perfil-bodega/${bodegaIdLocalStorage}`;
+          setBasePath(path);
         }, 4000);
       } else {
         const fetchNombreBodega = async () => {

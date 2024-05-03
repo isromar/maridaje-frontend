@@ -92,7 +92,7 @@ function EditarVino() {
           setVino(data);
         });
       }
-  }, []);
+  }, [vinoId]);
 
   useEffect(() => {
     if (vino) {

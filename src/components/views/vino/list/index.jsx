@@ -36,13 +36,11 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
       "info"
     );
 
-    fetchData();
-
     // Ocultar el mensaje después de 1 segundo
     setTimeout(() => {
       Swal.close();
     }, 2000);
-  }, []);
+  }, [busquedaNombreVino, selectedOption]);
 
   useEffect(() => {
     fetchData();
@@ -150,17 +148,17 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
                     <td>
                       {vino.comida.length > 0
                         ? vino.comida
-                            .sort((a, b) =>
-                              a.nombre && b.nombre
-                                ? a.nombre.localeCompare(b.nombre)
-                                : 0
-                            )
-                            .map((itemComida, index) => (
-                              <span key={itemComida["@id"]}>
-                                {itemComida.nombre}
-                                {index < vino.comida.length - 1 && ", "}
-                              </span>
-                            ))
+                          .sort((a, b) =>
+                            a.nombre && b.nombre
+                              ? a.nombre.localeCompare(b.nombre)
+                              : 0
+                          )
+                          .map((itemComida, index) => (
+                            <span key={itemComida["@id"]}>
+                              {itemComida.nombre}
+                              {index < vino.comida.length - 1 && ", "}
+                            </span>
+                          ))
                         : ""}
                     </td>
                   </td>

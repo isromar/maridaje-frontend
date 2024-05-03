@@ -19,7 +19,13 @@ export const getData = async (url, busquedaNombreVino = '', selectedOption = nul
   }
 
   const urlConParametros = `${url}?${params.toString()}`;
-  const response = await fetch(urlConParametros); // Envía el parámetro con la url
+  const response = await fetch(urlConParametros, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/ld+json',
+    }
+  });
+
   const data = await response.json();
   return data;
 }
