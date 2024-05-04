@@ -23,3 +23,8 @@
   AddOutputFilterByType DEFLATE text/css
   AddOutputFilterByType DEFLATE application/javascript
 </IfModule>
+
+# Redirección a isabelrodenas.es/cvtemporal
+RewriteCond %{HTTP_HOST} ^isabelrodenas.es [NC]
+RewriteCond %{REQUEST_URI} !^/cvtemporal [NC]
+RewriteRule ^(.*)$ https://isabelrodenas.es/cvtemporal [L,R=301]
