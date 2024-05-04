@@ -3,8 +3,8 @@ import TopMenu from "../../../menu";
 import { useParams } from "react-router-dom";
 import { obtenerNombreBodega } from "../../../../utility/utils";
 import MenuElementosBodega from "../menu";
-import Swal from 'sweetalert2';
 import setBasePath from "../../../../utility/redirectUtils";
+import { mostrarMensaje } from "../../../../utility/utils";
 
 
 const PerfilBodega = () => {
@@ -33,17 +33,6 @@ const PerfilBodega = () => {
         };
         fetchNombreBodega();
       }
-    };
-
-    const mostrarMensaje = (titulo, mensaje, tipo) => {
-      Swal.fire({
-        title: titulo,
-        text: mensaje,
-        icon: tipo,
-        timer: 4000,
-        timerProgressBar: true,
-        showConfirmButton: false
-      });
     };
 
     validarAccesoBodega();

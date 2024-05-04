@@ -40,7 +40,7 @@ const TablaVinos = ({ busquedaNombreVino, selectedOption }) => {
     setTimeout(() => {
       Swal.close();
     }, 2000);
-  }, [busquedaNombreVino, selectedOption]);
+  }, []);
 
   useEffect(() => {
     fetchData();

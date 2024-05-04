@@ -11,7 +11,7 @@ import AddBodega from "./add";
 
 const BodegaOptions = () => {
   const [bodegas, setBodegas] = useState([]);
-  const [bodegaSelected, setBodegaSelected] = useState("");
+  const [bodegaSelected, setBodegaSelected] = useState({});
   const [editedBodega, setEditedBodega] = useState({
     nombre: "",
     direccion: "",
@@ -55,11 +55,17 @@ const BodegaOptions = () => {
 
   const fetchBodegas = async () => {
     try {
-      const response = await fetch(apiUrl.bodegas);
+      const response = await fetch(apiUrl.bodegas, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/ld+json',
+          'Access-Control-Allow-Origin': '*'
+        }
+      });
       const data = await response.json();
       if (data && data["hydra:member"]) {
         const options = data["hydra:member"]
-        .filter((bodega) => bodega.id !== 88 && bodega.cif !== "admin")
+        .filter((bodega) => bodega.cif !== "admin")
           .map((bodega) => ({
             value: bodega.id,
             label: bodega.nombre,

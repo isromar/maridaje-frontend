@@ -35,7 +35,7 @@ function App() {
   );
 
   return (
-    <Router basename="/maridaje">
+    <Router basename="/">
       <ErrorBoundary>
       <Routes>
         <Route exact path="/" element={

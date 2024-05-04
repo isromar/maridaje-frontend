@@ -155,7 +155,7 @@ const NuevoVinoAdmin = () => {
     const data = await response.json();
   
     const options = data["hydra:member"]
-      .filter((bodega) => bodega.id !== 88 && bodega.cif !== "admin")
+      .filter((bodega) => bodega.cif !== "admin")
       .map((bodega) => ({
         value: bodega.id,
         label: bodega.nombre,
@@ -226,10 +226,10 @@ const NuevoVinoAdmin = () => {
   };
 
   const handleSubmit = async (event) => {
-    if (!nuevoVino.nombre || !nuevoVino.tipoVino || hayComidasEnElInput === 0) {
+    if (!nuevoVino.nombre || !nuevoVino.tipoVino || hayComidasEnElInput === 0 || !bodegaSelected) {
       mostrarMensaje(
         "Campos obligatorios",
-        "Por favor, rellena los campos Nombre, Tipo de Vino y Marida con",
+        "Por favor, rellena los campos Bodega, Nombre, Tipo de Vino y Marida con",
         "warning",
         4000
       );

@@ -1,6 +1,6 @@
 // redirectUtils.js
 const setBasePath = (path) => {
-    const basePath = "/maridaje";
+    const basePath = ".";
     window.location.pathname = `${basePath}${path}`;
   }
   
