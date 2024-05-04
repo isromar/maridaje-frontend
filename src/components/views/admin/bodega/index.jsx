@@ -11,7 +11,7 @@ import AddBodega from "./add";
 
 const BodegaOptions = () => {
   const [bodegas, setBodegas] = useState([]);
-  const [bodegaSelected, setBodegaSelected] = useState({});
+  const [bodegaSelected, setBodegaSelected] = useState("");
   const [editedBodega, setEditedBodega] = useState({
     nombre: "",
     direccion: "",
@@ -58,8 +58,7 @@ const BodegaOptions = () => {
       const response = await fetch(apiUrl.bodegas, {
         method: 'GET',
         headers: {
-          'Content-Type': 'application/ld+json',
-          'Access-Control-Allow-Origin': '*'
+          'Content-Type': 'application/ld+json'
         }
       });
       const data = await response.json();
@@ -294,8 +293,8 @@ const BodegaOptions = () => {
             <div className="select-container">
             <Select
               options={bodegas}
-              value={bodegaSelected}
-              onChange={setBodegaSelected}
+              value={bodegas.find(option => option.value === bodegaSelected.value)}
+              onChange={(selectedOption) => setBodegaSelected(selectedOption)}
               placeholder="Bodegas"
               getOptionLabel={(option) => `${option.label} - ${option.cif}`}
             />

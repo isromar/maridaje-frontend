@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 
 
 const DenominacionOrigenOptions = () => {
-  const [denominacionDeOrigen, setDenominacionDeOrigen] = useState([]);
+  const [denominacionDeOrigen, setDenominacionDeOrigen] = useState({});
   const [denominacionOrigenSelected, setDenominacionOrigenSelected] = useState(null);
   const [nuevaDenominacionOrigen, setNuevaDenominacionOrigen] = useState("");
   const [denominacionOrigenEdited, setDenominacionOrigenEdited] = useState("");

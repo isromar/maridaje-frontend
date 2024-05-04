@@ -205,11 +205,10 @@ const TipoVinoOptions = () => {
         </section>
         
         <div className="perfil-admin-content">
-
          
-          <section className="row">
+        <section className="row">
             <h3>Tipo de vino</h3>
-            <div className="select-containe col-12 col-md-4">
+            <div className="select-container col-12 col-md-4">
               <Select
                 options={tiposDeVino}
                 value={tipoVinoSelected}
