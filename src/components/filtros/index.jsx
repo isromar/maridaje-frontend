@@ -11,8 +11,8 @@ const ComponenteSuperior = () => {
 
   return (
     <>
-      <div className="row justify-content-center">
-        <div className="col-4 col-md-4 col-sm-12 d-flex">
+      <div className="row">
+        <div className="col-6 col-md-7 col-sm-12 d-flex justify-content-center">
             <ComidaSelect
               selectedOption={selectedOption}
               setSelectedOption={setSelectedOption}
@@ -20,7 +20,7 @@ const ComponenteSuperior = () => {
               setPlaceholder={setPlaceholder}
             />
           </div>
-          <div className="col-4 col-md-4 col-sm-12 d-flex">
+          <div className="col-6 col-md-5 col-sm-12 d-flex justify-content-center">
             <BuscadorVinos
               setSelectedOption={setSelectedOption}
               setBusquedaNombreVino={setBusquedaNombreVino}
