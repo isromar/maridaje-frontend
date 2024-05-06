@@ -3,11 +3,11 @@
 # Habilitar reescritura de URL
 <IfModule mod_rewrite.c>
   RewriteEngine On
-  RewriteBase /
+  RewriteBase /maridaje/
   RewriteRule ^index\.html$ - [L]
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule . /index.html [L]
+  RewriteRule ^ /maridaje/index.html [L]
 </IfModule>
 
 # Configurar encabezados para cacheo
@@ -23,8 +23,3 @@
   AddOutputFilterByType DEFLATE text/css
   AddOutputFilterByType DEFLATE application/javascript
 </IfModule>
-
-# Redirección a isabelrodenas.es/cvtemporal
-RewriteCond %{HTTP_HOST} ^isabelrodenas.es [NC]
-RewriteCond %{REQUEST_URI} !^/cvtemporal [NC]
-RewriteRule ^(.*)$ https://isabelrodenas.es/cvtemporal [L,R=301]
