@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { mostrarMensaje } from "../../../../../utility/utils";
 import Swal from "sweetalert2";
 import { apiUrl } from "../../../../../data/Url";
+import MenuElementosAdmin from "../../menu";
 
 const AddBodega = ({updateBodegas}) => {
   const [bodegas, setBodegas] = useState([]);
@@ -138,6 +139,11 @@ const AddBodega = ({updateBodegas}) => {
   };
 
   return (
+    <div>
+    <div>
+    <MenuElementosAdmin/>
+  </div>
+
     <div className="perfil-admin-container">
 
         <section>
@@ -200,6 +206,7 @@ const AddBodega = ({updateBodegas}) => {
             <button onClick={handleAddBodega}>Añadir</button>
           </div>
         </section>
+      </div>
       </div>
 
   );

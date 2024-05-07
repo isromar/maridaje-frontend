@@ -4,6 +4,7 @@ import { apiUrl } from "../../../../data/Url";
 import Select from "react-select";
 import { mostrarMensaje, mostrarMensajeConfirmacion } from "../../../../utility/utils"
 import Swal from "sweetalert2";
+import MenuElementosAdmin from "../menu";
 
 
 const TipoVinoOptions = () => {
@@ -11,13 +12,13 @@ const TipoVinoOptions = () => {
   const [tipoVinoSelected, setTipoVinoSelected] = useState("");
   const [nuevoTipoVino, setNuevoTipoVino] = useState("");
   const [tipoVinoEdited, setTipoVinoEdited] = useState("");
-  
+
   useEffect(() => {
     // Mostrar mensaje de cargando datos
     mostrarMensaje('Cargando datos...', 'Espere mientras se cargan los datos', 'info');
-  
+
     fetchTiposDeVino();
-  
+
     // Ocultar el mensaje después de 1 segundo
     setTimeout(() => {
       Swal.close();
@@ -42,12 +43,12 @@ const TipoVinoOptions = () => {
             label: tipo.nombre,
           }))
           .sort((a, b) => a.label.localeCompare(b.label));
-          setTiposDeVino(options);
+        setTiposDeVino(options);
 
-          Swal.close();
-        } else {
-          console.error("No se encontraron datos.");
-        }
+        Swal.close();
+      } else {
+        console.error("No se encontraron datos.");
+      }
     } catch (error) {
       console.error("Error al obtener los datos:", error);
 
@@ -65,12 +66,12 @@ const TipoVinoOptions = () => {
       );
       return;
     }
-  
+
     const updatedTipoVino = {
       ...tipoVinoSelected,
       nombre: tipoVinoEdited, // Nuevo label actualizado
     };
-  
+
     try {
       const response = await fetch(
         `${apiUrl.tiposDeVino}/${tipoVinoSelected.value}`,
@@ -82,7 +83,7 @@ const TipoVinoOptions = () => {
           body: JSON.stringify(updatedTipoVino),
         }
       );
-  
+
       if (response.ok) {
         const updatedTipoVinoAgregado = await response.json();
         setTiposDeVino((prevTipoVino) =>
@@ -92,12 +93,12 @@ const TipoVinoOptions = () => {
               : option
           )
         );
-  
+
         fetchTiposDeVino();
 
         setTipoVinoSelected(updatedTipoVinoAgregado);
         setTipoVinoEdited("");
-  
+
         mostrarMensaje(
           "Registro actualizado",
           "Registro actualizado con éxito",
@@ -118,7 +119,7 @@ const TipoVinoOptions = () => {
         "error"
       );
     }
-};
+  };
 
 
   const handleAddTipoVino = async () => {
@@ -131,12 +132,12 @@ const TipoVinoOptions = () => {
       return;
     }
 
-    
+
     if (nuevoTipoVino) {
       const nuevoTipoVinoObj = {
         nombre: nuevoTipoVino,
       };
-  
+
       try {
         const response = await fetch(`${apiUrl.tiposDeVino}`, {
           method: 'POST',
@@ -145,7 +146,7 @@ const TipoVinoOptions = () => {
           },
           body: JSON.stringify(nuevoTipoVinoObj),
         });
-  
+
         if (response.ok) {
           const nuevoVinoAgregado = await response.json();
           setTiposDeVino((prevTiposDeVino) => [
@@ -165,33 +166,33 @@ const TipoVinoOptions = () => {
     }
   };
 
- 
-  const handleDeleteTipoVino = async () => {    
+
+  const handleDeleteTipoVino = async () => {
     if (tipoVinoSelected) {
       mostrarMensajeConfirmacion('¿Quieres borrar este registro?', 'Esta acción no se puede deshacer', 'warning')
         .then((result) => {
           if (result.isConfirmed) {
             fetch(`${apiUrl.tiposDeVino}/${tipoVinoSelected.value}`, {
-            method: "DELETE",
-        })
-        .then(() => {
-          setTiposDeVino((prevTiposDevino) => prevTiposDevino.filter((option) => option.value !== tipoVinoSelected.value) );
+              method: "DELETE",
+            })
+              .then(() => {
+                setTiposDeVino((prevTiposDevino) => prevTiposDevino.filter((option) => option.value !== tipoVinoSelected.value));
 
-          setTipoVinoSelected(null);
-          setNuevoTipoVino("");
+                setTipoVinoSelected(null);
+                setNuevoTipoVino("");
 
-          mostrarMensaje('Registro eliminado', 'Registro eliminado con éxito', 'success');
-        })
-        .catch((error) => {
-            console.error("Error al eliminar el registro", error);
-            mostrarMensaje('Error al eliminar el registro', 'Hubo un error al eliminar el registro', 'error');
-          });
-        }
-      });
-  }
-};
+                mostrarMensaje('Registro eliminado', 'Registro eliminado con éxito', 'success');
+              })
+              .catch((error) => {
+                console.error("Error al eliminar el registro", error);
+                mostrarMensaje('Error al eliminar el registro', 'Hubo un error al eliminar el registro', 'error');
+              });
+          }
+        });
+    }
+  };
 
-   return (
+  return (
     <div className="perfil-admin-container">
       <div>
         <TopMenu />
@@ -203,10 +204,14 @@ const TipoVinoOptions = () => {
             <span>Administrador</span>
           </h2>
         </section>
-        
+
+        <div>
+          <MenuElementosAdmin />
+        </div>
+
         <div className="perfil-admin-content">
-         
-        <section className="row">
+
+          <section className="row">
             <h3>Tipo de vino</h3>
             <div className="select-container col-12 col-md-4">
               <Select
@@ -216,9 +221,9 @@ const TipoVinoOptions = () => {
                 placeholder="Tipos de vino"
               />
             </div>
-            
+
             <div className="input-container col-12 col-md-4">
-            <input
+              <input
                 className="disabled"
                 type="text"
                 placeholder="Tipo de vino seleccionado"

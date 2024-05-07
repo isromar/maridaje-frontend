@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import TopMenu from "../../../menu";
 import { apiUrl } from "../../../../data/Url";
-import { useParams } from "react-router-dom";
 import { mostrarMensaje } from "../../../../utility/utils";
 import Swal from "sweetalert2";
 import Select from "react-select";
+import MenuElementosAdmin from "../menu";
 
 const NuevoVinoAdmin = () => {
   const [bodegas, setBodegas] = useState([]);
@@ -36,32 +36,32 @@ const NuevoVinoAdmin = () => {
     let isMounted = true;
 
     const fetchData = async () => {
-        mostrarMensaje(
-            "Cargando datos...",
-            "Espere mientras se cargan los datos",
-            "info"
-        );
+      mostrarMensaje(
+        "Cargando datos...",
+        "Espere mientras se cargan los datos",
+        "info"
+      );
 
-        await Promise.all([
-            fetchBodegaData(),
-            fetchTiposDeVino(),
-            fetchDenominacionDeOrigen(),
-            fetchComidas(),
-            fetchVariedadesUva()
-        ]);
+      await Promise.all([
+        fetchBodegaData(),
+        fetchTiposDeVino(),
+        fetchDenominacionDeOrigen(),
+        fetchComidas(),
+        fetchVariedadesUva()
+      ]);
 
-        if (isMounted) {
-            // Cerrar el mensaje después de completar todas las solicitudes
-            Swal.close();
-        }
+      if (isMounted) {
+        // Cerrar el mensaje después de completar todas las solicitudes
+        Swal.close();
+      }
     };
 
     fetchData();
 
     return () => {
-        isMounted = false;
+      isMounted = false;
     };
-}, []);
+  }, []);
 
   useEffect(() => {
   }, [nuevoVino]);
@@ -153,7 +153,7 @@ const NuevoVinoAdmin = () => {
   const fetchBodegaData = async () => {
     const response = await fetch(apiUrl.bodegas);
     const data = await response.json();
-  
+
     const options = data["hydra:member"]
       .filter((bodega) => bodega.cif !== "admin")
       .map((bodega) => ({
@@ -161,9 +161,9 @@ const NuevoVinoAdmin = () => {
         label: bodega.nombre,
         cif: bodega.cif,
       }));
-  
+
     setBodegas(options);
-  
+
     // Asigna el ID de la primera bodega a bodegaId
     if (options.length > 0) {
       setBodegaId(options[0].value);
@@ -275,15 +275,12 @@ const NuevoVinoAdmin = () => {
 
       if (response.ok) {
         // Crear las relaciones entre el vino y las comidas seleccionadas
-        const data = await response.json();
-        //const vinoId = data["@id"].split("/").pop();
-
         mostrarMensaje(
           "Vino creado",
           "El vino se ha creado con éxito",
           "success"
         )
-        .then(data => console.log(data))
+          .then(data => console.log(data))
 
         // Restablecer el formulario después de la creación exitosa
         setNuevoVino({
@@ -304,12 +301,17 @@ const NuevoVinoAdmin = () => {
       mostrarMensaje("Error", "Hubo un error al crear el vino", "error");
     }
   };
-  
+
   return (
     <div className="perfil-admin-container">
       <div>
         <TopMenu />
       </div>
+
+      <div>
+        <MenuElementosAdmin />
+      </div>
+
       <form className="view" id="form-nuevo-vino" onSubmit={handleSubmit}>
         <section className="view">
           <h2 className="centrar">Nuevo Vino</h2>
@@ -318,7 +320,7 @@ const NuevoVinoAdmin = () => {
               <td>
                 <button type="submit" className="btn btn-light button-guardar">
                   Guardar vino
-                </button> 
+                </button>
               </td>
             </tr>
             <tr>

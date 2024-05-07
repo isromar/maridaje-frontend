@@ -8,6 +8,7 @@ import {
 } from "../../../../utility/utils";
 import Swal from "sweetalert2";
 import AddBodega from "./add";
+import MenuElementosAdmin from "../menu";
 
 const BodegaOptions = () => {
   const [bodegas, setBodegas] = useState([]);
@@ -174,65 +175,6 @@ const BodegaOptions = () => {
       }
     }
   };
-  
-  const handleAddBodega = async () => {
-    if (nuevaBodega.nombre && nuevaBodega.cif && nuevaBodega.password) {
-      const nuevaBodegaObj = {
-        nombre: nuevaBodega.nombre,
-        direccion: nuevaBodega.direccion,
-        telefono: nuevaBodega.telefono,
-        cif: nuevaBodega.cif,
-        web: nuevaBodega.web,
-        password: nuevaBodega.password,
-      };
-
-      try {
-        const response = await fetch(`${apiUrl.bodegas}`, {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/ld+json",
-          },
-          body: JSON.stringify(nuevaBodegaObj),
-        });
-
-        if (response.ok) {
-          const nuevaBodegaAgregada = await response.json();
-          setBodegas((prevBodegas) => [...prevBodegas, nuevaBodegaAgregada]);
-
-          fetchBodegas();
-
-          setNuevaBodega({
-            nombre: "",
-            direccion: "",
-            telefono: "",
-            cif: "",
-            web: "",
-            password: "",
-          });
-
-          mostrarMensaje(
-            "Registro añadido",
-            "Registro añadido con éxito",
-            "success"
-          );
-        } else {
-          mostrarMensaje(
-            "Error al añadir el registro",
-            "Hubo un error al añadir el registro",
-            "error"
-          );
-        }
-      } catch (error) {
-        console.error(error);
-        mostrarMensaje(
-          "Error al añadir el registro",
-          "Hubo un error al añadir el registro",
-          "error"
-        );
-      }
-    }
-  };
-
 
   const handleDeleteBodega = async () => {
     if (bodegaSelected) {
@@ -286,6 +228,10 @@ const BodegaOptions = () => {
             <span>Administrador</span>
           </h2>
         </section>
+
+        <div>
+          <MenuElementosAdmin/>
+        </div>
 
         <div className="perfil-admin-content">
           <section>

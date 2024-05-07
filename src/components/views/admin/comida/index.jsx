@@ -4,6 +4,7 @@ import { apiUrl } from "../../../../data/Url";
 import Select from "react-select";
 import { mostrarMensaje, mostrarMensajeConfirmacion } from "../../../../utility/utils";
 import Swal from "sweetalert2";
+import MenuElementosAdmin from "../menu";
 
 const ComidaOptions = () => {
   const [comidas, setComidas] = useState([]);
@@ -199,10 +200,12 @@ const ComidaOptions = () => {
             <span>Administrador</span>
           </h2>
         </section>
-        
-        <div className="perfil-admin-content">
 
-         
+        <div>
+          <MenuElementosAdmin/>
+        </div>
+        
+        <div className="perfil-admin-content">         
           <section className="row">
             <h3>Comida</h3>
             <div className="select-container col-12 col-md-4">

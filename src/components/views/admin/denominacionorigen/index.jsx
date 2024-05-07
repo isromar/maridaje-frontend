@@ -4,6 +4,7 @@ import { apiUrl } from "../../../../data/Url";
 import Select from "react-select";
 import { mostrarMensaje, mostrarMensajeConfirmacion } from "../../../../../src/utility/utils"
 import Swal from "sweetalert2";
+import MenuElementosAdmin from "../menu";
 
 
 const DenominacionOrigenOptions = () => {
@@ -202,6 +203,10 @@ const DenominacionOrigenOptions = () => {
             <span>Administrador</span>
           </h2>
         </section>
+
+        <div>
+          <MenuElementosAdmin/>
+        </div>
         
         <div className="perfil-admin-content">
 
