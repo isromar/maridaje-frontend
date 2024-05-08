@@ -3,7 +3,6 @@ import TopMenu from "../../../menu";
 import { apiUrl } from "../../../../data/Url";
 import { mostrarMensaje } from "../../../../utility/utils";
 import Swal from "sweetalert2";
-import { getDataPerfilBodega } from "../../../../utility/getData";
 
 const EditarBodega = () => {
   const [bodegas, setBodegas] = useState([]);

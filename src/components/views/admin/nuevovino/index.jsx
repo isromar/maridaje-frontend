@@ -308,13 +308,14 @@ const NuevoVinoAdmin = () => {
         <TopMenu />
       </div>
 
-      <div>
-        <MenuElementosAdmin />
-      </div>
-
       <form className="view" id="form-nuevo-vino" onSubmit={handleSubmit}>
         <section className="view">
           <h2 className="centrar">Nuevo Vino</h2>
+
+          <div>
+            <MenuElementosAdmin />
+          </div>
+
           <table className="tabla-view">
             <tr>
               <td>

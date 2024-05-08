@@ -175,6 +175,65 @@ const BodegaOptions = () => {
       }
     }
   };
+  
+  const handleAddBodega = async () => {
+    if (nuevaBodega.nombre && nuevaBodega.cif && nuevaBodega.password) {
+      const nuevaBodegaObj = {
+        nombre: nuevaBodega.nombre,
+        direccion: nuevaBodega.direccion,
+        telefono: nuevaBodega.telefono,
+        cif: nuevaBodega.cif,
+        web: nuevaBodega.web,
+        password: nuevaBodega.password,
+      };
+
+      try {
+        const response = await fetch(`${apiUrl.bodegas}`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/ld+json",
+          },
+          body: JSON.stringify(nuevaBodegaObj),
+        });
+
+        if (response.ok) {
+          const nuevaBodegaAgregada = await response.json();
+          setBodegas((prevBodegas) => [...prevBodegas, nuevaBodegaAgregada]);
+
+          fetchBodegas();
+
+          setNuevaBodega({
+            nombre: "",
+            direccion: "",
+            telefono: "",
+            cif: "",
+            web: "",
+            password: "",
+          });
+
+          mostrarMensaje(
+            "Registro añadido",
+            "Registro añadido con éxito",
+            "success"
+          );
+        } else {
+          mostrarMensaje(
+            "Error al añadir el registro",
+            "Hubo un error al añadir el registro",
+            "error"
+          );
+        }
+      } catch (error) {
+        console.error(error);
+        mostrarMensaje(
+          "Error al añadir el registro",
+          "Hubo un error al añadir el registro",
+          "error"
+        );
+      }
+    }
+  };
+
 
   const handleDeleteBodega = async () => {
     if (bodegaSelected) {
@@ -264,7 +323,7 @@ const BodegaOptions = () => {
 
             <div className="input-container input-bodega">
               <input
-                className="nombre"
+                className="nombre input-bodega-edit"
                 type="text"
                 placeholder="Nombre"
                 value={bodegaSelected ? bodegaSelected.nombre : ""}
@@ -276,7 +335,7 @@ const BodegaOptions = () => {
                 }
               />
               <input
-                className="direccion"
+                className="direccion input-bodega-edit"
                 type="text"
                 placeholder="Dirección"
                 value={bodegaSelected ? bodegaSelected.direccion : ""}
@@ -288,7 +347,7 @@ const BodegaOptions = () => {
                 }
               />
               <input
-                className="telefono"
+                className="telefono input-bodega-edit"
                 type="text"
                 placeholder="Teléfono"
                 value={bodegaSelected ? bodegaSelected.telefono : ""}
@@ -300,7 +359,7 @@ const BodegaOptions = () => {
                 }
               />
               <input
-                className="cif"
+                className="cif input-bodega-edit"
                 type="text"
                 placeholder="CIF"
                 value={bodegaSelected ? bodegaSelected.cif : ""}
@@ -312,7 +371,7 @@ const BodegaOptions = () => {
                 }
               />
               <input
-                className="web"
+                className="web input-bodega-edit"
                 type="text"
                 placeholder="Web"
                 value={bodegaSelected ? bodegaSelected.web : ""}
@@ -324,7 +383,7 @@ const BodegaOptions = () => {
                 }
               />
               <input
-                className="password"
+                className="password input-bodega-edit"
                 type="password"
                 placeholder="Contraseña"
                 value={bodegaSelected ? bodegaSelected.password : ""}

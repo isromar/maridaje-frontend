@@ -140,17 +140,12 @@ const AddBodega = ({updateBodegas}) => {
 
   return (
     <div>
-    <div>
-    <MenuElementosAdmin/>
-  </div>
-
     <div className="perfil-admin-container">
-
         <section>
           <h3>Añadir nueva bodega</h3>
           <div className="input-container input-bodega">
             <input
-              className="nombre"
+              className="nombre input-bodega-nueva"
               type="text"
               placeholder="Nombre"
               value={nuevaBodega.nombre}
@@ -159,7 +154,7 @@ const AddBodega = ({updateBodegas}) => {
               }
             />
             <input
-              className="direccion"
+              className="direccion input-bodega-nueva"
               type="text"
               placeholder="Dirección"
               value={nuevaBodega.direccion}
@@ -168,7 +163,7 @@ const AddBodega = ({updateBodegas}) => {
               }
             />
             <input
-              className="telefono"
+              className="telefono input-bodega-nueva"
               type="text"
               placeholder="Teléfono"
               value={nuevaBodega.telefono}
@@ -177,7 +172,7 @@ const AddBodega = ({updateBodegas}) => {
               }
             />
             <input
-              className="cif"
+              className="cif input-bodega-nueva"
               type="text"
               placeholder="CIF"
               value={nuevaBodega.cif}
@@ -186,7 +181,7 @@ const AddBodega = ({updateBodegas}) => {
               }
             />
             <input
-              className="web"
+              className="web input-bodega-nueva"
               type="text"
               placeholder="Web"
               value={nuevaBodega.web}
@@ -195,7 +190,7 @@ const AddBodega = ({updateBodegas}) => {
               }
             />
             <input
-              className="password"
+              className="password input-bodega-nueva"
               type="password"
               placeholder="Contraseña"
               value={nuevaBodega.password}

@@ -70,11 +70,11 @@ table {
   font-weight: 500;
   font-size: large;
 }
-
+/*
 .tabla-view input {
   min-width: 500px;
 }
-
+*/
 header h1{
   margin-top: 20px;
 }
@@ -103,11 +103,11 @@ section h2, section h4 {
   margin-bottom: 50px;
 }
 
-.vino-view {
-  width: 50%;
-  float: left; /* Para alinear las tablas una al lado de la otra */
-}
 
 .form-group {
   margin-right: 5px; /* Ajusta el valor según el margen deseado */
+}
+
+.input-bodega-nueva, .input-bodega-edit{
+  margin-bottom: 1%;
 }
