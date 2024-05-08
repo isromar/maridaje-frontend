@@ -12,23 +12,23 @@ const ComponenteSuperior = () => {
   return (
     <>
       <div className="row">
-        <div className="col-6 col-md-6 col-sm-10 d-flex justify-content-center">
-            <ComidaSelect
-              selectedOption={selectedOption}
-              setSelectedOption={setSelectedOption}
-              setBusquedaNombreVino={setBusquedaNombreVino}
-              setPlaceholder={setPlaceholder}
-            />
-          </div>
-          <div className="col-6 col-md-6 col-sm-10 d-flex justify-content-center">
-            <BuscadorVinos
-              setSelectedOption={setSelectedOption}
-              setBusquedaNombreVino={setBusquedaNombreVino}
-              busquedaNombreVino={busquedaNombreVino}
-              setPlaceholder={setPlaceholder}
-              placeholder={placeholder}
-            />
-          </div>
+        <div className="col-md-6 d-flex justify-content-center">
+          <ComidaSelect
+            selectedOption={selectedOption}
+            setSelectedOption={setSelectedOption}
+            setBusquedaNombreVino={setBusquedaNombreVino}
+            setPlaceholder={setPlaceholder}
+          />
+        </div>
+        <div className="col-md-6 d-flex justify-content-center">
+          <BuscadorVinos
+            setSelectedOption={setSelectedOption}
+            setBusquedaNombreVino={setBusquedaNombreVino}
+            busquedaNombreVino={busquedaNombreVino}
+            setPlaceholder={setPlaceholder}
+            placeholder={placeholder}
+          />
+        </div>
       </div>
       <br />
       <div className="row">
@@ -39,6 +39,6 @@ const ComponenteSuperior = () => {
       </div>
     </>
   );
-};
-
-export default ComponenteSuperior;
+  };
+  
+  export default ComponenteSuperior;

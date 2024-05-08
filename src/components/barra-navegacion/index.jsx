@@ -99,31 +99,45 @@ const BarraNavegacion = () => {
       <form onSubmit={handleFormSubmit} className="d-flex align-items-center">
         {!acceso && (
           <>
-            <div className="form-group">
-              <input
-                type="text"
-                className="form-control"
-                placeholder={"Usuario"}
-                value={usuario}
-                onChange={handleUsuarioChange}
-              />
+            <div className="row">
+              <div className="col-md">
+                <div className="form-group">
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder={"Usuario"}
+                    value={usuario}
+                    onChange={handleUsuarioChange}
+                  />
+                </div>
+              </div>
+              <div className="col-md">
+                <div className="form-group">
+                  <input
+                    type="password"
+                    className="form-control"
+                    placeholder="Contraseña"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                </div>
+              </div>
             </div>
-            <div className="form-group">
-              <input
-                type="password"
-                className="form-control"
-                placeholder="Contraseña"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
+            <div className="row">
+              <div className="col-md">
+                <button type="submit" className="btn btn-light">Entrar</button>
+              </div>
             </div>
-            <button type="submit" className="btn btn-light">Entrar</button>
           </>
         )}
         {acceso && (
-          <button type="submit" className="btn btn-light" onClick={handleLogout}>
-            Salir
-          </button>
+          <div className="row">
+            <div className="col-md">
+              <button type="submit" className="btn btn-light" onClick={handleLogout}>
+                Salir
+              </button>
+            </div>
+          </div>
         )}
       </form>
 
